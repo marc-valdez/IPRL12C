@@ -42,6 +42,7 @@ int main()
         "Roosevelt"
     };
 	
+    // This is to initialize the size of the array above for easier function passing.
 	int station_count = sizeof(station_names)/sizeof(station_names[0]);
 	
     // Some greetings.
@@ -57,28 +58,31 @@ int main()
     // This function passes the names of the station pairing, as well as the beep state to determine the fare price.
     int fare = calculate_fare(station_names[--origin], station_names[--destination], beep);
 
-    // Finally, the fare price is printed, alongside the station names that the user has inputted.
+    // The fare price is then printed, alongside the station names that the user has inputted.
 	printf("\nThe fare from %s to %s is %d pesos.\n\n", station_names[origin], station_names[destination], fare);	
     
+    // Lastly, a simple banking system that outputs the updated balance or change.
     calculate_change(beep, fare);
 
+    // Some closing greetings.
     printf("\nThank you for riding LRT-1!\n");
 
 	return 0;
 }
 
+// This function either outputs a 1 or a 0 depending on user input.
 int beep_check()
 {	
     char buffer = get_char("Do you have a beep card? (Y/N) >> ", "YyNn\n");
     
-    // If the user input passes the error checking, 
-	// this next if will return a 1 if the user inputted either 'Y' or 'y' otherwise, it will return 0.
+    // If the user input passes the error checking, this next if will return a 1 if the user inputted either 'Y' or 'y' otherwise, it will return 0.
 	if(buffer == 'Y' || buffer == 'y')
         return 1;
     else
         return 0;
 }
 
+// This function will loop if the user were to input the same origin and destination.
 void get_stations(char *station_names[], int station_count, int *origin, int *destination)
 {
 	while(1)
@@ -100,8 +104,7 @@ void get_stations(char *station_names[], int station_count, int *origin, int *de
 void print_stations(char *station_names[], int size)
 {
     printf("\n");
-    // For the sake of space constraints, a second integer j is initialized to start at the halfway point of the array index,
-    	// printing the stations side by side, effectively creating two columns.
+    // For the sake of space constraints, a second integer j is initialized to start at the halfway point of the array index, printing the stations side by side, effectively creating two columns.
 	for(int i = 0, j = size/2; i < size/2; i++, j++)
 		printf("[%d] %s\t\t[%d] %s\n", i+1, station_names[i], j+1, station_names[j]);
 	printf("\nPlease refer to the list above.\n");
@@ -325,11 +328,9 @@ int calculate_fare(char *in1, char *in2, int beep)
 	// This for loop simply iterates through the dictionary.
     for(int i = 0; i < sizeof(fare_matrix)/sizeof(fare_matrix[0]); i++)
     {   
-        // The first part of the if statement simply compares the first input to the first station in the dictionary,
-        	// as well as the second input to the second station in the dictionary.
-        // The second part of the if statement simply reverses the checks.
-        // So if the user were to input "Roosevelt" and "Baclaran,"
-			// the if statement will also check for "Baclaran" and "Roosevelt" as well.
+        // The first part of the if statement simply compares the first input to the first station in the dictionary, as well as the second input to the second station in the dictionary.
+        // The second part of the if statement simply reverses the order in which the station names are checked.
+        // So if the user were to input "Roosevelt" and "Baclaran," the if statement will also check for "Baclaran" and "Roosevelt" as well.
 		if((strcmp(in1, fare_matrix[i].station1) == 0 && strcmp(in2, fare_matrix[i].station2) == 0) || (strcmp(in2, fare_matrix[i].station1) == 0 && strcmp(in1, fare_matrix[i].station2) == 0))
         {
             // If the user has a beep card, the stored value fare will be returned.
@@ -341,10 +342,12 @@ int calculate_fare(char *in1, char *in2, int beep)
     }
 }
 
+// This function will simply act as a basic banking system.
 void calculate_change(int beep, int fare)
 {
     float balance;
 
+    // This will loop until the user inputs a sufficient amount of money.
     while(1)
     {
         if(beep == 1)
@@ -357,8 +360,8 @@ void calculate_change(int beep, int fare)
         printf("\n\t* Insufficient balance. Please try again.\n\n");
     }
 
+    // Update and print the balance/change.
     balance -= fare;
-
     if(beep == 1)
         printf("\nYour beep card balance has been updated to %.2f pesos.\n", balance);
     else
