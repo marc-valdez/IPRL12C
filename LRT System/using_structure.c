@@ -8,7 +8,7 @@ void print_stations(char *station_names[], int size);
 int calculate_fare(char *in1, char *in2, int beep);
 
 // This declares a structure called Station that has 4 properties: an origin, a destination, and the two fares.
-typedef struct {
+typedef struct Station {
     char *station1;
     char *station2;
     int sj_fare; // Single Journey
@@ -42,35 +42,44 @@ int main()
     };
 	
 	int station_count = sizeof(station_names)/sizeof(station_names[0]);
-	// Some greetings.
+	
+    // Some greetings.
 	printf("Welcome to LRT Line 1!\n\n");
 
 	// If the user has a beep card, then beep should be equal to 1, otherwise 0.
-//    int beep = 0;//beep_check();
-    int beep = beep_check();
+    int beep = 1;// beep_check();
 	
 	int origin, destination;
-	get_stations(station_names, station_count, &origin, &destination);
+	// get_stations(station_names, station_count, &origin, &destination);
+
+    origin = 1;
+    destination = 2;
 	
-//	while(1)
-//	{
-//		// This function simply prints the station_names array by iterating through it linearly.
-//	    print_stations(station_names, station_count);
-//		
-//		origin = get_int("Please enter your Current Station number [1-20] >> ", "0123456789\n", 1, 20);
-//		destination = get_int("Please enter your Destination Station number [1-20] >> ", "0123456789\n", 1, 20);
-//		
-//		// This checks if the user inputted the same station twice.
-//		if(origin != destination)
-//			break;
-//		printf("\n\t* Invalid input. Origin and Destination cannot be the same.\n");
-//	}
+	// while(1)
+	// {
+	// 	// This function simply prints the station_names array by iterating through it linearly.
+	//     print_stations(station_names, station_count);
+		
+	// 	origin = get_int("Please enter your Current Station number [1-20] >> ", "0123456789\n", 1, 20);
+	// 	destination = get_int("Please enter your Destination Station number [1-20] >> ", "0123456789\n", 1, 20);
+		
+	// 	// This checks if the user inputted the same station twice.
+	// 	if(origin != destination)
+	// 		break;
+	// 	printf("\n\t* Invalid input. Origin and Destination cannot be the same.\n");
+	// }
 
     // This function passes the names of the station pairing, as well as the value of beep to determine the fare price.
-    int fare = calculate_fare(station_names[origin], station_names[destination], beep);
+    int fare = calculate_fare(station_names[origin-1], station_names[destination-1], beep);
 	
-    // Finally, the fare price is printed, alongside the station names that the user has inputted.
-	printf("\nThe fare from %s to %s is %d pesos.\n\n", station_names[origin], station_names[destination], fare);
+    float balance = get_float("Please enter your beep card balance >> ", "0123456789.\n", 0.0, 10000.0);
+    printf("\nCurrent Balance: %.2f", balance);
+    printf("\nTransaction: %.2f - %d = %.2f", balance, fare, balance - fare);
+    balance -= fare;
+    printf("\nYour updated balance is %.2f pesos.", balance);
+
+    // // Finally, the fare price is printed, alongside the station names that the user has inputted.
+	// printf("\nThe fare from %s to %s is %d pesos.\n\n", station_names[origin], station_names[destination], fare);
 
 	return 0;
 }
@@ -80,8 +89,7 @@ int beep_check()
     char buffer = get_char("Do you have a beep card? (Y/N) >> ", "YyNn\n");
     
     // If the user input passes the error checking, 
-	// this next if will return a 1 if the user inputted either 'Y' or 'y'
-    	// otherwise, it will return 0.
+	// this next if will return a 1 if the user inputted either 'Y' or 'y' otherwise, it will return 0.
 	if(buffer == 'Y' || buffer == 'y')
         return 1;
     else
