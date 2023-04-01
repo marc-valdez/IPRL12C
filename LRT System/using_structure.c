@@ -6,6 +6,7 @@ int beep_check();
 void get_stations(char *station_names[], int station_count, int *origin, int *destination);
 void print_stations(char *station_names[], int size);
 int calculate_fare(char *in1, char *in2, int beep);
+void calculate_change(int beep, int fare);
 
 // This declares a structure called Station that has 4 properties: an origin, a destination, and the two fares.
 typedef struct Station {
@@ -47,25 +48,21 @@ int main()
 	printf("Welcome to LRT Line 1!\n\n");
 
 	// If the user has a beep card, then beep should be equal to 1, otherwise 0.
-    int beep = 1;// beep_check();
-	
+    int beep = beep_check();
+
+    // This function modifies the values inside origin and destination, based on user input.
 	int origin, destination;
-	// get_stations(station_names, station_count, &origin, &destination);
+	get_stations(station_names, station_count, &origin, &destination);
 
-    origin = 1;
-    destination = 2;
+    // This function passes the names of the station pairing, as well as the beep state to determine the fare price.
+    int fare = calculate_fare(station_names[--origin], station_names[--destination], beep);
 
-    // This function passes the names of the station pairing, as well as the value of beep to determine the fare price.
-    int fare = calculate_fare(station_names[origin-1], station_names[destination-1], beep);
-	
-    float balance = get_float("Please enter your beep card balance >> ", "0123456789.\n", 0.0, 10000.0);
-    printf("\nCurrent Balance: %.2f", balance);
-    printf("\nTransaction: %.2f - %d = %.2f", balance, fare, balance - fare);
-    balance -= fare;
-    printf("\nYour updated balance is %.2f pesos.", balance);
+    // Finally, the fare price is printed, alongside the station names that the user has inputted.
+	printf("\nThe fare from %s to %s is %d pesos.\n\n", station_names[origin], station_names[destination], fare);	
+    
+    calculate_change(beep, fare);
 
-    // // Finally, the fare price is printed, alongside the station names that the user has inputted.
-	// printf("\nThe fare from %s to %s is %d pesos.\n\n", station_names[origin], station_names[destination], fare);
+    printf("\nThank you for riding LRT-1!\n");
 
 	return 0;
 }
@@ -342,4 +339,28 @@ int calculate_fare(char *in1, char *in2, int beep)
             return fare_matrix[i].sj_fare;    
         }
     }
+}
+
+void calculate_change(int beep, int fare)
+{
+    float balance;
+
+    while(1)
+    {
+        if(beep == 1)
+            balance = get_float("Please enter your beep card balance >> ", "0123456789.\n", 0.0, 10000.0);
+        else
+            balance = get_float("Please enter your payment amount >> ", "0123456789.\n", 0.0, 10000.0);
+
+        if(balance >= fare)
+            break;
+        printf("\n\t* Insufficient balance. Please try again.\n\n");
+    }
+
+    balance -= fare;
+
+    if(beep == 1)
+        printf("\nYour beep card balance has been updated to %.2f pesos.\n", balance);
+    else
+        printf("\nYour change is %.2f pesos.\n", balance);
 }
