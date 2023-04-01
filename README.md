@@ -1,3 +1,3 @@
 # Intermediate Programming
 
-<h1>TEST<h1>
+This is just a repository of my school coding projects.
