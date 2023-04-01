@@ -54,20 +54,6 @@ int main()
 
     origin = 1;
     destination = 2;
-	
-	// while(1)
-	// {
-	// 	// This function simply prints the station_names array by iterating through it linearly.
-	//     print_stations(station_names, station_count);
-		
-	// 	origin = get_int("Please enter your Current Station number [1-20] >> ", "0123456789\n", 1, 20);
-	// 	destination = get_int("Please enter your Destination Station number [1-20] >> ", "0123456789\n", 1, 20);
-		
-	// 	// This checks if the user inputted the same station twice.
-	// 	if(origin != destination)
-	// 		break;
-	// 	printf("\n\t* Invalid input. Origin and Destination cannot be the same.\n");
-	// }
 
     // This function passes the names of the station pairing, as well as the value of beep to determine the fare price.
     int fare = calculate_fare(station_names[origin-1], station_names[destination-1], beep);
