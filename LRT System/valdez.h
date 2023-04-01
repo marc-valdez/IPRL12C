@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <string.h>
 #define MAX 100
 
 char get_char(char *prompt, char *limit)
@@ -65,6 +67,41 @@ int get_int(char *prompt, char *limit, int min, int max)
             continue;
         }
 		
-        return user_input-1;
+        return user_input;
+	}
+}
+
+float get_float(char *prompt, char *limit, float min, float max)
+{
+	char buffer[MAX];
+	float user_input;
+	
+	while(1)
+	{
+        printf("%s", prompt);
+		fgets(buffer, sizeof(buffer), stdin);
+		
+		if(strspn(buffer, limit) != strlen(buffer))
+        {
+			strcpy(buffer, "");
+            printf("\n\t* Invalid input. Prompt only accepts %s\n", limit);
+            continue;
+        }
+        
+        if(sscanf(buffer, "%f", &user_input) != 1)
+        {
+            strcpy(buffer, "");
+            printf("\n\t* Invalid input. Please enter a number.\n\n");
+            continue;
+        }
+        
+        if(user_input < min || user_input > max) 
+        {
+            strcpy(buffer, "");
+            printf("\n\t* Invalid input. Please enter a number between %.2f and %.2f.\n\n", min, max);
+            continue;
+        }
+		
+        return user_input;
 	}
 }

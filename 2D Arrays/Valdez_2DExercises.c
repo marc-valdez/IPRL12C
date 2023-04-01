@@ -1,12 +1,11 @@
-// NOTE! No Error Correction!
-// Code will infinitely loop if you enter a non-integer in the prompts that require only numbers!
-
 #include <stdio.h>
 #include <stdlib.h>
+#include "..\LRT System\valdez.h"
+
 // Marc Valdez
 
 // Edit these to change 2D array size (Max 10)
-const int row = 10, col = 10;
+const int row = 3, col = 3;
 
 void exercise_1(void);
 void exercise_2(void);
@@ -20,9 +19,8 @@ void exit_prompt(void);
 
 void main()
 {
-	int buffer = 0;
-	printf("=======================================================================================================\n\n> Enter Activity Number [1-8] / Exit [9]: ");
-	scanf(" %d", &buffer);
+	char *prompt = "=======================================================================================================\n\n> Enter Activity Number [1-8] / Exit [9]: ";
+	int buffer = get_int(prompt, "0123456789\n", 1, 9);
 	
 	switch(buffer)
 	{
@@ -72,10 +70,7 @@ void d_init_scan(double arr[row][col])
 {
 	for(int i = 0; i < row; i++)
 		for(int j = 0; j < col; j++)
-		{
-			printf("Enter value of array element [%d][%d]: ", i, j);
-			scanf(" %lf", &arr[i][j]);
-		}
+			arr[i][j] = get_float("Enter value of array element [%d][%d]: ", "0123456789.\n", 0.0, 100.0);
 	printf("\n");
 }
 
@@ -154,7 +149,7 @@ void exercise_4(void)
 // Prints the numbers along the main diagonal
 void print_diagonal(double arr[row][col])
 {
-	printf("\nMain Diagonal:\n\n");
+	printf("\nMain Diagonal:\n");
 	for(int i = 0; i < row; i++)
 	{
 		for(int j = 0; j < col; j++)
@@ -211,12 +206,8 @@ void exercise_6()
 			printf("%.2f\t", d_arr[i][j]);
 		printf("\n");
 	}
-	
-	int buffer = 0;
-	printf("\nPlease enter a row [1-%d]: ", row);
-	scanf("%d", &buffer);
-	
-	sum_row(d_arr, buffer);
+	printf("\n");
+	sum_row(d_arr, get_int("Please enter a row number: ", "1234567890\n", 1, row));
 	printf("\n");
 }
 
@@ -249,11 +240,8 @@ void exercise_7()
 		printf("\n");
 	}
 	
-	int buffer = 0;
-	printf("\nPlease enter a [1-%d]: ", col);
-	scanf("%d", &buffer);
-		
-	sum_column(d_arr, buffer);
+	printf("\n");
+	sum_column(d_arr, get_int("Please enter a column number: ", "1234567890\n", 1, col));
 	printf("\n");
 }
 
@@ -313,10 +301,8 @@ void exercise_8(void)
 // Prompts for exit
 void exit_prompt(void)
 {
-	char in;
-	printf("\nWould you like to exit? [Y-N]: ");
-	scanf(" %c", &in);
-	
+	printf("\n");
+	char in = get_char("Would you like to exit? [Y-N]: ", "YyNn\n");
 	if(in == 'Y' || in == 'y')
 		exit(0);
 	printf("\n");
