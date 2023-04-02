@@ -4,7 +4,6 @@
 
 int beep_check();
 void get_stations(char *station_names[], int station_count, int *origin, int *destination);
-void print_stations(char *station_names[], int size);
 void calculate_change(int beep, int fare);
 
 int main()
@@ -129,13 +128,24 @@ int beep_check()
         return 0;
 }
 
+// This function prints the selection menu for the user.
+void print_menu(char *station_names[], int size)
+{
+    printf("\n");
+    // For the sake of space constraints, a second integer j is initialized to start at the halfway point of the array index, 
+    // printing the stations side by side, effectively creating two columns.
+	for(int i = 0, j = size/2; i < size/2; i++, j++)
+		printf("[%d] %s\t\t[%d] %s\n", i+1, station_names[i], j+1, station_names[j]);
+	printf("\nPlease refer to the list above.\n");
+}
+
 // This function will loop if the user were to input the same origin and destination.
 void get_stations(char *station_names[], int station_count, int *origin, int *destination)
 {
 	while(1)
 	{
 		// This function simply prints the station_names array by iterating through it linearly.
-	    print_stations(station_names, station_count);
+	    print_menu(station_names, station_count);
 		
 		*origin = get_int("Please enter your Current Station number [1-20] >> ", "0123456789\n", 1, 20);
 		*destination = get_int("Please enter your Destination Station number [1-20] >> ", "0123456789\n", 1, 20);
@@ -145,17 +155,6 @@ void get_stations(char *station_names[], int station_count, int *origin, int *de
 			break;
 		printf("\n\t* Invalid input. Origin and Destination cannot be the same.\n");
 	}
-}
-
-// This function just prints the station_names array for the user.
-void print_stations(char *station_names[], int size)
-{
-    printf("\n");
-    // For the sake of space constraints, a second integer j is initialized to start at the halfway point of the array index, 
-    // printing the stations side by side, effectively creating two columns.
-	for(int i = 0, j = size/2; i < size/2; i++, j++)
-		printf("[%d] %s\t\t[%d] %s\n", i+1, station_names[i], j+1, station_names[j]);
-	printf("\nPlease refer to the list above.\n");
 }
 
 // This function will simply act as a basic banking system.
