@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <string.h>
-#define MAX 100
+#include "valdez.h"
 
 int beep_check();
+void get_stations(char *station_names[], int station_count, int *origin, int *destination);
 void print_stations(char *station_names[], int size);
-int get_station(char *);
+void calculate_change(int beep, int fare);
 
 int main()
 { 
@@ -32,6 +33,9 @@ int main()
         "Roosevelt"
     };
     
+	// This is to initialize the size of the array above for easier function passing.
+	int station_count = sizeof(station_names)/sizeof(station_names[0]);
+
     // This is a 3d Lookup Array that contains all the fare data for each station pairing.
     	// The first dimension corresponds to the beep card, 0 if the user doesn't have it, 1 if they do.
     	// The second and third dimensions are the actual fare data.
@@ -90,114 +94,92 @@ int main()
     // If the user has a beep card, then beep should be equal to 1, otherwise 0.
 	int beep = beep_check();
 
-    // This function simply prints the station_names array by iterating through it linearly.
-	print_stations(station_names, sizeof(station_names)/sizeof(station_names[0]));
+	// This function modifies the values inside origin and destination, based on user input.
+	int origin, destination;
+	get_stations(station_names, station_count, &origin, &destination);
+	
+	// Because index zero.
+	--origin;
+	--destination;
 
-    // This function will output an integer that corresponds to the index number of the chosen station.
-	int origin = get_station("Current");
-    int destination = get_station("Destination");
-	
-	// If the user input the same station twice, the program will end.
-	if(origin == destination)
-        printf("\nOrigin and Destination cannot be the same.\n\n");
-    else
-        printf("\nGoing from %s to %s will cost you %d pesos.\n\n", station_names[origin], station_names[destination], fare_matrix[beep][origin][destination]);
-	
+	// The fare is then looked up using the 3D array.
+	int fare = fare_matrix[beep][origin][destination];
+
+	// The fare price is then printed, along with the station names that the user has inputted.
+    printf("\nThe fare from %s to %s is %d pesos.\n\n", station_names[origin], station_names[destination], fare);
+    
+    // Lastly, a simple banking system that outputs the updated balance or change.
+    calculate_change(beep, fare);
+
+    // Some closing greetings.
+    printf("\nThank you for riding LRT-1!\n\n");	
+
 	return 0;
 }
 
-// This function will ask the user if they have a beep card.
+// This function either outputs a 1 or a 0 depending on user input.
 int beep_check()
+{	
+    char buffer = get_char("Do you have a beep card? (Y/N) >> ", "YyNn\n");
+    
+    // If the user input passes the error checking, this next if will return a 1 if the user inputted either 'Y' or 'y' otherwise, it will return 0.
+	if(buffer == 'Y' || buffer == 'y')
+        return 1;
+    else
+        return 0;
+}
+
+// This function will loop if the user were to input the same origin and destination.
+void get_stations(char *station_names[], int station_count, int *origin, int *destination)
 {
-    char buffer[MAX];
-	// while(1) is usually not a good idea, but one can use break; 
-		// or in the case of functions, use return; to end the loop.
-    while(1)
-    {
-        printf("Do you have a beep card? (Y/N): ");
-        fgets(buffer, sizeof(buffer), stdin);
+	while(1)
+	{
+		// This function simply prints the station_names array by iterating through it linearly.
+	    print_stations(station_names, station_count);
 		
-		// The strlen is used to check if the input exceeds one character.
-		// It is set to != 2 because the newline character is factored in the calculation.
-		// So if a user were to input "Y", the fgets actually reads "Y\n"
-		// If a user were to input "Yy" for example, fgets will read "Yy\n" which is 3 characters, 
-			// therefore it will not pass the if statement.
-		// If a user were to just press enter, fgets will read "\n" which amounts to only 1 character,
-			// but the strlen requires 2, so it also won't pass.
-		// The rest of the if statement is there to limit the user to input only these characters: "Y y N n"
-        if(strlen(buffer) != 2 || (buffer[0] != 'Y' && buffer[0] != 'y' && buffer[0] != 'N' && buffer[0] != 'n'))
-		{
-        	// The strcpy resets the value of the buffer for the next loop.
-			strcpy(buffer, "");
-        	printf("\n\t* Invalid input. Please enter Y or N.\n\n");
-		}
-        else
-        {
-            // If the user input passes the error checking, this next if will return a 1 if the user inputted either 'Y' or 'y'
-            	// otherwise, it will return 0.
-			if(buffer[0] == 'Y' || buffer[0] == 'y')
-                return 1;
-            else
-                return 0;
-        }
-    }
+		*origin = get_int("Please enter your Current Station number [1-20] >> ", "0123456789\n", 1, 20);
+		*destination = get_int("Please enter your Destination Station number [1-20] >> ", "0123456789\n", 1, 20);
+		
+		// This checks if the user inputted the same station twice.
+		if(*origin != *destination)
+			break;
+		printf("\n\t* Invalid input. Origin and Destination cannot be the same.\n");
+	}
 }
 
 // This function just prints the station_names array for the user.
 void print_stations(char *station_names[], int size)
 {
     printf("\n");
-    // For the sake of space constraints, a second integer j is initialized to start at the halfway point of the array index,
-    	// printing the stations side by side, effectively creating two columns.
+    // For the sake of space constraints, a second integer j is initialized to start at the halfway point of the array index, 
+    // printing the stations side by side, effectively creating two columns.
 	for(int i = 0, j = size/2; i < size/2; i++, j++)
-		printf("[%d] %s\t\t[%d] %s\n", i, station_names[i], j, station_names[j]);
-	printf("\nRefer to the list above.\n");
+		printf("[%d] %s\t\t[%d] %s\n", i+1, station_names[i], j+1, station_names[j]);
+	printf("\nPlease refer to the list above.\n");
 }
-// This function will only let the user input a number from 0 to 19.
-int get_station(char *station)
+
+// This function will simply act as a basic banking system.
+void calculate_change(int beep, int fare)
 {
-    char buffer[MAX];
-    int user_input;
+    float balance;
 
-    while (1) {
-		// Instead of using another if else, this function utilizes a string input to determine what to print in front of the Station number.
-    		// So if the function was called with the string "Origin", then the %s will be replaced with the word "Origin".
-        printf("Please enter your %s Station number [0-19]: ", station);
-        fgets(buffer, sizeof(buffer), stdin);
-		
-		// The strspn function checks if the buffer contains the characters "0123456789\n".
-			// It includes the \n character because of fgets.
-			// This function will count the number of characters found till it sees an invalid character.
-			// For example, if we have a buffer input of "g12a3a\n", it will return 2 because a is not inside "0123456789\n".
-		// It then checks against the length of the buffer.
-			// If they're not equal, that means that the buffer contains characters that doesn't belong inside "0123456789\n".
-        if(strspn(buffer, "0123456789\n") != strlen(buffer))
-        {
-            // The strcpy resets the value of the buffer for the next loop.
-			strcpy(buffer, "");
-            printf("\n\t* Invalid input. Please enter a number between 0 and 19.\n\n");
-            continue;
-        }
-        
-        // The sscanf is a function that reads a formatted input from a string.
-			// In this case, it was called with a %d, meaning the sscanf will look for an integer inside the buffer string.
-			// It will then assign this value inside the address of the declared integer called user_input.
-		// The if statement here simply asks if the sscanf has successfully read one and only one integer from the buffer string.
-        if(sscanf(buffer, "%d", &user_input) != 1)
-        {
-			strcpy(buffer, "");
-            printf("\n\t* Invalid input. Please enter a number between 0 and 19.\n\n");
-            continue;
-        }
-        
-		// When both error checks have passed, this last one will finally check if the user input is within the array index range of 0 to 19.
-		if(user_input < 0 || user_input > 19) 
-        {
-            strcpy(buffer, "");
-			printf("\n\t* Invalid input. Please enter a number between 0 and 19.\n\n");
-            continue;
-        }
-        return user_input;
+    // This will loop until the user inputs a sufficient amount of money.
+    while(1)
+    {
+        if(beep == 1)
+            balance = get_float("Please enter your beep card balance >> ", "0123456789.\n", 0.0, 10000.0);
+        else
+            balance = get_float("Please enter your payment amount >> ", "0123456789.\n", 0.0, 10000.0);
+
+        if(balance >= fare)
+            break;
+        printf("\n\t* Insufficient balance. Please try again.\n\n");
     }
-}
 
+    // Update and print the balance/change.
+    balance -= fare;
+    if(beep == 1)
+        printf("\nYour beep card balance has been updated to %.2f pesos.\n", balance);
+    else
+        printf("\nYour change is %.2f pesos.\n", balance);
+}

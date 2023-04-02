@@ -55,17 +55,21 @@ int main()
 	int origin, destination;
 	get_stations(station_names, station_count, &origin, &destination);
 
-    // This function passes the names of the station pairing, as well as the beep state to determine the fare price.
-    int fare = calculate_fare(station_names[--origin], station_names[--destination], beep);
+    // Because index zero.
+    --origin;
+	--destination;
 
-    // The fare price is then printed, alongside the station names that the user has inputted.
+    // This function passes the names of the station pairing, as well as the beep state to determine the fare price.
+    int fare = calculate_fare(station_names[origin], station_names[destination], beep);
+
+    // The fare price is then printed, along with the station names that the user has inputted.
 	printf("\nThe fare from %s to %s is %d pesos.\n\n", station_names[origin], station_names[destination], fare);	
     
     // Lastly, a simple banking system that outputs the updated balance or change.
     calculate_change(beep, fare);
 
     // Some closing greetings.
-    printf("\nThank you for riding LRT-1!\n");
+    printf("\nThank you for riding LRT-1!\n\n");
 
 	return 0;
 }
