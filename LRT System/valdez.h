@@ -105,3 +105,38 @@ float get_float(char *prompt, char *limit, float min, float max)
         return user_input;
 	}
 }
+
+double get_double(char *prompt, char *limit, double min, double max)
+{
+	char buffer[MAX];
+	double user_input;
+	
+	while(1)
+	{
+        printf("%s", prompt);
+		fgets(buffer, sizeof(buffer), stdin);
+		
+		if(strspn(buffer, limit) != strlen(buffer))
+        {
+			strcpy(buffer, "");
+            printf("\n\t* Invalid input. Prompt only accepts %s\n", limit);
+            continue;
+        }
+        
+        if(sscanf(buffer, "%lf", &user_input) != 1)
+        {
+            strcpy(buffer, "");
+            printf("\n\t* Invalid input. Please enter a number.\n\n");
+            continue;
+        }
+        
+        if(user_input < min || user_input > max) 
+        {
+            strcpy(buffer, "");
+            printf("\n\t* Invalid input. Please enter a number between %.2f and %.2f.\n\n", min, max);
+            continue;
+        }
+		
+        return user_input;
+	}
+}
