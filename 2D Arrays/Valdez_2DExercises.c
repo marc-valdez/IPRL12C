@@ -19,25 +19,28 @@ void exit_prompt(void);
 
 void main()
 {
-	char *prompt = "=======================================================================================================\n\n> Enter Activity Number [1-8] / Exit [9]: ";
-	int buffer = get_int(prompt, "0123456789\n", 1, 9);
-	
-	switch(buffer)
+	while(1)
 	{
-		case 1: exercise_1(); break;
-		case 2: exercise_2(); break;
-		case 3: exercise_3(); break;
-		case 4: exercise_4(); break;
-		case 5: exercise_5(); break;
-		case 6: exercise_6(); break;
-		case 7: exercise_7(); break;
-		case 8: exercise_8(); break;
-		case 9: exit_prompt(); break;
-		default:
-			printf("\nInvalid Input.\n\n");
-			break;
+		printf("=======================================================================================================\n\n");
+		char *prompt = "> Enter Exercise Number [1-8] / Exit [9]: ";
+		int buffer = get_int(prompt, "0123456789\n", 1, 9);
+		
+		switch(buffer)
+		{
+			case 1: exercise_1(); break;
+			case 2: exercise_2(); break;
+			case 3: exercise_3(); break;
+			case 4: exercise_4(); break;
+			case 5: exercise_5(); break;
+			case 6: exercise_6(); break;
+			case 7: exercise_7(); break;
+			case 8: exercise_8(); break;
+			case 9: exit_prompt(); break;
+			default:
+				printf("\nInvalid Input.\n\n");
+				break;
+		}
 	}
-	main();
 }
 
 // Initializes a double 2D array that has element values of 0.0
@@ -70,7 +73,11 @@ void d_init_scan(double arr[row][col])
 {
 	for(int i = 0; i < row; i++)
 		for(int j = 0; j < col; j++)
-			arr[i][j] = get_float("Enter value of array element [%d][%d]: ", "0123456789.\n", 0.0, 100.0);
+		{
+			char prompt[50];
+            sprintf(prompt, "Enter value of array element [%d][%d]: ", i, j);
+			arr[i][j] = get_double(prompt, "0123456789.\n", 0.0, 100.0);
+		}
 	printf("\n");
 }
 
@@ -138,7 +145,7 @@ void exercise_4(void)
 	printf("\n4. Write a function that will return the number of negative elements in the 2D array.\nPass the array as parameter\n\n");
 	
 	double d_arr[row][col];
-	
+
 	d_init(d_arr);
 	print_arr(d_arr);
 	printf("\nThe number of negative values are: %d\n", count_negative(d_arr));
@@ -182,13 +189,13 @@ void exercise_5()
 }
 
 // Adds the numbers on a specified row
-void sum_row(double arr[row][col], int buffer)
+int sum_row(double arr[row][col], int buffer)
 {
 	--buffer;
 	int sum = 0;
 	for(int j = 0; j < col; j++)
 		sum += arr[buffer][j];
-	printf("\nThe sum of row %d is %d\n", ++buffer, sum);
+	return sum;
 }
 
 void exercise_6()
@@ -207,19 +214,20 @@ void exercise_6()
 		printf("\n");
 	}
 	printf("\n");
-	sum_row(d_arr, get_int("Please enter a row number: ", "1234567890\n", 1, row));
-	printf("\n");
+	int input = get_int("Please enter a row number: ", "1234567890\n", 1, row);
+	int sum = sum_row(d_arr, input);
+	printf("\nThe sum of row %d is %d\n", input, sum);
 }
 
 // Adds the numbers on a specified column
-void sum_column(double arr[row][col], int buffer)
+int sum_column(double arr[row][col], int buffer)
 {
 	--buffer;
 	int sum = 0;
 	
 	for(int i = 0; i < row; i++)
 		sum += arr[i][buffer];
-	printf("\nThe sum of column %d is %d\n", ++buffer, sum);
+	return sum;
 }
 
 void exercise_7()
@@ -241,8 +249,9 @@ void exercise_7()
 	}
 	
 	printf("\n");
-	sum_column(d_arr, get_int("Please enter a column number: ", "1234567890\n", 1, col));
-	printf("\n");
+	int input = get_int("Please enter a column number: ", "1234567890\n", 1, col);
+	int sum = sum_column(d_arr, input);
+	printf("\nThe sum of column %d is %d\n", input, sum);
 }
 
 // Adds two arrays of the same size and stores it to another
