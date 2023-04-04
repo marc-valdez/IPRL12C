@@ -28,6 +28,13 @@ void main()
 	while(1)
 	{
 		printf("=======================================================================================================\n\n");
+		
+		// I would prefer if you commented this out from here...
+		for(int i = 1, j = 5; i <= 8/2; i++, j++)
+			printf("[%d] Exercise %d\t\t[%d] Exercise %d\n", i, i, j, j);
+		printf("\n\t\t[9] Exit\n\n");
+		// ...to here.
+		
 		char *prompt = "> Enter Exercise Number [1-8] / Exit [9]: ";
 		int buffer = get_int(prompt, "0123456789\n", 1, 9);
 		
