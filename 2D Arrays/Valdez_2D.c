@@ -1,8 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "..\LRT System\valdez.h"
+#include <string.h>
+#define MAX 100
 
 // Marc Valdez
+
+char get_char(char *prompt, char *limit);
+int get_int(char *prompt, char *limit, int min, int max);
+float get_float(char *prompt, char *limit, float min, float max);
+double get_double(char *prompt, char *limit, double min, double max);
 
 // Edit these to change 2D array size (Max 10)
 const int row = 3, col = 3;
@@ -216,7 +222,7 @@ void exercise_6()
 	printf("\n");
 	int input = get_int("Please enter a row number: ", "1234567890\n", 1, row);
 	int sum = sum_row(d_arr, input);
-	printf("\nThe sum of row %d is %d\n", input, sum);
+	printf("\nThe sum of row %d is %d\n\n", input, sum);
 }
 
 // Adds the numbers on a specified column
@@ -251,7 +257,7 @@ void exercise_7()
 	printf("\n");
 	int input = get_int("Please enter a column number: ", "1234567890\n", 1, col);
 	int sum = sum_column(d_arr, input);
-	printf("\nThe sum of column %d is %d\n", input, sum);
+	printf("\nThe sum of column %d is %d\n\n", input, sum);
 }
 
 // Adds two arrays of the same size and stores it to another
@@ -315,4 +321,145 @@ void exit_prompt(void)
 	if(in == 'Y' || in == 'y')
 		exit(0);
 	printf("\n");
+}
+
+// from valdez.h
+
+char get_char(char *prompt, char *limit)
+{
+	char buffer[MAX];
+	
+	while(1)
+	{
+        printf("%s", prompt);
+		fgets(buffer, sizeof(buffer), stdin);
+		
+        if(strlen(buffer) > 2)
+        {
+			strcpy(buffer, "");
+            printf("\n\t* Invalid input. Character limit is: %d\n\n", 1);
+            continue;
+        }
+        
+        if(strlen(buffer) < 2)
+        {
+			strcpy(buffer, "");
+            printf("\n\t* Invalid input. Please enter a character.\n\n");
+            continue;
+        }
+        
+		if(strspn(buffer, limit) != strlen(buffer))
+        {
+			strcpy(buffer, "");
+            printf("\n\t* Invalid input. Prompt only accepts: %s\n", limit);
+            continue;
+        }
+		
+        return buffer[0];
+	}
+}
+
+int get_int(char *prompt, char *limit, int min, int max)
+{
+	char buffer[MAX];
+	int user_input;
+	
+	while(1)
+	{
+        printf("%s", prompt);
+		fgets(buffer, sizeof(buffer), stdin);
+		
+		if(strspn(buffer, limit) != strlen(buffer))
+        {
+			strcpy(buffer, "");
+            printf("\n\t* Invalid input. Prompt only accepts %s\n", limit);
+            continue;
+        }
+        
+        if(sscanf(buffer, "%d", &user_input) != 1)
+        {
+            strcpy(buffer, "");
+            printf("\n\t* Invalid input. Please enter a number.\n\n");
+            continue;
+        }
+        
+        if(user_input < min || user_input > max) 
+        {
+            strcpy(buffer, "");
+            printf("\n\t* Invalid input. Please enter a number between %d and %d.\n\n", min, max);
+            continue;
+        }
+		
+        return user_input;
+	}
+}
+
+float get_float(char *prompt, char *limit, float min, float max)
+{
+	char buffer[MAX];
+	float user_input;
+	
+	while(1)
+	{
+        printf("%s", prompt);
+		fgets(buffer, sizeof(buffer), stdin);
+		
+		if(strspn(buffer, limit) != strlen(buffer))
+        {
+			strcpy(buffer, "");
+            printf("\n\t* Invalid input. Prompt only accepts %s\n", limit);
+            continue;
+        }
+        
+        if(sscanf(buffer, "%f", &user_input) != 1)
+        {
+            strcpy(buffer, "");
+            printf("\n\t* Invalid input. Please enter a number.\n\n");
+            continue;
+        }
+        
+        if(user_input < min || user_input > max) 
+        {
+            strcpy(buffer, "");
+            printf("\n\t* Invalid input. Please enter a number between %.2f and %.2f.\n\n", min, max);
+            continue;
+        }
+		
+        return user_input;
+	}
+}
+
+double get_double(char *prompt, char *limit, double min, double max)
+{
+	char buffer[MAX];
+	double user_input;
+	
+	while(1)
+	{
+        printf("%s", prompt);
+		fgets(buffer, sizeof(buffer), stdin);
+		
+		if(strspn(buffer, limit) != strlen(buffer))
+        {
+			strcpy(buffer, "");
+            printf("\n\t* Invalid input. Prompt only accepts %s\n", limit);
+            continue;
+        }
+        
+        if(sscanf(buffer, "%lf", &user_input) != 1)
+        {
+            strcpy(buffer, "");
+            printf("\n\t* Invalid input. Please enter a number.\n\n");
+            continue;
+        }
+        
+        if(user_input < min || user_input > max) 
+        {
+            strcpy(buffer, "");
+            printf("\n\t* Invalid input. Please enter a number between %.2f and %.2f.\n\n", min, max);
+            continue;
+        }
+		
+        return user_input;
+	}
 }
