@@ -63,7 +63,7 @@ int get_int(char *prompt, char *limit, int min, int max)
         if(user_input < min || user_input > max) 
         {
             strcpy(buffer, "");
-            printf("\n\t* Invalid input. Please enter a number between %d and %d.\n\n", min, max);
+            printf("\n\t* Invalid input. Please enter a number between %d and %d.\n", min, max);
             continue;
         }
 		
@@ -98,7 +98,7 @@ float get_float(char *prompt, char *limit, float min, float max)
         if(user_input < min || user_input > max) 
         {
             strcpy(buffer, "");
-            printf("\n\t* Invalid input. Please enter a number between %.2f and %.2f.\n\n", min, max);
+            printf("\n\t* Invalid input. Please enter a number between %.2f and %.2f.\n", min, max);
             continue;
         }
 		
@@ -133,7 +133,7 @@ double get_double(char *prompt, char *limit, double min, double max)
         if(user_input < min || user_input > max) 
         {
             strcpy(buffer, "");
-            printf("\n\t* Invalid input. Please enter a number between %.2f and %.2f.\n\n", min, max);
+            printf("\n\t* Invalid input. Please enter a number between %.2f and %.2f.\n", min, max);
             continue;
         }
 		
