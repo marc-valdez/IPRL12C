@@ -2,9 +2,11 @@
 #include <string.h>
 #include "valdez.h"
 
+#define BEEP_CARD_PRICE 30.0
 #define INITIAL_BEEP_CARD_BALANCE 70.0
 #define MIN_RELOAD 13.0
 #define MAX_RELOAD 10000.0
+
 #define STATION_COUNT 20
 
 void beep_check(float *beep_card_balance, int *beep_card_status);
@@ -161,21 +163,24 @@ void balance_check(float *beep_card_balance, int fare)
 // This function sells the user a new beep card.
 void beep_avail(float *beep_card_balance, int *beep_card_status)
 {
-	printf("\nA new beep card costs 100.00 PHP, 30.00 for the card, 70.00 for the initial load.");
+	float new_card_total = BEEP_CARD_PRICE + INITIAL_BEEP_CARD_BALANCE;
+	printf("\nA new beep card costs %.2f PHP, %.2f for the card, %.2f for the initial load.", new_card_total, BEEP_CARD_PRICE, INITIAL_BEEP_CARD_BALANCE);
 	char buffer = get_char("\nWould you like to avail a beep card? [Y/N] >> ", "YyNn\n");
 
-	float beep_price = 0.0;
+	float payment = 0.0;
 	if(buffer == 'Y' || buffer == 'y') 
 	{
 		// Update the beep status to 1 since the user said yes in availing a new card.
 		*beep_card_status = 1;
 
-		// Ask for the payment, the minimum price of a beep card today is 100 pesos.
-		beep_price = get_float("\nPlease enter your payment amount. [100-1000] >> ", "0123456789.\n", 100.0, 1000.0);
+		// Ask user for the payment, the minimum price of a beep card today is 100 pesos.
+		char prompt[100];
+		sprintf(prompt, "\nPlease enter your payment amount. [%.0f-1000] >> ", new_card_total);
+		payment = get_float(prompt, "0123456789.\n", new_card_total, 1000.0);
 		
 		// Print the user's change and update them on their new beep card balance.
-		printf("\nYour change is %.2f\n", beep_price - 100);
-		printf("\nYour new beep card has a balance of 70 PHP.\n");
+		printf("\nYour change is %.2f PHP.\n", payment - new_card_total);
+		printf("\nYour new beep card has a balance of %.0f PHP.\n", INITIAL_BEEP_CARD_BALANCE);
 
 		// Set the beep balance to 70 pesos
 		*beep_card_balance = INITIAL_BEEP_CARD_BALANCE;
