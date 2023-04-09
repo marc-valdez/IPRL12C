@@ -2,9 +2,9 @@
 #include <string.h>
 #include "valdez.h"
 
-#define INITIAL_BEEP_CARD_BALANCE 70
-#define MIN_RELOAD 13
-#define MAX_RELOAD 10000
+#define INITIAL_BEEP_CARD_BALANCE 70.0
+#define MIN_RELOAD 13.0
+#define MAX_RELOAD 10000.0
 
 
 void beep_check(float *beep_card_balance, int *beep_card_status);
@@ -141,7 +141,7 @@ void beep_reload(float *beep_card_balance)
 	
 	// sprintf is similar to printf wherein it can read format specifiers but it instead outputs to a string/character array.
 	char prompt[100];
-	sprintf(prompt, "\nPlease enter your reload amount. [%d-%.0f] >> ", MIN_RELOAD, MAX_RELOAD - *beep_card_balance);
+	sprintf(prompt, "\nPlease enter your reload amount. [%.0f-%.0f] >> ", MIN_RELOAD, MAX_RELOAD - *beep_card_balance);
 
 	// Get the reload amount from the user then add it to the beep balance.
 	reload_amount = get_int(prompt, "0123456789.\n", MIN_RELOAD, MAX_RELOAD - *beep_card_balance);
@@ -183,7 +183,7 @@ void beep_avail(float *beep_card_balance, int *beep_card_status)
 		printf("\nYour new beep card has a balance of 70 PHP.\n");
 
 		// Set the beep balance to 70 pesos
-		*beep_card_balance = 70.0;
+		*beep_card_balance = INITIAL_BEEP_CARD_BALANCE;
 
 		// Ask the user if they want to reload immediately.
 		char buffer = get_char("Would you like to immediately reload your new beep card? [Y/N] >> ", "YyNn\n");
