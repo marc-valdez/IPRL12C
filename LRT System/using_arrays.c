@@ -2,18 +2,12 @@
 #include <string.h>
 #include "valdez.h"
 
-int beep_check();
-
-void balance_check(float *beep_balance, int fare);
-void beep_avail(float *beep_balance, int *beep);
-
+int beep_check(float *beep_balance, int *beep_state);
 void get_stations(char *station_names[], int station_count, int *origin, int *destination);
-
-void update_balance(float *beep_balance, int fare);
-void calculate_change(int fare);
+void print_fare(float *beep_balance, int *beep_state, char *origin_station, char *destination_station, int fare);
 
 int main()
-{ 
+{
 	// This is a string array of all the Station names in LRT Line 1.
     char *station_names[] = {
         "Baclaran", 
@@ -42,8 +36,8 @@ int main()
 	int station_count = sizeof(station_names)/sizeof(station_names[0]);
 
     // This is a 3d Lookup Array that contains all the fare data for each station pairing.
-    	// The first dimension corresponds to the beep card, 0 if the user doesn't have it, 1 if they do.
-    	// The second and third dimensions are the actual fare data.
+	// The first dimension corresponds to the beep card, 0 if the user doesn't have it, 1 if they do.
+	// The second and third dimensions are the actual fare data.
 	int fare_matrix[2][20][20] = {
 		{
 			// Single Journey Fares
@@ -100,15 +94,8 @@ int main()
 	float beep_balance = 0.0;
 
     // If the user has a beep card, then beep should be equal to 1, otherwise 0.
-	int beep_state = beep_check();
-
-	if(beep_state == 1)
-	{
-		beep_balance = get_float("\nPlease enter your beep card balance [13-10000] >> ", "0123456789.\n", 0.0, 10000.0);
-		balance_check(&beep_balance, 13);
-	}
-	else
-		beep_avail(&beep_balance, &beep_state);
+	int beep_state = 0;
+	beep_check(&beep_balance, &beep_state);
 
 	// This function modifies the values inside origin and destination, based on user input.
 	int origin, destination;
@@ -121,17 +108,12 @@ int main()
 	// The fare is then looked up using the 3D array.
 	int fare = fare_matrix[beep_state][origin][destination];
 
+	// Store the station names.
+	char *origin_station = *(station_names + origin);
+	char *destination_station = *(station_names + destination);
+
 	// The respective fare price is then printed, along with the station names that the user has inputted.
-    if(beep_state == 1)
-	{
-		printf("\nThe stored value fare from %s to %s is %d PHP.\n", station_names[origin], station_names[destination], fare);
-		update_balance(&beep_balance, fare);
-	}
-	else
-	{
-		printf("\nThe single journey fare from %s to %s is %d PHP.\n", station_names[origin], station_names[destination], fare);
-		calculate_change(fare);
-	}
+    print_fare(&beep_balance, &beep_state, origin_station, destination_station, fare);
    	
     // Some closing greetings.
     printf("\nThank you for riding LRT-1!\n\n");	
@@ -139,29 +121,22 @@ int main()
 	return 0;
 }
 
-// This function either outputs a 1 or a 0 depending on user input.
-int beep_check()
-{	
-    char buffer = get_char("Do you have a beep card? [Y/N] >> ", "YyNn\n");
-    
-    // If the user input passes the error checking, this next if will return a 1 if the user inputted either 'Y' or 'y' otherwise, it will return 0.
-	if(buffer == 'Y' || buffer == 'y')
-        return 1;
-    else
-		return 0;
-}
-
 // The minimum reload amount of a beep card is 13 pesos.
 void beep_reload(float *beep_balance)
 {
 	float reload_amount = 0.0;
-	reload_amount = get_int("\nPlease enter your reload amount. [13-10000] >> ", "0123456789.\n", 13.0, 10000.0);
+	
+	// sprintf is similar to printf wherein it can read format specifiers but it instead outputs to a string/character array.
+	char prompt[100];
+	sprintf(prompt, "\nPlease enter your reload amount. [13-%.0f] >> ", 10000 - *beep_balance);
+
+	reload_amount = get_int(prompt, "0123456789.\n", 13.0, 10000.0 - *beep_balance);
 	*beep_balance += reload_amount;
 
-	printf("\nYour beep card balance has been reloaded to %.2f PHP.\n", *beep_balance);
+	printf("\nAdding %.2f PHP, your beep card balance has been reloaded to %.2f PHP.\n", reload_amount, *beep_balance);
 }
 
-// This function simply checks if the user has suffienct beep card funds.
+// This function simply checks if the user has sufficient beep card funds.
 void balance_check(float *beep_balance, int fare)
 {
 	while(1)
@@ -176,12 +151,12 @@ void balance_check(float *beep_balance, int fare)
 // This function sells the user a new beep card.
 void beep_avail(float *beep_balance, int *beep_state)
 {
-	printf("\nA new beep card costs 100 PHP, 30 for the card, 70 for the initial load.");
+	printf("\nA new beep card costs 100.00 PHP, 30.00 for the card, 70.00 for the initial load.");
 
 	char buffer = get_char("\nWould you like to avail a beep card? [Y/N] >> ", "YyNn\n");
 
 	float beep_price = 0.0;
-	if(buffer == 'Y' || buffer == 'y')
+	if(buffer == 'Y' || buffer == 'y') 
 	{
 		*beep_state = 1;
 
@@ -197,6 +172,22 @@ void beep_avail(float *beep_balance, int *beep_state)
 		if(buffer == 'Y' || buffer == 'y')
 			beep_reload(beep_balance);
 	}
+}
+
+// This function either outputs a 1 or a 0 depending on user input.
+int beep_check(float *beep_balance, int *beep_state)
+{	
+    char buffer = get_char("Do you have a beep card? [Y/N] >> ", "YyNn\n");
+    
+    // If the user input passes the error checking, this next if will return a 1 if the user inputted either 'Y' or 'y' otherwise, it will return 0.
+	if(buffer == 'Y' || buffer == 'y')
+    {
+		*beep_state = 1;
+		*beep_balance = get_float("\nPlease enter your beep card balance [0-10000] >> ", "0123456789.\n", 0.0, 10000.0);
+		balance_check(beep_balance, 13);
+	}
+    else
+		beep_avail(beep_balance, beep_state);
 }
 
 // This function prints the selection menu for the user.
@@ -257,4 +248,18 @@ void calculate_change(int fare)
 	change -= fare;
 
     printf("\nYour change is %.2f PHP.\n", change);
+}
+
+void print_fare(float *beep_balance, int *beep_state, char *origin_station, char *destination_station, int fare)
+{
+	if(*beep_state == 1)
+	{
+		printf("\nThe stored value fare from %s to %s is %d.00 PHP.\n", origin_station, destination_station, fare);
+		update_balance(beep_balance, fare);
+	}
+	else
+	{
+		printf("\nThe single journey fare from %s to %s is %d.00 PHP.\n", origin_station, destination_station, fare);
+		calculate_change(fare);
+	}
 }
