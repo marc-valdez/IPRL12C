@@ -5,9 +5,10 @@
 #define INITIAL_BEEP_CARD_BALANCE 70.0
 #define MIN_RELOAD 13.0
 #define MAX_RELOAD 10000.0
+#define STATION_COUNT 20
 
 void beep_check(float *beep_card_balance, int *beep_card_status);
-void get_stations(int station_count, int *origin, int *destination);
+void get_stations(int *origin, int *destination);
 void print_fare(float *beep_card_balance, int *beep_card_status, char *origin_station, char *destination_station, int fare);
 
 // This is a string array of all the Station names in LRT Line 1.
@@ -88,9 +89,6 @@ static int fare_matrix[2][20][20] = {
 
 int main()
 { 
-	// This is to initialize the size of the array above for easier function passing.
-	int station_count = sizeof(station_names)/sizeof(station_names[0]);
-
 	// Some greetings.
 	printf("Welcome to LRT Line 1!\n\n");
 
@@ -107,7 +105,7 @@ int main()
 	int origin, destination;
 	
 	// This function modifies the values inside origin and destination, based on user input.
-	get_stations(station_count, &origin, &destination);
+	get_stations(&origin, &destination);
 	
 	// Because index zero.
 	--origin;
@@ -208,23 +206,23 @@ void beep_check(float *beep_card_balance, int *beep_card_status)
 }
 
 // This function prints the selection menu for the user.
-void print_menu(int size)
+void print_menu()
 {
     printf("\n");
     /*	For the sake of space constraints, a second integer j is initialized to start at the halfway point of the array index, 
 		printing the stations side by side, effectively creating two columns. */
-	for(int i = 0, j = size/2; i < size/2; i++, j++)
+	for(int i = 0, j = STATION_COUNT/2; i < STATION_COUNT/2; i++, j++)
 		printf("[%d] %s\t\t[%d] %s\n", i+1, station_names[i], j+1, station_names[j]);
 	printf("\nPlease refer to the list above.\n");
 }
 
 // This function will loop if the user were to input the same origin and destination.
-void get_stations(int station_count, int *origin, int *destination)
+void get_stations(int *origin, int *destination)
 {
 	while(1)
 	{
 		// This function simply prints the station_names array by iterating through it linearly.
-	    print_menu(station_count);
+	    print_menu();
 		
 		*origin = get_int("\nPlease enter your Current Station number [1-20] >> ", "0123456789\n", 1, 20);
 		*destination = get_int("\nPlease enter your Destination Station number [1-20] >> ", "0123456789\n", 1, 20);
