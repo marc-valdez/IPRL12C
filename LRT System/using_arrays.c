@@ -2,7 +2,7 @@
 #include <string.h>
 #include "valdez.h"
 
-int beep_check(float *beep_balance, int *beep_state);
+void beep_check(float *beep_balance, int *beep_state);
 void get_stations(char *station_names[], int station_count, int *origin, int *destination);
 void print_fare(float *beep_balance, int *beep_state, char *origin_station, char *destination_station, int fare);
 
@@ -87,36 +87,43 @@ int main()
 		}
 	};
 	
+
 	// Some greetings.
 	printf("Welcome to LRT Line 1!\n\n");
 
-	// Initialize beep card balance.
+	
+	// Initialize beep card balance as well as the initial beep state.
 	float beep_balance = 0.0;
-
-    // If the user has a beep card, then beep should be equal to 1, otherwise 0.
 	int beep_state = 0;
+
+	// If the user has a beep card, then beep_state should be equal to 1, otherwise 0.
 	beep_check(&beep_balance, &beep_state);
 
-	// This function modifies the values inside origin and destination, based on user input.
+
+	// Declare origin and destination for indexing in the fare_matrix later.
 	int origin, destination;
+	
+	// This function modifies the values inside origin and destination, based on user input.
 	get_stations(station_names, station_count, &origin, &destination);
 	
 	// Because index zero.
 	--origin;
 	--destination;
 
+
 	// The fare is then looked up using the 3D array.
 	int fare = fare_matrix[beep_state][origin][destination];
 
-	// Store the station names.
+	// Store the station names to pass later.
 	char *origin_station = *(station_names + origin);
 	char *destination_station = *(station_names + destination);
 
 	// The respective fare price is then printed, along with the station names that the user has inputted.
     print_fare(&beep_balance, &beep_state, origin_station, destination_station, fare);
-   	
+
+
     // Some closing greetings.
-    printf("\nThank you for riding LRT-1!\n\n");	
+    printf("\nThank you for riding LRT Line 1!\n\n");	
 
 	return 0;
 }
@@ -130,13 +137,15 @@ void beep_reload(float *beep_balance)
 	char prompt[100];
 	sprintf(prompt, "\nPlease enter your reload amount. [13-%.0f] >> ", 10000 - *beep_balance);
 
+	// Get the reload amount from the user then add it to the beep balance.
 	reload_amount = get_int(prompt, "0123456789.\n", 13.0, 10000.0 - *beep_balance);
 	*beep_balance += reload_amount;
 
+	// Update the user on what happened.
 	printf("\nAdding %.2f PHP, your beep card balance has been reloaded to %.2f PHP.\n", reload_amount, *beep_balance);
 }
 
-// This function simply checks if the user has sufficient beep card funds.
+// This function simply checks if the user has sufficient beep card funds, loops otherwise.
 void balance_check(float *beep_balance, int fare)
 {
 	while(1)
@@ -152,38 +161,43 @@ void balance_check(float *beep_balance, int fare)
 void beep_avail(float *beep_balance, int *beep_state)
 {
 	printf("\nA new beep card costs 100.00 PHP, 30.00 for the card, 70.00 for the initial load.");
-
 	char buffer = get_char("\nWould you like to avail a beep card? [Y/N] >> ", "YyNn\n");
 
 	float beep_price = 0.0;
 	if(buffer == 'Y' || buffer == 'y') 
 	{
+		// Update the beep state to 1 since the user said yes in availing a new card.
 		*beep_state = 1;
 
+		// Ask for the payment, the minimum price of a beep card today is 100 pesos.
 		beep_price = get_float("\nPlease enter your payment amount. [100-1000] >> ", "0123456789.\n", 100.0, 1000.0);
 		
+		// Print the user's change and update them on their new beep card balance.
 		printf("\nYour change is %.2f\n", beep_price - 100);
-
 		printf("\nYour new beep card has a balance of 70 PHP.\n");
 
+		// Set the beep balance to 70 pesos
 		*beep_balance = 70.0;
 
+		// Ask the user if they want to reload immediately.
 		char buffer = get_char("Would you like to immediately reload your new beep card? [Y/N] >> ", "YyNn\n");
 		if(buffer == 'Y' || buffer == 'y')
 			beep_reload(beep_balance);
 	}
 }
 
-// This function either outputs a 1 or a 0 depending on user input.
-int beep_check(float *beep_balance, int *beep_state)
+// This function checks the existence of a beep card and sells the user a new one if they don't already have it.
+void beep_check(float *beep_balance, int *beep_state)
 {	
     char buffer = get_char("Do you have a beep card? [Y/N] >> ", "YyNn\n");
     
-    // If the user input passes the error checking, this next if will return a 1 if the user inputted either 'Y' or 'y' otherwise, it will return 0.
 	if(buffer == 'Y' || buffer == 'y')
     {
+		// Update the beep state to 1 since the user already has a beep card.
 		*beep_state = 1;
 		*beep_balance = get_float("\nPlease enter your beep card balance [0-10000] >> ", "0123456789.\n", 0.0, 10000.0);
+		
+		// Check if the user has the minimum required balance of 13 pesos inside their beep card.
 		balance_check(beep_balance, 13);
 	}
     else
@@ -194,8 +208,8 @@ int beep_check(float *beep_balance, int *beep_state)
 void print_menu(char *station_names[], int size)
 {
     printf("\n");
-    // For the sake of space constraints, a second integer j is initialized to start at the halfway point of the array index, 
-    // printing the stations side by side, effectively creating two columns.
+    /*	For the sake of space constraints, a second integer j is initialized to start at the halfway point of the array index, 
+		printing the stations side by side, effectively creating two columns. */
 	for(int i = 0, j = size/2; i < size/2; i++, j++)
 		printf("[%d] %s\t\t[%d] %s\n", i+1, station_names[i], j+1, station_names[j]);
 	printf("\nPlease refer to the list above.\n");
