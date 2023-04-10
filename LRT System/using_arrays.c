@@ -7,8 +7,6 @@
 #define MIN_RELOAD 13.0
 #define MAX_RELOAD 10000.0
 
-#define STATION_COUNT 20
-
 void check_beep_card(float *beep_card_balance, int *beep_card_status);
 void get_stations(int *origin, int *destination);
 void print_fare(float *beep_card_balance, int *beep_card_status, char *origin_station, char *destination_station, int fare);
@@ -36,6 +34,9 @@ static char *station_names[] = {
 	"Balintawak", 
 	"Roosevelt"
 };
+
+// Initialize station count.
+static const int station_count = sizeof(station_names)/sizeof(station_names[0]);
 
 // This is a 3d Lookup Array that contains all the fare data for each station pairing.
 // The first dimension corresponds to the beep card, 0 if the user doesn't have it, 1 if they do.
@@ -215,7 +216,7 @@ void print_menu()
     printf("\n");
     /*	For the sake of space constraints, a second integer j is initialized to start at the halfway point of the array index, 
 		printing the stations side by side, effectively creating two columns. */
-	for(int i = 0, j = STATION_COUNT/2; i < STATION_COUNT/2; i++, j++)
+	for(int i = 0, j = station_count/2; i < station_count/2; i++, j++)
 		printf("[%d] %s\t\t[%d] %s\n", i+1, station_names[i], j+1, station_names[j]);
 	printf("\nPlease refer to the list above.\n");
 }
