@@ -180,10 +180,9 @@ void beep_avail(float *beep_card_balance, int *beep_card_status)
 		
 		// Print the user's change and update them on their new beep card balance.
 		printf("\nYour change is %.2f PHP.\n", payment - new_card_total);
-		printf("\nYour new beep card has a balance of %.0f PHP.\n", INITIAL_BEEP_CARD_BALANCE);
-
-		// Set the beep balance to 70 pesos
-		*beep_card_balance = INITIAL_BEEP_CARD_BALANCE;
+		
+		// Set the beep balance to the value of INITIAL_BEEP_CARD_BALANCE
+		printf("\nYour new beep card has a balance of %.0f PHP.\n", *beep_card_balance = INITIAL_BEEP_CARD_BALANCE);
 
 		// Ask the user if they want to reload immediately.
 		char buffer = get_char("Would you like to immediately reload your new beep card? [Y/N] >> ", "YyNn\n");
