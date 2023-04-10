@@ -141,7 +141,7 @@ void beep_reload(float *beep_card_balance)
 	sprintf(prompt, "\nPlease enter your reload amount. [%.0f-%.0f] >> ", MIN_RELOAD, MAX_RELOAD - *beep_card_balance);
 
 	// Get the reload amount from the user then add it to the beep balance.
-	reload_amount = get_int(prompt, "0123456789.\n", MIN_RELOAD, MAX_RELOAD - *beep_card_balance);
+	reload_amount = get_float(prompt, "0123456789.\n", MIN_RELOAD, MAX_RELOAD - *beep_card_balance);
 	*beep_card_balance += reload_amount;
 
 	// Update the user on what happened.
