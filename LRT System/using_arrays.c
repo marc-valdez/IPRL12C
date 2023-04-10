@@ -9,7 +9,7 @@
 
 #define STATION_COUNT 20
 
-void beep_check(float *beep_card_balance, int *beep_card_status);
+void check_beep_card(float *beep_card_balance, int *beep_card_status);
 void get_stations(int *origin, int *destination);
 void print_fare(float *beep_card_balance, int *beep_card_status, char *origin_station, char *destination_station, int fare);
 
@@ -100,7 +100,7 @@ int main()
 	int beep_card_status = 0;
 
 	// If the user has a beep card, then beep_card_status should be equal to 1, otherwise 0.
-	beep_check(&beep_card_balance, &beep_card_status);
+	check_beep_card(&beep_card_balance, &beep_card_status);
 
 
 	// Declare origin and destination for indexing in the fare_matrix later.
@@ -193,7 +193,7 @@ void beep_avail(float *beep_card_balance, int *beep_card_status)
 }
 
 // This function checks the existence of a beep card and sells the user a new one if they don't already have it.
-void beep_check(float *beep_card_balance, int *beep_card_status)
+void check_beep_card(float *beep_card_balance, int *beep_card_status)
 {	
     char buffer = get_char("Do you have a beep card? [Y/N] >> ", "YyNn\n");
     
