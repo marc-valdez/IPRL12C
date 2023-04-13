@@ -37,6 +37,7 @@ void main()
 	}
 }
 
+/* Example 1 */
 void example_1(void)
 {
     printf("\nExample 1:\n");
@@ -54,7 +55,9 @@ void example_1(void)
 
     printf("\nx=%d\t,y=%d\n\n",point.x, point.y);
 }
+/* Example 1 */
 
+/* Example 2 */
 void example_2(void)
 {
     printf("\nExample 2:\n");
@@ -73,7 +76,9 @@ void example_2(void)
     //display the value of the members of structure point2
     printf("\npoint2.x=%d,\tpoint2.y=%d\n\n",point2.x, point2.y);
 }
+/* Example 2 */
 
+/* Example 3 */
 struct pointType{
     int x;
     int y;
@@ -97,7 +102,7 @@ void PrintPoint(struct pointType p)
     printf("\nx=%d\n",p.x);
     printf("y=%d\n\n",p.y);
 }
-
+/* Example 3 */
 
 // Prompts for exit
 void exit_prompt(void)
