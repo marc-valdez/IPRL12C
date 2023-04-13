@@ -7,6 +7,7 @@
 void example_1(void);
 void example_2(void);
 void example_3(void);
+void example_4(void);
 void exit_prompt(void);
 
 void main()
@@ -16,20 +17,21 @@ void main()
 		printf("=======================================================================================================\n\n");
 		
 		//* I would prefer if you commented this out from here...
-		for(int i = 1; i < 4; i++)
+		for(int i = 1; i < 5; i++)
 			printf("[%d] Example %d\t", i, i);
-		printf("[4] Exit\n\n");
+		printf("[5] Exit\n\n");
 		// ...to here. */
 		
-		char *prompt = "> Enter Example Number [1-3] / Exit [4]: ";
-		int buffer = get_int(prompt, "1234\n", 1, 4);
+		char *prompt = "> Enter Example Number [1-4] / Exit [5]: ";
+		int buffer = get_int(prompt, "12345\n", 1, 4);
 		
 		switch(buffer)
 		{
 			case 1: example_1(); break;
 			case 2: example_2(); break;
 			case 3: example_3(); break;
-			case 4: exit_prompt(); break;
+            case 4: example_4(); break;
+			case 5: exit_prompt(); break;
 			default:
 				printf("\nInvalid Input.\n\n");
 				break;
@@ -103,6 +105,31 @@ void PrintPoint(struct pointType p)
     printf("y=%d\n\n",p.y);
 }
 /* Example 3 */
+
+/* Example 4 */
+void example_4(void)
+{
+	printf("\nExample 4:\n");
+    
+    struct pointType {
+        int x;
+        int y;
+        int z;
+    };
+
+    struct pointType PointArray[5] = {
+        {100, 20, 80}, // {x, y, z}
+        {200, 30, 1},
+        {400, 50, 7},
+        {600, 70, 6},
+        {800, 90, 8}
+    };
+	
+
+    for(int i = 0; i < 5; i++)
+        printf("\nPointArray[%d].x=%d,\tPointArray[%d].y=%d,\tPointArray[%d].z=%d\n\n", i, PointArray[i].x, i, PointArray[i].y, i, PointArray[i].z);
+}
+/* Example 4 */
 
 // Prompts for exit
 void exit_prompt(void)
