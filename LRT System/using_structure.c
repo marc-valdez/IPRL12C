@@ -40,15 +40,18 @@ static char *station_names[] = {
 static const int station_count = sizeof(station_names)/sizeof(station_names[0]);
 
 // This declares a structure called Station that has 4 properties: an origin, a destination, and the two fares.
-typedef struct Station {
+struct Station {
     char *station1;
     char *station2;
     int sj_fare; // Single Journey
     int sv_fare; // Stored Value
-} Station;
+};
+
+// This declares a new data type called LRT_Line1 that takes the form of a struct Station.
+typedef struct Station LRT_Line1;
 
 // Using the defined struct above called Station, a dictionary called fare_matrix is created.
-static Station fare_matrix[190] = {
+static LRT_Line1 fare_matrix[190] = {
     {"Baclaran", "EDSA", 15, 12},
     {"Baclaran", "Libertad", 15, 13},
     {"Baclaran", "Gil Puyat", 15, 13},
@@ -444,7 +447,6 @@ void update_balance(float *beep_card_balance, int fare)
 void calculate_change(int fare)
 {
     float change;
-
     while(1)
     {
         change = get_float("\nPlease enter your payment amount. [0-1000] >> ", "0123456789.\n", 0.0, 1000.0);

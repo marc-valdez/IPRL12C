@@ -91,7 +91,7 @@ static int fare_matrix[2][20][20] = {
 };
 
 int main()
-{ 
+{
 	// Some greetings.
 	printf("Welcome to LRT Line 1!\n\n");
 
