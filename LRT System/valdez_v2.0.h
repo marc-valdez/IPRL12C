@@ -61,7 +61,7 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
                 if(sscanf(buffer, "%d%[.]%s", user_input, remaining, remaining) != 1)
                 {
                     strcpy(buffer, "");
-                    printf("\n\t* Invalid input. It must be an integer.\n");
+                    printf("\n\t* Invalid input. It must be a whole number.\n");
                     continue;
                 }
 
@@ -114,26 +114,35 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
             case DOUBLE:
             {
                 user_input = malloc(sizeof(double));
+                
+                if(is_empty(buffer, "\n\t* Input cannot be empty.\n"))
+                    continue;
+                
+                if(has_whitespace(buffer, "\n\t* Invalid input. Input cannot contain whitespace characters.\n"))
+                    continue;
+
+                if(starts_or_ends_with_dot(buffer, "\n\t* Invalid input. Please try again.\n"))
+                    continue;
 
                 if(sscanf(buffer, "%lf", user_input) != 1)
                 {
                     strcpy(buffer, "");
-                    printf("\n\t* Invalid input. It must be a number.\n");
+                    printf("\n\t* Invalid input. Input must not contain non-numeric characters.\n");
                     continue;
                 }
-                
+
                 char remaining[MAX];
                 if(sscanf(buffer, "%lf%s", user_input, remaining) != 1)
                 {
                     strcpy(buffer, "");
-                    printf("\n\t* Invalid input. It must be an number.\n");
+                    printf("\n\t* Invalid input. Input must not contain non-numeric characters.\n");
                     continue;
                 }
 
                 if(*(double *)user_input < *(double *)min || *(double *)user_input > *(double *)max) 
                 {
                     strcpy(buffer, "");
-                    printf("\n\t* Invalid input. Please enter a number between %.2f and %.2f.\n", *(double *)min, *(double *)max);
+                    printf("\n\t* Input out of range. Please enter a number between %lf and %lf.\n", *(double *)min, *(double *)max);
                     continue;
                 }
                 
