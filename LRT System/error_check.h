@@ -5,6 +5,10 @@
 #include <stdbool.h>
 #define MAX 256
 
+bool is_empty(char *buffer, char *prompt);
+bool has_whitespace(char *buffer, char *prompt);
+bool starts_or_ends_with_dot(char *buffer, char *prompt);
+
 enum data_type {
     CHAR,
     STRING,
@@ -12,39 +16,6 @@ enum data_type {
     FLOAT,
     DOUBLE
 };
-
-bool is_empty(char *buffer, char *prompt)
-{
-    if(buffer[0] == '\0')
-    {
-        strcpy(buffer, "");
-        printf(prompt);
-        return true;
-    }
-    return false;
-}
-
-bool has_whitespace(char *buffer, char *prompt)
-{
-    if(strchr(buffer, ' ') != NULL)
-    {
-        strcpy(buffer, "");
-        printf(prompt);
-        return true;
-    }
-    return false;
-}
-
-bool starts_or_ends_with_dot(char *buffer, char *prompt)
-{
-    if(buffer[0] == '.' || buffer[strlen(buffer)-1] == '.')
-    {
-        strcpy(buffer, "");
-        printf(prompt);
-        return true;
-    }
-    return false;
-}
 
 void *get_number(enum data_type type, char *prompt, void *min, void *max)
 {
@@ -72,7 +43,6 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
                 if(starts_or_ends_with_dot(buffer, "\n\t* Invalid input. Please try again.\n"))
                     continue;
 
-                // pending changes
                 if(sscanf(buffer, "%d", user_input) != 1)
                 {
                     strcpy(buffer, "");
@@ -117,7 +87,6 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
                 if(starts_or_ends_with_dot(buffer, "\n\t* Invalid input. Please try again.\n"))
                     continue;
 
-                // pending changes
                 if(sscanf(buffer, "%f", user_input) != 1)
                 {
                     strcpy(buffer, "");
@@ -236,4 +205,37 @@ void *get_text(enum data_type type, char *prompt, char *limit)
             }
         }
 	}
+}
+
+bool is_empty(char *buffer, char *prompt)
+{
+    if(buffer[0] == '\0')
+    {
+        strcpy(buffer, "");
+        printf(prompt);
+        return true;
+    }
+    return false;
+}
+
+bool has_whitespace(char *buffer, char *prompt)
+{
+    if(strchr(buffer, ' ') != NULL)
+    {
+        strcpy(buffer, "");
+        printf(prompt);
+        return true;
+    }
+    return false;
+}
+
+bool starts_or_ends_with_dot(char *buffer, char *prompt)
+{
+    if(buffer[0] == '.' || buffer[strlen(buffer)-1] == '.')
+    {
+        strcpy(buffer, "");
+        printf(prompt);
+        return true;
+    }
+    return false;
 }
