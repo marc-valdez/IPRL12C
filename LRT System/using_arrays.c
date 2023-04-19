@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "error_check.h"
+#include "valdez.h"
 
 #define BEEP_CARD_PRICE 30.0
 #define INITIAL_BEEP_CARD_BALANCE 70.0
@@ -143,7 +144,7 @@ void beep_reload(float *beep_card_balance)
 	sprintf(prompt, "\nPlease enter your reload amount. [%.2f PHP - %.2f PHP] >> ", min, max);
 
 	// Get the reload amount from the user then add it to the beep balance.
-	reload_amount = *(float *)get_number(FLOAT, prompt, "1234567890.", &min, &max);
+	reload_amount = *(float *)get_number(FLOAT, prompt, &min, &max);
 	*beep_card_balance += reload_amount;
  
 	// Update the user on what happened.
@@ -180,7 +181,7 @@ void beep_avail(float *beep_card_balance, int *beep_card_status)
 		char prompt[MAX];
 		sprintf(prompt, "\nPlease enter your payment amount. [%.2f PHP - %.2f PHP] >> ", min, max);
 
-		payment = *(float *)get_number(FLOAT, prompt, "1234567890.", &min, &max);
+		payment = *(float *)get_number(FLOAT, prompt, &min, &max);
 		
 		// Print the user's change and update them on their new beep card balance.
 		printf("\nYour change is %.2f PHP.\n", payment - new_card_total);
@@ -199,7 +200,7 @@ void beep_avail(float *beep_card_balance, int *beep_card_status)
 void check_beep_card(float *beep_card_balance, int *beep_card_status)
 {	
     char buffer = get_char("Do you have a beep card? [Y/N] >> ", "YyNn\n");
-    
+
 	if(buffer == 'Y' || buffer == 'y')
     {
 		// Update the beep status to 1 since the user already has a beep card.
@@ -209,7 +210,7 @@ void check_beep_card(float *beep_card_balance, int *beep_card_status)
 		char prompt[MAX];
 		sprintf(prompt, "\nPlease enter your beep card balance. [%.2f PHP - %.2f PHP] >> ", min, max);
 
-		*beep_card_balance = *(float *)get_number(FLOAT, prompt, "1234567890.", &min, &max);
+		*beep_card_balance = *(float *)get_number(FLOAT, prompt, &min, &max);
 		
 		// Check if the user has the minimum required balance of 13 pesos inside their beep card.
 		balance_check(beep_card_balance, MIN_RELOAD);
@@ -243,8 +244,8 @@ void get_stations(int *origin, int *destination)
 		sprintf(prompt1, "\nPlease enter your Current Station number. [%d-%d] >> ", min, max);
 		sprintf(prompt2, "\nPlease enter your Destination Station number. [%d-%d] >> ", min, max);
 
-		*origin = *(int *)get_number(INTEGER, prompt1, "1234567890", &min, &max);
-		*destination = *(int *)get_number(INTEGER, prompt2, "1234567890", &min, &max);
+		*origin = *(int *)get_number(INTEGER, prompt1, &min, &max);
+		*destination = *(int *)get_number(INTEGER, prompt2, &min, &max);
 		
 		// This checks if the user inputted the same station twice.
 		if(*origin != *destination)
@@ -275,11 +276,11 @@ void calculate_change(int fare)
 		char prompt[MAX];
 		sprintf(prompt, "\nPlease enter your payment amount. [%.2f PHP - %.2f PHP] >> ", min, max);
 		
-		change = *(float *)get_number(FLOAT, prompt, "1234567890.\n", &min, &max);
+		change = *(float *)get_number(FLOAT, prompt, &min, &max);
 
 		if(change >= fare)
 			break;
-        printf("\n\t* Insufficient balance. Please try again.\n\n");
+        printf("\n\t* Insufficient balance. Please try again.\n");
     }
 
     // Update and print the change.
