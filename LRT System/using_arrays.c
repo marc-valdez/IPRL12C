@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "valdez.h"
+#include "error_check.h"
 
 #define BEEP_CARD_PRICE 30.0
 #define INITIAL_BEEP_CARD_BALANCE 70.0
@@ -101,7 +101,7 @@ int main()
 	int beep_card_status = 0;
 
 	// If the user has a beep card, then beep_card_status should be equal to 1, otherwise 0.
-	check_beep_card(&beep_card_balance, &beep_card_status);
+	// check_beep_card(&beep_card_balance, &beep_card_status);
 
 
 	// Declare origin and destination for indexing in the fare_matrix later.
@@ -137,14 +137,15 @@ void beep_reload(float *beep_card_balance)
 {
 	float reload_amount = 0.0;
 	
+	float min = MIN_RELOAD, max = MAX_RELOAD - *beep_card_balance;
+	char prompt[MAX];
 	// sprintf is similar to printf wherein it can read format specifiers but it instead outputs to a string/character array.
-	char prompt[100];
-	sprintf(prompt, "\nPlease enter your reload amount. [%.0f-%.0f] >> ", MIN_RELOAD, MAX_RELOAD - *beep_card_balance);
+	sprintf(prompt, "\nPlease enter your reload amount. [%.2f PHP - %.2f PHP] >> ", min, max);
 
 	// Get the reload amount from the user then add it to the beep balance.
-	reload_amount = get_float(prompt, "0123456789.\n", MIN_RELOAD, MAX_RELOAD - *beep_card_balance);
+	reload_amount = *(float *)get_number(FLOAT, prompt, "1234567890.", &min, &max);
 	*beep_card_balance += reload_amount;
-
+ 
 	// Update the user on what happened.
 	printf("\nAdding %.2f PHP, your beep card balance has been reloaded to %.2f PHP.\n", reload_amount, *beep_card_balance);
 }
@@ -175,9 +176,11 @@ void beep_avail(float *beep_card_balance, int *beep_card_status)
 		*beep_card_status = 1;
 
 		// Ask user for the payment, the minimum price of a beep card today is 100 pesos.
-		char prompt[100];
-		sprintf(prompt, "\nPlease enter your payment amount. [%.0f-1000] >> ", new_card_total);
-		payment = get_float(prompt, "0123456789.\n", new_card_total, 1000.0);
+		float min = new_card_total, max = 1000;
+		char prompt[MAX];
+		sprintf(prompt, "\nPlease enter your payment amount. [%.2f PHP - %.2f PHP] >> ", min, max);
+
+		payment = *(float *)get_number(FLOAT, prompt, "1234567890.", &min, &max);
 		
 		// Print the user's change and update them on their new beep card balance.
 		printf("\nYour change is %.2f PHP.\n", payment - new_card_total);
@@ -201,7 +204,12 @@ void check_beep_card(float *beep_card_balance, int *beep_card_status)
     {
 		// Update the beep status to 1 since the user already has a beep card.
 		*beep_card_status = 1;
-		*beep_card_balance = get_float("\nPlease enter your beep card balance [0-10000] >> ", "0123456789.\n", 0.0, MAX_RELOAD);
+
+		float min = 0, max = MAX_RELOAD;
+		char prompt[MAX];
+		sprintf(prompt, "\nPlease enter your beep card balance. [%.2f PHP - %.2f PHP] >> ", min, max);
+
+		*beep_card_balance = *(float *)get_number(FLOAT, prompt, "1234567890.", &min, &max);
 		
 		// Check if the user has the minimum required balance of 13 pesos inside their beep card.
 		balance_check(beep_card_balance, MIN_RELOAD);
@@ -228,9 +236,15 @@ void get_stations(int *origin, int *destination)
 	{
 		// This function simply prints the station_names array by iterating through it linearly.
 	    print_menu();
-		
-		*origin = get_int("\nPlease enter your Current Station number [1-20] >> ", "0123456789\n", 1, 20);
-		*destination = get_int("\nPlease enter your Destination Station number [1-20] >> ", "0123456789\n", 1, 20);
+
+		int min = 1, max = 20;
+		char prompt1[MAX], prompt2[MAX];;
+
+		sprintf(prompt1, "\nPlease enter your Current Station number. [%d-%d] >> ", min, max);
+		sprintf(prompt2, "\nPlease enter your Destination Station number. [%d-%d] >> ", min, max);
+
+		*origin = *(int *)get_number(INTEGER, prompt1, "1234567890", &min, &max);
+		*destination = *(int *)get_number(INTEGER, prompt2, "1234567890", &min, &max);
 		
 		// This checks if the user inputted the same station twice.
 		if(*origin != *destination)
@@ -257,7 +271,11 @@ void calculate_change(int fare)
 
     while(1)
     {
-        change = get_float("\nPlease enter your payment amount. [0-1000] >> ", "0123456789.\n", 0.0, 1000.0);
+        float min = 0.0, max = 1000.0;
+		char prompt[MAX];
+		sprintf(prompt, "\nPlease enter your payment amount. [%.2f PHP - %.2f PHP] >> ", min, max);
+		
+		change = *(float *)get_number(FLOAT, prompt, "1234567890.\n", &min, &max);
 
 		if(change >= fare)
 			break;
