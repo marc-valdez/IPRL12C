@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#define MAX 100
+#include <stdlib.h>
+#define MAX 256
 
 char get_char(char *prompt, char *limit)
 {
@@ -56,7 +57,7 @@ int get_int(char *prompt, char *limit, int min, int max)
         if(sscanf(buffer, "%d", &user_input) != 1)
         {
             strcpy(buffer, "");
-            printf("\n\t* Invalid input. Please enter a number.\n\n");
+            printf("\n\t* Invalid input. It must be a number.\n\n");
             continue;
         }
         
@@ -91,7 +92,7 @@ float get_float(char *prompt, char *limit, float min, float max)
         if(sscanf(buffer, "%f", &user_input) != 1)
         {
             strcpy(buffer, "");
-            printf("\n\t* Invalid input. Please enter a number.\n\n");
+            printf("\n\t* Invalid input. It must be a number.\n\n");
             continue;
         }
         
@@ -126,7 +127,7 @@ double get_double(char *prompt, char *limit, double min, double max)
         if(sscanf(buffer, "%lf", &user_input) != 1)
         {
             strcpy(buffer, "");
-            printf("\n\t* Invalid input. Please enter a number.\n\n");
+            printf("\n\t* Invalid input. It must be a number.\n\n");
             continue;
         }
         
