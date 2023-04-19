@@ -107,11 +107,21 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
             case FLOAT:
             {
                 user_input = malloc(sizeof(float));
+                
+                if(is_empty(buffer, "\n\t* Input cannot be empty.\n"))
+                    continue;
+                
+                if(has_whitespace(buffer, "\n\t* Invalid input. Input cannot contain whitespace characters.\n"))
+                    continue;
 
+                if(starts_or_ends_with_dot(buffer, "\n\t* Invalid input. Please try again.\n"))
+                    continue;
+
+                // pending changes
                 if(sscanf(buffer, "%f", user_input) != 1)
                 {
                     strcpy(buffer, "");
-                    printf("\n\t* Invalid input. It must be a number.\n");
+                    printf("\n\t* Invalid input. Input must not contain non-numeric characters.\n");
                     continue;
                 }
 
@@ -119,14 +129,14 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
                 if(sscanf(buffer, "%f%s", user_input, remaining) != 1)
                 {
                     strcpy(buffer, "");
-                    printf("\n\t* Invalid input. It must be an number.\n");
+                    printf("\n\t* Invalid input. Input must not contain non-numeric characters.\n");
                     continue;
                 }
-                
+
                 if(*(float *)user_input < *(float *)min || *(float *)user_input > *(float *)max) 
                 {
                     strcpy(buffer, "");
-                    printf("\n\t* Invalid input. Please enter a number between %.2f and %.2f.\n", *(float *)min, *(float *)max);
+                    printf("\n\t* Input out of range. Please enter a number between %f and %f.\n", *(float *)min, *(float *)max);
                     continue;
                 }
                 
