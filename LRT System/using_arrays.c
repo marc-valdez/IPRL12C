@@ -102,7 +102,7 @@ int main()
 	int beep_card_status = 0;
 
 	// If the user has a beep card, then beep_card_status should be equal to 1, otherwise 0.
-	// check_beep_card(&beep_card_balance, &beep_card_status);
+	check_beep_card(&beep_card_balance, &beep_card_status);
 
 
 	// Declare origin and destination for indexing in the fare_matrix later.
