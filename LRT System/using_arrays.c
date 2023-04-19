@@ -119,11 +119,11 @@ int main()
 	int fare = fare_matrix[beep_card_status][origin][destination];
 
 	// Store the station names to pass later.
-	char *origin_station = *(station_names + origin);
-	char *destination_station = *(station_names + destination);
+	char *origin_name = *(station_names + origin);
+	char *destination_name = *(station_names + destination);
 
 	// The respective fare price is then printed, along with the station names that the user has inputted.
-    print_fare(&beep_card_balance, &beep_card_status, origin_station, destination_station, fare);
+    print_fare(&beep_card_balance, &beep_card_status, origin_name, destination_name, fare);
 
 
     // Some closing greetings.
