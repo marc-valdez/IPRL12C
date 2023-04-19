@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include "error_check.h"
-#include "valdez.h"
+#include "valdez_2.0.h"
+#include "valdez_1.0.h"
 
 #define BEEP_CARD_PRICE 30.0
 #define INITIAL_BEEP_CARD_BALANCE 70.0
