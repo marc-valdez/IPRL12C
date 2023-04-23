@@ -17,7 +17,7 @@ void main()
     printf("[2] Deposit\n");
     printf("[3] Withdrawal\n");
     printf("[4] Logout \\ Change Account\n");
-    printf("[5] Balance Inquiry\n");
+    printf("[5] Exit\n");
 
     int min = 1, max = 5;
     int in = *(int *)get_number(INTEGER, "\nEnter transaction number. >> ", &min, &max);
