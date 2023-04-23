@@ -46,6 +46,7 @@ void main()
         }
         case 5:
         {
+            printf("\nThank you for banking with us!\n");
             exit(0);
             break;
         }
