@@ -117,7 +117,7 @@ Account *account_login()
             else
                 continue;
         }
-        printf("Wrong PIN.\n");
+        printf("\n\t* Wrong PIN.\n");
     }
 }
 
@@ -147,7 +147,7 @@ void withdrawal(Account *user)
 {
     while(1)
     {
-        float min = -10000.0, max = 10000.00;
+        float min = INT_MIN, max = INT_MAX;
         user->withdrawal_amount = *(float *)get_number(FLOAT, "Withdrawal amount >> ", &min, &max);
 
         if(user->withdrawal_amount > MAX_WITHDRAW)
