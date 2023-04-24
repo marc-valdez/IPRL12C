@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 #include "valdez_v2.h"
 
 #define INITIAL_BALANCE 5000.00
@@ -61,18 +62,27 @@ void print_menu(Account *user)
             case 1:
             {
                 balance_inquiry(user);
+                char in = *(char *)get_text(CHAR, "\nWould you like to do another transaction? [Y/N] >> ", "YyNn");
+                if(in == 'n' || in == 'n')
+                    return;
                 break;
             }
             case 2:
             {
                 deposit(user);
                 balance_inquiry(user);
+                char in = *(char *)get_text(CHAR, "\nWould you like to do another transaction? [Y/N] >> ", "YyNn");
+                if(in == 'n' || in == 'n')
+                    return;
                 break;
             }
             case 3:
             {
                 withdrawal(user);
                 balance_inquiry(user);
+                char in = *(char *)get_text(CHAR, "\nWould you like to do another transaction? [Y/N] >> ", "YyNn");
+                if(in == 'n' || in == 'n')
+                    return;
                 break;
             }
             case 4:
@@ -96,19 +106,13 @@ Account *account_login()
 {
     while(1)
     {
-        char *pin_number = get_text(STRING, "PIN Number >> ", "1234567890");
+        char *pin_number = get_text(STRING, "\nPIN Number >> ", "1234567890");
         for(int i = 0; i < sizeof(users)/sizeof(users[0]); i++)
         {
             if(strcmp(pin_number, users[i].pin_number) == 0)
-            {
-                printf("Pin %d: %s\n", i, users[i].pin_number);
                 return &users[i];
-                break;
-            }
             else
-            {
                 continue;
-            }
         }
         printf("Wrong PIN.\n");
     }
@@ -116,14 +120,14 @@ Account *account_login()
 
 void balance_inquiry(Account *user)
 {
-    printf("\nCurrent Balance: %.2f\n", user->balance);
+    printf("\nYour current balance is : %.2f\n", user->balance);
 }
 
 void deposit(Account *user)
 {
     while(1)
     {
-        float min = -10000.0, max = 10000.00;
+        float min = INT_MIN, max = INT_MAX;
         user->deposit = *(float *)get_number(FLOAT, "Deposit amount >> ", &min, &max);
 
         if(user->deposit <= 0.0)
