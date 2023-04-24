@@ -15,9 +15,9 @@ typedef struct Account {
 } Account;
 
 Account users[] = {
-    {"Valdez, Marc Joshua", "111111", INITIAL_BALANCE, 0.0, 0.0},
-    {"Binegas, John Daniel", "123123", INITIAL_BALANCE, 0.0, 0.0},
-    {"Bautista, Glen Angelo", "456456", INITIAL_BALANCE, 0.0, 0.0}
+    {"Valdez, Marc Joshua", "123123", INITIAL_BALANCE, 0.0, 0.0},
+    {"Binegas, John Daniel", "456456", INITIAL_BALANCE, 0.0, 0.0},
+    {"Bautista, Glen Angelo", "789789", INITIAL_BALANCE, 0.0, 0.0}
 };
 
 Account *account_login();
@@ -123,7 +123,7 @@ Account *account_login()
 
 void balance_inquiry(Account *user)
 {
-    printf("\nYour current balance is : %.2f\n", user->balance);
+    printf("\nYour current balance is %.2f\n", user->balance);
 }
 
 void deposit(Account *user)
@@ -131,7 +131,7 @@ void deposit(Account *user)
     while(1)
     {
         float min = INT_MIN, max = INT_MAX;
-        user->deposit = *(float *)get_number(FLOAT, "Deposit amount >> ", &min, &max);
+        user->deposit = *(float *)get_number(FLOAT, "\nDeposit amount >> ", &min, &max);
 
         if(user->deposit <= 0.0)
             printf("\n\t* Deposit amount should be greater than zero.\n\n");
@@ -148,10 +148,10 @@ void withdrawal(Account *user)
     while(1)
     {
         float min = INT_MIN, max = INT_MAX;
-        user->withdrawal_amount = *(float *)get_number(FLOAT, "Withdrawal amount >> ", &min, &max);
+        user->withdrawal_amount = *(float *)get_number(FLOAT, "\nWithdrawal amount >> ", &min, &max);
 
         if(user->withdrawal_amount > MAX_WITHDRAW)
-            printf("\n\t* Withdrawal exceeded the maximum amount : %.2f\n\n", MAX_WITHDRAW);
+            printf("\n\t* Withdrawal exceeded the maximum amount of %.2f\n\n", MAX_WITHDRAW);
         else
         {
             user->balance -= user->withdrawal_amount;
