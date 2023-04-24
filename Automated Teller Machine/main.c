@@ -3,6 +3,7 @@
 #include "valdez_v2.h"
 
 #define INITIAL_BALANCE 5000.00
+#define MAX_WITHDRAW 4000.00
 
 typedef struct Account {
     char *name;
@@ -13,17 +14,16 @@ typedef struct Account {
 } Account;
 
 Account users[] = {
-    {"Valdez, Marc Joshua", "000000", INITIAL_BALANCE, 0.0, 0.0},
+    {"Valdez, Marc Joshua", "111111", INITIAL_BALANCE, 0.0, 0.0},
     {"Binegas, John Daniel", "123123", INITIAL_BALANCE, 0.0, 0.0},
     {"Bautista, Glen Angelo", "456456", INITIAL_BALANCE, 0.0, 0.0}
 };
 
 Account *account_login();
 void print_menu(Account *user);
-void balance_inquiry();
+void balance_inquiry(Account *user);
 void deposit(Account *user);
-void withdrawal();
-void change_account();
+void withdrawal(Account *user);
 
 void main()
 {
@@ -33,9 +33,9 @@ void main()
         
         printf("\nAccount Name: %s\n", user->name);
         printf("PIN Number: %s\n", user->pin_number);
-        printf("Initial Balance: %.2f\n", user->balance);
-        printf("Withdrawal Amount: %.2f\n", user->withdrawal_amount);
-        printf("Deposit Amount: %.2f\n\n", user->deposit);
+        printf("Account Balance: %.2f\n", user->balance);
+        printf("Last Withdrawal Amount: %.2f\n", user->withdrawal_amount);
+        printf("Last Deposit Amount: %.2f\n\n", user->deposit);
 
         print_menu(user);
     }
@@ -43,7 +43,7 @@ void main()
 
 void print_menu(Account *user)
 {
-    printf("WELCOME TO LPU BANK");
+    printf("WELCOME TO LPU BANK\n");
 
     while(1)
     {
@@ -71,7 +71,8 @@ void print_menu(Account *user)
             }
             case 3:
             {
-                withdrawal();
+                withdrawal(user);
+                balance_inquiry(user);
                 break;
             }
             case 4:
@@ -115,7 +116,7 @@ Account *account_login()
 
 void balance_inquiry(Account *user)
 {
-    printf("Current Balance: %.2f\n", user->balance);
+    printf("\nCurrent Balance: %.2f\n", user->balance);
 }
 
 void deposit(Account *user)
@@ -135,11 +136,19 @@ void deposit(Account *user)
     }
 }
 
-void withdrawal()
+void withdrawal(Account *user)
 {
-    printf("You chose [3]\n");
-}
-void change_account()
-{
-    printf("You chose [4]\n");
+    while(1)
+    {
+        float min = -10000.0, max = 10000.00;
+        user->withdrawal_amount = *(float *)get_number(FLOAT, "Withdrawal amount >> ", &min, &max);
+
+        if(user->withdrawal_amount > MAX_WITHDRAW)
+            printf("\n\t* Withdrawal exceeded the maximum amount : %.2f\n\n", MAX_WITHDRAW);
+        else
+        {
+            user->balance -= user->withdrawal_amount;
+            break;
+        }
+    }
 }
