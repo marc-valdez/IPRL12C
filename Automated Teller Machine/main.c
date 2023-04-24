@@ -14,13 +14,14 @@ typedef struct Account {
 
 Account users[] = {
     {"Valdez, Marc Joshua", "000000", INITIAL_BALANCE, 0.0, 0.0},
-    {"Binegas, John Daniel", "123123", INITIAL_BALANCE, 0.0, 0.0}
+    {"Binegas, John Daniel", "123123", INITIAL_BALANCE, 0.0, 0.0},
+    {"Bautista, Glen Angelo", "456456", INITIAL_BALANCE, 0.0, 0.0}
 };
 
 Account *account_login();
 void print_menu(Account *user);
 void balance_inquiry();
-void deposit(float *deposit);
+void deposit(Account *user);
 void withdrawal();
 void change_account();
 
@@ -39,11 +40,11 @@ void main()
 
 void print_menu(Account *user)
 {
+    printf("WELCOME TO LPU BANK");
+
     while(1)
     {
-        printf("WELCOME TO LPU BANK\n\n");
-
-        printf("[1] Balance Inquiry\n");
+        printf("\n[1] Balance Inquiry\n");
         printf("[2] Deposit\n");
         printf("[3] Withdrawal\n");
         printf("[4] Logout \\ Change Account\n");
@@ -61,7 +62,8 @@ void print_menu(Account *user)
             }
             case 2:
             {
-                deposit(&users[0].deposit);
+                deposit(user);
+                balance_inquiry(user);
                 break;
             }
             case 3:
@@ -108,20 +110,23 @@ Account *account_login()
 
 void balance_inquiry(Account *user)
 {
-    printf("Current Balance: %.2f", user->balance);
+    printf("Current Balance: %.2f\n", user->balance);
 }
 
-void deposit(float *deposit)
+void deposit(Account *user)
 {
     while(1)
     {
-        int min = -10000.0, max = 10000.00;
-        deposit = (float *)get_number(FLOAT, "Deposit amount >> ", &min, &max);
+        float min = -10000.0, max = 10000.00;
+        user->deposit = *(float *)get_number(FLOAT, "Deposit amount >> ", &min, &max);
 
-        if(*deposit <= 0.0)
+        if(user->deposit <= 0.0)
             printf("\n\t* Deposit amount should be greater than zero.\n\n");
         else
+        {
+            user->balance += user->deposit;
             break;
+        }
     }
 }
 
