@@ -3,8 +3,8 @@
 #include <limits.h>
 #include "valdez_v2.h"
 
-#define INITIAL_BALANCE 5000.00
-#define MAX_WITHDRAW 4000.00
+#define INITIAL_BALANCE 5000.0
+#define MAX_WITHDRAW 4000.0
 
 typedef struct Account {
     char *name;
@@ -15,9 +15,9 @@ typedef struct Account {
 } Account;
 
 Account users[] = {
-    {"Valdez, Marc Joshua", "123123", INITIAL_BALANCE, 0.0, 0.0},
-    {"Binegas, John Daniel", "456456", INITIAL_BALANCE, 0.0, 0.0},
-    {"Bautista, Glen Angelo", "789789", INITIAL_BALANCE, 0.0, 0.0}
+    {"Valdez, Marc Joshua", "1111", INITIAL_BALANCE, 0.0, 0.0},
+    {"Binegas, John Daniel", "2222", INITIAL_BALANCE, 0.0, 0.0},
+    {"Bautista, Glen Angelo", "3333", INITIAL_BALANCE, 0.0, 0.0}
 };
 
 Account *account_login();
@@ -70,7 +70,6 @@ void print_menu(Account *user)
             case 2:
             {
                 deposit(user);
-                balance_inquiry(user);
                 char in = *(char *)get_text(CHAR, "\nWould you like to do another transaction? [Y/N] >> ", "YyNn");
                 if(in == 'n' || in == 'n')
                     return;
@@ -79,7 +78,6 @@ void print_menu(Account *user)
             case 3:
             {
                 withdrawal(user);
-                balance_inquiry(user);
                 char in = *(char *)get_text(CHAR, "\nWould you like to do another transaction? [Y/N] >> ", "YyNn");
                 if(in == 'n' || in == 'n')
                     return;
@@ -94,7 +92,6 @@ void print_menu(Account *user)
             }
             case 5:
             {
-                
                 char in = *(char *)get_text(CHAR, "\nAre you sure you want to Exit? [Y/N] >> ", "YyNn");
                 if(in == 'n' || in == 'n')
                     break;
@@ -134,10 +131,11 @@ void deposit(Account *user)
         user->deposit = *(float *)get_number(FLOAT, "\nDeposit amount >> ", &min, &max);
 
         if(user->deposit <= 0.0)
-            printf("\n\t* Deposit amount should be greater than zero.\n\n");
+            printf("\n\t* Deposit amount should be greater than zero.\n");
         else
         {
             user->balance += user->deposit;
+            balance_inquiry(user);
             break;
         }
     }
@@ -150,11 +148,16 @@ void withdrawal(Account *user)
         float min = INT_MIN, max = INT_MAX;
         user->withdrawal_amount = *(float *)get_number(FLOAT, "\nWithdrawal amount >> ", &min, &max);
 
-        if(user->withdrawal_amount > MAX_WITHDRAW)
-            printf("\n\t* Withdrawal exceeded the maximum amount of %.2f\n\n", MAX_WITHDRAW);
+        if(user->withdrawal_amount > user->balance)
+            printf("\n\t* Withdrawal exceeds the available balance of %.2f\n", user->balance);
+        else if(user->withdrawal_amount <= 0.0)
+            printf("\n\t* Withdrawal amount should be greater than zero.\n");
+        else if(user->withdrawal_amount > MAX_WITHDRAW)
+            printf("\n\t* Withdrawal exceeded the maximum amount of %.2f\n", MAX_WITHDRAW);
         else
         {
             user->balance -= user->withdrawal_amount;
+            balance_inquiry(user);
             break;
         }
     }
