@@ -27,15 +27,18 @@ void change_account();
 
 void main()
 {
-    Account *user = account_login();
-    
-    printf("\nAccount Name: %s\n", user->name);
-    printf("PIN Number: %s\n", user->pin_number);
-    printf("Initial Balance: %.2f\n", user->balance);
-    printf("Withdrawal Amount: %.2f\n", user->withdrawal_amount);
-    printf("Deposit Amount: %.2f\n\n", user->deposit);
+    while(1)
+    {
+        Account *user = account_login();
+        
+        printf("\nAccount Name: %s\n", user->name);
+        printf("PIN Number: %s\n", user->pin_number);
+        printf("Initial Balance: %.2f\n", user->balance);
+        printf("Withdrawal Amount: %.2f\n", user->withdrawal_amount);
+        printf("Deposit Amount: %.2f\n\n", user->deposit);
 
-    print_menu(user);
+        print_menu(user);
+    }
 }
 
 void print_menu(Account *user)
@@ -73,7 +76,9 @@ void print_menu(Account *user)
             }
             case 4:
             {
-                change_account();
+                char in = *(char *)get_text(CHAR, "\nAre you sure you want to Logout? [Y/N] >> ", "YyNn");
+                if(in == 'Y' || in == 'y')
+                    return;
                 break;
             }
             case 5:
