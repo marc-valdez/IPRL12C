@@ -166,7 +166,7 @@ void *get_text(enum data_type type, char *prompt, char *limit)
 		if(strspn(buffer, limit) != strlen(buffer))
         {
 			strcpy(buffer, "");
-            printf("\n\t* Invalid input. Prompt only accepts \"%s\"\n\n", limit);
+            printf("\n\t* Invalid input. Prompt only accepts \"%s\"\n", limit);
             continue;
         }
         
@@ -179,14 +179,14 @@ void *get_text(enum data_type type, char *prompt, char *limit)
                 if(sscanf(buffer, "%s", user_input) != 1)
                 {
                     strcpy(buffer, "");
-                    printf("\n\t* Invalid input. It must be a single character.\n[%s]\n");
+                    printf("\n\t* Invalid input. It must be a single character.\n[%s]");
                     continue;
                 }
 
                 if(strlen((char *)user_input) > 1) 
                 {
                     strcpy(buffer, "");
-                    printf("\n\t* Invalid input. Character limit is: %d\n\n", 1);
+                    printf("\n\t* Invalid input. Character limit is: %d\n", 1);
                     continue;
                 }
                 
@@ -199,14 +199,14 @@ void *get_text(enum data_type type, char *prompt, char *limit)
                 if(sscanf(buffer, "%s", user_input) != 1)
                 {
                     strcpy(buffer, "");
-                    printf("\n\t* Invalid input. It must be a string of characters.\n\n");
+                    printf("\n\t* Invalid input. It must be a string of characters.\n");
                     continue;
                 }
 
                 if(strlen((char *)user_input) > MAX) 
                 {
                     strcpy(buffer, "");
-                    printf("\n\t* Invalid input. Character limit is: %d\n\n", MAX);
+                    printf("\n\t* Invalid input. Character limit is: %d\n", MAX);
                     continue;
                 }
                 
