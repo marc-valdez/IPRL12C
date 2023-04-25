@@ -63,7 +63,7 @@ void print_menu(Account *user)
             case 1:
             {
                 balance_inquiry(user);
-                char in = *(char *)get_text(CHAR, "\nWould you like to do another transaction? [Y/N] >> ", 1, "YyNn");
+                char in = *(char *)get_text(CHAR, "\nWould you like to do another transaction? (Y/N) >> ", 1, "YyNn");
                 if(in == 'N' || in == 'n')
                     return;
                 break;
@@ -71,7 +71,7 @@ void print_menu(Account *user)
             case 2:
             {
                 deposit(user);
-                char in = *(char *)get_text(CHAR, "\nWould you like to do another transaction? [Y/N] >> ", 1, "YyNn");
+                char in = *(char *)get_text(CHAR, "\nWould you like to do another transaction? (Y/N) >> ", 1, "YyNn");
                 if(in == 'N' || in == 'n')
                     return;
                 break;
@@ -79,21 +79,21 @@ void print_menu(Account *user)
             case 3:
             {
                 withdrawal(user);
-                char in = *(char *)get_text(CHAR, "\nWould you like to do another transaction? [Y/N] >> ", 1, "YyNn");
+                char in = *(char *)get_text(CHAR, "\nWould you like to do another transaction? (Y/N) >> ", 1, "YyNn");
                 if(in == 'N' || in == 'n')
                     return;
                 break;
             }
             case 4:
             {
-                char in = *(char *)get_text(CHAR, "\nAre you sure you want to logout? [Y/N] >> ", 1, "YyNn");
+                char in = *(char *)get_text(CHAR, "\nAre you sure you want to logout? (Y/N) >> ", 1, "YyNn");
                 if(in == 'Y' || in == 'y')
                     return;
                 break;
             }
             case 5:
             {
-                char in = *(char *)get_text(CHAR, "\nAre you sure you want to exit? [Y/N] >> ", 1, "YyNn");
+                char in = *(char *)get_text(CHAR, "\nAre you sure you want to exit? (Y/N) >> ", 1, "YyNn");
                 if(in == 'N' || in == 'n')
                     break;
                 printf("\nThank you for banking with us!\n");
