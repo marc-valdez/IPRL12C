@@ -21,7 +21,7 @@ Account users[] = {
 };
 
 Account *account_login();
-void print_menu(Account *user);
+void main_menu(Account *user);
 void balance_inquiry(Account *user);
 void deposit(Account *user);
 void withdrawal(Account *user);
@@ -38,12 +38,12 @@ void main()
         printf("Last Withdrawal Amount: %.2f\n", user->withdrawal_amount);
         printf("Last Deposit Amount: %.2f\n\n", user->deposit);
 
-        print_menu(user);
+        main_menu(user);
         system("cls");
     }
 }
 
-void print_menu(Account *user)
+void main_menu(Account *user)
 {
     printf("WELCOME TO LPU BANK\n");
 
@@ -55,49 +55,67 @@ void print_menu(Account *user)
         printf("[4] Logout \\ Change Account\n");
         printf("[5] Exit\n");
 
-        int min = 1, max = 5;
-        int in = *(int *)get_number(INTEGER, "\nEnter transaction number >> ", 1, 5);
+        int transaction = *(int *)get_number(INTEGER, "\nEnter transaction number >> ", 1.0, 5.0);
 
-        switch(in)
+        switch(transaction)
         {
             case 1:
             {
                 balance_inquiry(user);
-                char in = *(char *)get_text(CHAR, "\nWould you like to do another transaction? (Y/N) >> ", 1, "YyNn");
-                if(in == 'N' || in == 'n')
+                char answer = yes_or_no("\nWould you like to do another transaction? (Y/N) >> ");
+                if(answer == 'N' || answer == 'n')
+                {
+                    answer = yes_or_no("\nWould you like to exit(Y) or logout(N)? >> ");
+                    if(answer == 'Y' || answer == 'y')
+                        exit_prompt("\nThank you for banking with us!\n");
                     return;
+                }
                 break;
             }
             case 2:
             {
                 deposit(user);
-                char in = *(char *)get_text(CHAR, "\nWould you like to do another transaction? (Y/N) >> ", 1, "YyNn");
-                if(in == 'N' || in == 'n')
+                char answer = yes_or_no("\nWould you like to do another transaction? (Y/N) >> ");
+                if(answer == 'N' || answer == 'n')
+                {
+                    answer = yes_or_no("\nWould you like to exit(Y) or logout(N) >> ");
+                    if(answer == 'Y' || answer == 'y')
+                        exit_prompt("\nThank you for banking with us!\n");
                     return;
+                }
                 break;
             }
             case 3:
             {
                 withdrawal(user);
-                char in = *(char *)get_text(CHAR, "\nWould you like to do another transaction? (Y/N) >> ", 1, "YyNn");
-                if(in == 'N' || in == 'n')
+                char answer = yes_or_no("\nWould you like to do another transaction? (Y/N) >> ");
+                if(answer == 'N' || answer == 'n')
+                {
+                    answer = yes_or_no("\nWould you like to exit(Y) or logout(N) >> ");
+                    if(answer == 'Y' || answer == 'y')
+                        exit_prompt("\nThank you for banking with us!\n");
                     return;
+                }
                 break;
             }
             case 4:
             {
-                char in = *(char *)get_text(CHAR, "\nAre you sure you want to logout? (Y/N) >> ", 1, "YyNn");
-                if(in == 'Y' || in == 'y')
+                char answer = yes_or_no("\nAre you sure you want to logout? (Y/N) >> ");
+                if(answer == 'Y' || answer == 'y')
+                {
+                    answer = yes_or_no("\nWould you like to exit(Y) or logout(N) >> ");
+                    if(answer == 'Y' || answer == 'y')
+                        exit_prompt("\nThank you for banking with us!\n");
                     return;
+                }
                 break;
             }
             case 5:
             {
-                char in = *(char *)get_text(CHAR, "\nAre you sure you want to exit? (Y/N) >> ", 1, "YyNn");
-                if(in == 'N' || in == 'n')
+                char answer = yes_or_no("\nAre you sure you want to exit? (Y/N) >> ");
+                if(answer == 'N' || answer == 'n')
                     break;
-                printf("\nThank you for banking with us!\n");
-                exit(0);
+                exit_prompt("\nThank you for banking with us!\n");
             }
         }
     }
@@ -107,7 +125,7 @@ Account *account_login()
 {
     while(1)
     {
-        char *pin_number = (char *)get_text(STRING, "\nPIN Number >> ", 4);
+        char *pin_number = (char *)get_text(STRING, "\nPIN Number >> ");
 
         if(strspn(pin_number, "1234567890") != strlen(pin_number))
         {
@@ -142,7 +160,7 @@ void deposit(Account *user)
     while(1)
     {
         float min = INT_MIN, max = INT_MAX;
-        user->deposit = *(float *)get_number(FLOAT, "\nDeposit amount >> ", INT_MIN, INT_MAX);
+        user->deposit = *(float *)get_number(FLOAT, "\nDeposit amount >> ");
 
         if(user->deposit <= 0.0)
             print_error("\n! Deposit amount should be greater than zero.\n");
@@ -160,7 +178,7 @@ void withdrawal(Account *user)
     while(1)
     {
         float min = INT_MIN, max = INT_MAX;
-        user->withdrawal_amount = *(float *)get_number(FLOAT, "\nWithdrawal amount >> ", INT_MIN, INT_MAX);
+        user->withdrawal_amount = *(float *)get_number(FLOAT, "\nWithdrawal amount >> ");
 
         if(user->withdrawal_amount <= 0.0)
             print_error("\n! Withdrawal amount should be greater than zero.\n");
