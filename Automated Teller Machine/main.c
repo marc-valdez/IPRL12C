@@ -56,7 +56,7 @@ void print_menu(Account *user)
         printf("[5] Exit\n");
 
         int min = 1, max = 5;
-        int in = *(int *)get_number(INTEGER, "\nEnter transaction number >> ", &min, &max);
+        int in = *(int *)get_number(INTEGER, "\nEnter transaction number >> ", 1, 5);
 
         switch(in)
         {
@@ -142,7 +142,7 @@ void deposit(Account *user)
     while(1)
     {
         float min = INT_MIN, max = INT_MAX;
-        user->deposit = *(float *)get_number(FLOAT, "\nDeposit amount >> ", &min, &max);
+        user->deposit = *(float *)get_number(FLOAT, "\nDeposit amount >> ", INT_MIN, INT_MAX);
 
         if(user->deposit <= 0.0)
             print_error("\n! Deposit amount should be greater than zero.\n");
@@ -160,7 +160,7 @@ void withdrawal(Account *user)
     while(1)
     {
         float min = INT_MIN, max = INT_MAX;
-        user->withdrawal_amount = *(float *)get_number(FLOAT, "\nWithdrawal amount >> ", &min, &max);
+        user->withdrawal_amount = *(float *)get_number(FLOAT, "\nWithdrawal amount >> ", INT_MIN, INT_MAX);
 
         if(user->withdrawal_amount <= 0.0)
             print_error("\n! Withdrawal amount should be greater than zero.\n");

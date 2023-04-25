@@ -22,7 +22,7 @@ enum data_type {
     DOUBLE
 };
 
-void *get_number(enum data_type type, char *prompt, void *min, void *max)
+void *get_number(enum data_type type, char *prompt, const double min, const double max)
 {
 	char buffer[MAX];
     void *user_input;
@@ -65,9 +65,9 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
                     continue;
                 }
 
-                if(*(int *)user_input < *(int *)min || *(int *)user_input > *(int *)max) 
+                if(*(int *)user_input < (int)min || *(int *)user_input > (int)max) 
                 {
-                    print_error("\n! Input out of range. Please enter a number between %d and %d (inclusive).\n", *(int *)min, *(int *)max);
+                    print_error("\n! Input out of range. Please enter a number between %d and %d (inclusive).\n", (int)min, (int)max);
                     continue;
                 }
                 
@@ -90,9 +90,9 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
                     continue;
                 }
 
-                if(*(float *)user_input < *(float *)min || *(float *)user_input > *(float *)max) 
+                if(*(float *)user_input < (float)min || *(float *)user_input > (float)max) 
                 {
-                    print_error("\n! Input out of range. Please enter a number between %f and %f (inclusive).\n", *(float *)min, *(float *)max);
+                    print_error("\n! Input out of range. Please enter a number between %f and %f (inclusive).\n", (float)min, (float)max);
                     continue;
                 }
                 
@@ -115,9 +115,9 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
                     continue;
                 }
 
-                if(*(double *)user_input < *(double *)min || *(double *)user_input > *(double *)max) 
+                if(*(double *)user_input < (double)min || *(double *)user_input > (double)max) 
                 {
-                    print_error("\n! Input out of range. Please enter a number between %lf and %lf (inclusive).\n", *(double *)min, *(double *)max);
+                    print_error("\n! Input out of range. Please enter a number between %lf and %lf (inclusive).\n", (double)min, (double)max);
                     continue;
                 }
                 
