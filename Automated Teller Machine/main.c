@@ -86,14 +86,14 @@ void print_menu(Account *user)
             }
             case 4:
             {
-                char in = *(char *)get_text(CHAR, "\nAre you sure you want to Logout? [Y/N] >> ", "YyNn");
+                char in = *(char *)get_text(CHAR, "\nAre you sure you want to logout? [Y/N] >> ", "YyNn");
                 if(in == 'Y' || in == 'y')
                     return;
                 break;
             }
             case 5:
             {
-                char in = *(char *)get_text(CHAR, "\nAre you sure you want to Exit? [Y/N] >> ", "YyNn");
+                char in = *(char *)get_text(CHAR, "\nAre you sure you want to exit? [Y/N] >> ", "YyNn");
                 if(in == 'n' || in == 'n')
                     break;
                 printf("\nThank you for banking with us!\n");
@@ -149,12 +149,12 @@ void withdrawal(Account *user)
         float min = INT_MIN, max = INT_MAX;
         user->withdrawal_amount = *(float *)get_number(FLOAT, "\nWithdrawal amount >> ", &min, &max);
 
-        if(user->withdrawal_amount > user->balance)
-            print_error("\n! Withdrawal exceeds the available balance of %.2f\n", user->balance);
-        else if(user->withdrawal_amount <= 0.0)
-            print_error("\n! Withdrawal amount should be greater than zero.\n"); 
+        if(user->withdrawal_amount <= 0.0)
+            print_error("\n! Withdrawal amount should be greater than zero.\n");
         else if(user->withdrawal_amount > MAX_WITHDRAW)
-            print_error("\n! Withdrawal exceeded the maximum amount of %.2f\n", MAX_WITHDRAW);
+            print_error("\n! Withdrawal exceeded the maximum amount of %.2f\n", MAX_WITHDRAW);    
+        else if(user->withdrawal_amount > user->balance)
+            print_error("\n! Withdrawal exceeds the available balance of %.2f\n", user->balance);
         else
         {
             user->balance -= user->withdrawal_amount;
