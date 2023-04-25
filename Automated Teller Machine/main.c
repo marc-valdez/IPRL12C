@@ -107,7 +107,20 @@ Account *account_login()
 {
     while(1)
     {
-        char *pin_number = get_text(STRING, "\nPIN Number >> ", "1234567890");
+        char *pin_number = get_text(STRING, "\nPIN Number >> ", 4);
+
+        if(strspn(pin_number, "1234567890") != strlen(pin_number))
+        {
+            print_error("\n! Invalid PIN format. Please remove any non-numeric characters and try again (ex: 1234).\n");
+            continue;
+        }
+        
+        if(strlen(pin_number) != 4)
+        {
+            print_error("\n! Invalid PIN format. PIN must be exactly 4 digits long.\n");
+            continue;
+        }
+
         for(int i = 0; i < sizeof(users)/sizeof(users[0]); i++)
         {
             if(strcmp(pin_number, users[i].pin_number) == 0)
