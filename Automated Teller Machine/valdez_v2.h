@@ -6,13 +6,14 @@
 #include <stdarg.h>
 
 #define MAX 256
-#define ERROR_COLOR "\033[31m"
+#define ERROR_COLOR "\033[1;31m"
 #define RESET_COLOR "\033[0m"
 
-void print_error(const char *prompt, ...);
 bool is_empty(char *buffer);
 bool has_whitespace(char *buffer);
 bool starts_or_ends_with_dot(char *buffer);
+void print_error(const char *buffer, ...);
+
 
 enum data_type {
     CHAR,
@@ -22,14 +23,38 @@ enum data_type {
     DOUBLE
 };
 
-void *get_number(enum data_type type, char *prompt, const double min, const double max)
+void *get_number(enum data_type type, const char *PROMPT, ...)
 {
-	char buffer[MAX];
+    double min = INT_MIN, max = INT_MAX;
+    int arg_count = 0;
+
+    va_list args, args_copy;
+    va_start(args, PROMPT);
+
+    va_copy(args_copy, args);
+    for(int i = 0; i < 2; i++)
+    {
+        if(va_arg(args_copy, void *) == NULL)
+            arg_count += 1;
+        else
+            break;
+    }
+
+    if(arg_count != 0)
+    {
+        min = va_arg(args, double);
+        max = va_arg(args, double);
+    }
+
+    va_end(args);
+    va_end(args_copy);
+
+    char buffer[MAX];
     void *user_input;
 
 	while(true)
 	{
-        printf("%s", prompt);
+        printf("%s", PROMPT);
 		fgets(buffer, sizeof(buffer), stdin);
         buffer[strcspn(buffer, "\n")] = '\0';
         
@@ -127,23 +152,14 @@ void *get_number(enum data_type type, char *prompt, const double min, const doub
 	}
 }
 
-void *get_text(enum data_type type, char *prompt, ...)
+void *get_text(enum data_type type, const char *PROMPT)
 {
-    int character_limit = MAX;
-    const char *format = NULL;
-
-    va_list args;
-    va_start(args, prompt);
-
-    character_limit = va_arg(args, const int);
-    format = va_arg(args, const char *);
-
     char buffer[MAX];
     void *user_input;
 
 	while(1)
 	{
-        printf("%s", prompt);
+        printf("%s", PROMPT);
 		fgets(buffer, sizeof(buffer), stdin);
         buffer[strcspn(buffer, "\n")] = '\0';
 
@@ -172,19 +188,8 @@ void *get_text(enum data_type type, char *prompt, ...)
                     continue;
                 }
 
-                if(format != NULL)
-                {
-                    if(strspn(buffer, format) != strlen(buffer))
-                    {
-                        print_error("\n! Invalid input. Please enter a value that matches the format \"%s\"\n", format);
-                        continue;
-                    }
-                }
-
-                va_end(args);
                 return (char *)user_input;
             }
-
             case STRING:
             {
                 user_input = malloc(sizeof(char) * MAX);
@@ -195,36 +200,16 @@ void *get_text(enum data_type type, char *prompt, ...)
                     continue;
                 }
 
-                if(strlen((char *)user_input) > character_limit) 
+                if(strlen((char *)user_input) > MAX) 
                 {
-                    print_error("\n! Invalid input. Character limit is %d characters.\n", character_limit);
+                    print_error("\n! Invalid input. Character limit is %d characters.\n", MAX);
                     continue;
                 }
-                
-                if(format != NULL)
-                {
-                    if(strspn(buffer, format) != strlen(buffer))
-                    {
-                        print_error("\n! Invalid input. Please enter a value that matches the format \"%s\"\n", format);
-                        continue;
-                    }
-                }
 
-                va_end(args);
                 return (char *)user_input;
             }
         }
 	}
-}
-
-void print_error(const char *buffer, ...)
-{
-    va_list args;
-    va_start(args, buffer);
-    printf(ERROR_COLOR);
-    vprintf(buffer, args);
-    printf(RESET_COLOR);
-    va_end(args);
 }
 
 bool is_empty(char *buffer)
@@ -258,4 +243,35 @@ bool starts_or_ends_with_dot(char *buffer)
         return true;
     }
     return false;
+}
+
+void print_error(const char *buffer, ...)
+{
+    va_list args;
+    va_start(args, buffer);
+    printf(ERROR_COLOR);
+    vprintf(buffer, args);
+    printf(RESET_COLOR);
+    va_end(args);
+}
+
+void exit_prompt(const char *PROMPT)
+{
+    printf(PROMPT);
+    exit(0);
+}
+
+char yes_or_no(const char *PROMPT)
+{
+    while(1)
+    {
+        char *buffer = (char *)get_text(CHAR, PROMPT);
+        
+        if(strspn(buffer, "YyNn") != strlen(buffer))
+        {
+            print_error("\n! Invalid input. Please enter Y or N to continue.\n");
+            continue;
+        }
+        return buffer[0];
+    }
 }
