@@ -94,7 +94,7 @@ void print_menu(Account *user)
             case 5:
             {
                 char in = *(char *)get_text(CHAR, "\nAre you sure you want to exit? [Y/N] >> ", "YyNn");
-                if(in == 'n' || in == 'n')
+                if(in == 'N' || in == 'n')
                     break;
                 printf("\nThank you for banking with us!\n");
                 exit(0);
