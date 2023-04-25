@@ -33,11 +33,11 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
 		fgets(buffer, sizeof(buffer), stdin);
         buffer[strcspn(buffer, "\n")] = '\0';
         
-        if(is_empty(buffer, "\n\t* Input cannot be empty.\n"))
+        if(is_empty(buffer, "\n! Input cannot be empty.\n"))
             continue;
-        if(has_whitespace(buffer, "\n\t* Invalid input. Input cannot contain whitespace characters.\n"))
+        if(has_whitespace(buffer, "\n! Invalid input. Input cannot contain whitespace characters.\n"))
             continue;
-        if(starts_or_ends_with_dot(buffer, "\n\t* Invalid input. Please try again.\n"))
+        if(starts_or_ends_with_dot(buffer, "\n! Invalid input. Please try again.\n"))
             continue;
 
         switch(type)
@@ -49,7 +49,7 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
                 if(sscanf(buffer, "%d", user_input) != 1)
                 {
                     strcpy(buffer, "");
-                    print_error("\n\t* Invalid input. Input must not contain non-numeric characters.\n");
+                    print_error("\n! Invalid input. Input must not contain non-numeric characters.\n");
                     continue;
                 }
 
@@ -57,21 +57,21 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
                 if(sscanf(buffer, "%f%s", user_input, remaining) != 1)
                 {
                     strcpy(buffer, "");
-                    print_error("\n\t* Invalid input. Input must not contain non-numeric characters.\n");
+                    print_error("\n! Invalid input. Input must not contain non-numeric characters.\n");
                     continue;
                 }
 
                 if(sscanf(buffer, "%d%[.]%s", user_input, remaining, remaining) != 1)
                 {
                     strcpy(buffer, "");
-                    print_error("\n\t* Invalid input. It must be a whole number.\n");
+                    print_error("\n! Invalid input. It must be a whole number.\n");
                     continue;
                 }
 
                 if(*(int *)user_input < *(int *)min || *(int *)user_input > *(int *)max) 
                 {
                     strcpy(buffer, "");
-                    print_error("\n\t* Input out of range. Please enter a number between %d and %d.\n", *(int *)min, *(int *)max);
+                    print_error("\n! Input out of range. Please enter a number between %d and %d.\n", *(int *)min, *(int *)max);
                     continue;
                 }
                 
@@ -84,7 +84,7 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
                 if(sscanf(buffer, "%f", user_input) != 1)
                 {
                     strcpy(buffer, "");
-                    print_error("\n\t* Invalid input. Input must not contain non-numeric characters.\n");
+                    print_error("\n! Invalid input. Input must not contain non-numeric characters.\n");
                     continue;
                 }
 
@@ -92,14 +92,14 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
                 if(sscanf(buffer, "%f%s", user_input, remaining) != 1)
                 {
                     strcpy(buffer, "");
-                    print_error("\n\t* Invalid input. Input must not contain non-numeric characters.\n");
+                    print_error("\n! Invalid input. Input must not contain non-numeric characters.\n");
                     continue;
                 }
 
                 if(*(float *)user_input < *(float *)min || *(float *)user_input > *(float *)max) 
                 {
                     strcpy(buffer, "");
-                    print_error("\n\t* Input out of range. Please enter a number between %f and %f.\n", *(float *)min, *(float *)max);
+                    print_error("\n! Input out of range. Please enter a number between %f and %f.\n", *(float *)min, *(float *)max);
                     continue;
                 }
                 
@@ -112,7 +112,7 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
                 if(sscanf(buffer, "%lf", user_input) != 1)
                 {
                     strcpy(buffer, "");
-                    print_error("\n\t* Invalid input. Input must not contain non-numeric characters.\n");
+                    print_error("\n! Invalid input. Input must not contain non-numeric characters.\n");
                     continue;
                 }
 
@@ -120,14 +120,14 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
                 if(sscanf(buffer, "%lf%s", user_input, remaining) != 1)
                 {
                     strcpy(buffer, "");
-                    print_error("\n\t* Invalid input. Input must not contain non-numeric characters.\n");
+                    print_error("\n! Invalid input. Input must not contain non-numeric characters.\n");
                     continue;
                 }
 
                 if(*(double *)user_input < *(double *)min || *(double *)user_input > *(double *)max) 
                 {
                     strcpy(buffer, "");
-                    print_error("\n\t* Input out of range. Please enter a number between %lf and %lf.\n", *(double *)min, *(double *)max);
+                    print_error("\n! Input out of range. Please enter a number between %lf and %lf.\n", *(double *)min, *(double *)max);
                     continue;
                 }
                 
@@ -148,17 +148,17 @@ void *get_text(enum data_type type, char *prompt, char *limit)
 		fgets(buffer, sizeof(buffer), stdin);
         buffer[strcspn(buffer, "\n")] = '\0';
 
-        if(is_empty(buffer, "\n\t* Input cannot be empty.\n"))
+        if(is_empty(buffer, "\n! Input cannot be empty.\n"))
             continue;
-        if(has_whitespace(buffer, "\n\t* Invalid input. Input cannot contain whitespace characters.\n"))
+        if(has_whitespace(buffer, "\n! Invalid input. Input cannot contain whitespace characters.\n"))
             continue;
-        if(starts_or_ends_with_dot(buffer, "\n\t* Invalid input. Please try again.\n"))
+        if(starts_or_ends_with_dot(buffer, "\n! Invalid input. Please try again.\n"))
             continue;
         
         if(strspn(buffer, limit) != strlen(buffer))
         {
 			strcpy(buffer, "");
-            print_error("\n\t* Invalid input. Prompt only accepts \"%s\"\n", limit);
+            print_error("\n! Invalid input. Prompt only accepts \"%s\"\n", limit);
             continue;
         }
 
@@ -171,14 +171,14 @@ void *get_text(enum data_type type, char *prompt, char *limit)
                 if(sscanf(buffer, "%s", user_input) != 1)
                 {
                     strcpy(buffer, "");
-                    print_error("\n\t* Invalid input. It must be a single character.\n[%s]");
+                    print_error("\n! Invalid input. It must be a single character.\n[%s]");
                     continue;
                 }
 
                 if(strlen((char *)user_input) > 1) 
                 {
                     strcpy(buffer, "");
-                    print_error("\n\t* Invalid input. Character limit is: %d\n", 1);
+                    print_error("\n! Invalid input. Character limit is: %d\n", 1);
                     continue;
                 }
                 
@@ -191,14 +191,14 @@ void *get_text(enum data_type type, char *prompt, char *limit)
                 if(sscanf(buffer, "%s", user_input) != 1)
                 {
                     strcpy(buffer, "");
-                    print_error("\n\t* Invalid input. It must be a string of characters.\n");
+                    print_error("\n! Invalid input. It must be a string of characters.\n");
                     continue;
                 }
 
                 if(strlen((char *)user_input) > MAX) 
                 {
                     strcpy(buffer, "");
-                    print_error("\n\t* Invalid input. Character limit is: %d\n", MAX);
+                    print_error("\n! Invalid input. Character limit is: %d\n", MAX);
                     continue;
                 }
                 

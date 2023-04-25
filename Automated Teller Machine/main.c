@@ -107,7 +107,7 @@ Account *account_login()
 {
     while(1)
     {
-        char *pin_number = get_text(STRING, "PIN Number >> ", "1234567890");
+        char *pin_number = get_text(STRING, "\nPIN Number >> ", "1234567890");
         for(int i = 0; i < sizeof(users)/sizeof(users[0]); i++)
         {
             if(strcmp(pin_number, users[i].pin_number) == 0)
@@ -115,7 +115,7 @@ Account *account_login()
             else
                 continue;
         }
-        print_error("\n\t* Wrong PIN.\n");
+        print_error("\n! Wrong PIN.\n");
     }
 }
 
@@ -132,7 +132,7 @@ void deposit(Account *user)
         user->deposit = *(float *)get_number(FLOAT, "\nDeposit amount >> ", &min, &max);
 
         if(user->deposit <= 0.0)
-            print_error("\n\t* Deposit amount should be greater than zero.\n");
+            print_error("\n! Deposit amount should be greater than zero.\n");
         else
         {
             user->balance += user->deposit;
@@ -150,11 +150,11 @@ void withdrawal(Account *user)
         user->withdrawal_amount = *(float *)get_number(FLOAT, "\nWithdrawal amount >> ", &min, &max);
 
         if(user->withdrawal_amount > user->balance)
-            print_error("\n\t* Withdrawal exceeds the available balance of %.2f\n", user->balance);
+            print_error("\n! Withdrawal exceeds the available balance of %.2f\n", user->balance);
         else if(user->withdrawal_amount <= 0.0)
-            print_error("\n\t* Withdrawal amount should be greater than zero.\n"); 
+            print_error("\n! Withdrawal amount should be greater than zero.\n"); 
         else if(user->withdrawal_amount > MAX_WITHDRAW)
-            print_error("\n\t* Withdrawal exceeded the maximum amount of %.2f\n", MAX_WITHDRAW);
+            print_error("\n! Withdrawal exceeded the maximum amount of %.2f\n", MAX_WITHDRAW);
         else
         {
             user->balance -= user->withdrawal_amount;
