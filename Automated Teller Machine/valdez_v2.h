@@ -48,7 +48,6 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
 
                 if(sscanf(buffer, "%d", user_input) != 1)
                 {
-                    strcpy(buffer, "");
                     print_error("\n! Invalid input. Please enter a numeric value.\n");
                     continue;
                 }
@@ -56,21 +55,18 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
                 char remaining[MAX];
                 if(sscanf(buffer, "%f%s", user_input, remaining) != 1)
                 {
-                    strcpy(buffer, "");
                     print_error("\n! Invalid input. Please refrain from using non-numeric characters.\n");
                     continue;
                 }
 
                 if(sscanf(buffer, "%d%[.]%s", user_input, remaining, remaining) != 1)
                 {
-                    strcpy(buffer, "");
                     print_error("\n! Invalid input. Please enter a whole number.\n");
                     continue;
                 }
 
                 if(*(int *)user_input < *(int *)min || *(int *)user_input > *(int *)max) 
                 {
-                    strcpy(buffer, "");
                     print_error("\n! Input out of range. Please enter a number between %d and %d (inclusive).\n", *(int *)min, *(int *)max);
                     continue;
                 }
@@ -83,7 +79,6 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
 
                 if(sscanf(buffer, "%f", user_input) != 1)
                 {
-                    strcpy(buffer, "");
                     print_error("\n! Invalid input. Please enter a numeric value.\n");
                     continue;
                 }
@@ -91,14 +86,12 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
                 char remaining[MAX];
                 if(sscanf(buffer, "%f%s", user_input, remaining) != 1)
                 {
-                    strcpy(buffer, "");
                     print_error("\n! Invalid input. Please enter a whole number.\n");
                     continue;
                 }
 
                 if(*(float *)user_input < *(float *)min || *(float *)user_input > *(float *)max) 
                 {
-                    strcpy(buffer, "");
                     print_error("\n! Input out of range. Please enter a number between %f and %f (inclusive).\n", *(float *)min, *(float *)max);
                     continue;
                 }
@@ -111,7 +104,6 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
 
                 if(sscanf(buffer, "%lf", user_input) != 1)
                 {
-                    strcpy(buffer, "");
                     print_error("\n! Invalid input. Please enter a numeric value.\n");
                     continue;
                 }
@@ -119,14 +111,12 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
                 char remaining[MAX];
                 if(sscanf(buffer, "%lf%s", user_input, remaining) != 1)
                 {
-                    strcpy(buffer, "");
                     print_error("\n! Invalid input. Please enter a whole number.\n");
                     continue;
                 }
 
                 if(*(double *)user_input < *(double *)min || *(double *)user_input > *(double *)max) 
                 {
-                    strcpy(buffer, "");
                     print_error("\n! Input out of range. Please enter a number between %lf and %lf (inclusive).\n", *(double *)min, *(double *)max);
                     continue;
                 }
@@ -137,9 +127,18 @@ void *get_number(enum data_type type, char *prompt, void *min, void *max)
 	}
 }
 
-void *get_text(enum data_type type, char *prompt, const char *limit)
+void *get_text(enum data_type type, char *prompt, ...)
 {
-	char buffer[MAX];
+    int character_limit = MAX;
+    const char *format = NULL;
+
+    va_list args;
+    va_start(args, prompt);
+
+    character_limit = va_arg(args, const int);
+    format = va_arg(args, const char *);
+
+    char buffer[MAX];
     void *user_input;
 
 	while(1)
@@ -163,52 +162,61 @@ void *get_text(enum data_type type, char *prompt, const char *limit)
 
                 if(sscanf(buffer, "%s", user_input) != 1)
                 {
-                    strcpy(buffer, "");
+
                     print_error("\n! Invalid input. Please enter a single character.\n");
                     continue;
                 }
 
                 if(strlen((char *)user_input) != 1) 
                 {
-                    strcpy(buffer, "");
+
                     print_error("\n! Invalid input. Please enter a single character.\n");
                     continue;
                 }
 
-                if(strspn(buffer, limit) != strlen(buffer))
+                if(format != NULL)
                 {
-                    strcpy(buffer, "");
-                    print_error("\n! Invalid input. Please enter a value that matches the format \"%s\"\n", limit);
-                    continue;
+                    if(strspn(buffer, format) != strlen(buffer))
+                    {
+    
+                        print_error("\n! Invalid input. Please enter a value that matches the format \"%s\"\n", format);
+                        continue;
+                    }
                 }
 
+                va_end(args);
                 return (char *)user_input;
             }
+
             case STRING:
             {
                 user_input = malloc(sizeof(char) * MAX);
 
                 if(sscanf(buffer, "%s", user_input) != 1)
                 {
-                    strcpy(buffer, "");
+
                     print_error("\n! Invalid input. Please enter a string of characters.\n");
                     continue;
                 }
 
-                if(strlen((char *)user_input) > MAX) 
+                if(strlen((char *)user_input) > character_limit) 
                 {
-                    strcpy(buffer, "");
-                    print_error("\n! Invalid input. Character limit is %d characters.\n", MAX);
+
+                    print_error("\n! Invalid input. Character limit is %d characters.\n", character_limit);
                     continue;
                 }
                 
-                if(strspn(buffer, limit) != strlen(buffer))
+                if(format != NULL)
                 {
-                    strcpy(buffer, "");
-                    print_error("\n! Invalid input. Please enter a value that matches the format \"%s\"\n", limit);
-                    continue;
+                    if(strspn(buffer, format) != strlen(buffer))
+                    {
+    
+                        print_error("\n! Invalid input. Please enter a value that matches the format \"%s\"\n", format);
+                        continue;
+                    }
                 }
 
+                va_end(args);
                 return (char *)user_input;
             }
         }
