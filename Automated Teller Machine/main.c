@@ -64,7 +64,7 @@ void print_menu(Account *user)
             {
                 balance_inquiry(user);
                 char in = *(char *)get_text(CHAR, "\nWould you like to do another transaction? [Y/N] >> ", 1, "YyNn");
-                if(in == 'n' || in == 'n')
+                if(in == 'N' || in == 'n')
                     return;
                 break;
             }
@@ -72,7 +72,7 @@ void print_menu(Account *user)
             {
                 deposit(user);
                 char in = *(char *)get_text(CHAR, "\nWould you like to do another transaction? [Y/N] >> ", 1, "YyNn");
-                if(in == 'n' || in == 'n')
+                if(in == 'N' || in == 'n')
                     return;
                 break;
             }
@@ -80,7 +80,7 @@ void print_menu(Account *user)
             {
                 withdrawal(user);
                 char in = *(char *)get_text(CHAR, "\nWould you like to do another transaction? [Y/N] >> ", 1, "YyNn");
-                if(in == 'n' || in == 'n')
+                if(in == 'N' || in == 'n')
                     return;
                 break;
             }

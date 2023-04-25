@@ -162,14 +162,12 @@ void *get_text(enum data_type type, char *prompt, ...)
 
                 if(sscanf(buffer, "%s", user_input) != 1)
                 {
-
                     print_error("\n! Invalid input. Please enter a single character.\n");
                     continue;
                 }
 
                 if(strlen((char *)user_input) != 1) 
                 {
-
                     print_error("\n! Invalid input. Please enter a single character.\n");
                     continue;
                 }
@@ -178,7 +176,6 @@ void *get_text(enum data_type type, char *prompt, ...)
                 {
                     if(strspn(buffer, format) != strlen(buffer))
                     {
-    
                         print_error("\n! Invalid input. Please enter a value that matches the format \"%s\"\n", format);
                         continue;
                     }
@@ -194,14 +191,12 @@ void *get_text(enum data_type type, char *prompt, ...)
 
                 if(sscanf(buffer, "%s", user_input) != 1)
                 {
-
                     print_error("\n! Invalid input. Please enter a string of characters.\n");
                     continue;
                 }
 
                 if(strlen((char *)user_input) > character_limit) 
                 {
-
                     print_error("\n! Invalid input. Character limit is %d characters.\n", character_limit);
                     continue;
                 }
@@ -210,7 +205,6 @@ void *get_text(enum data_type type, char *prompt, ...)
                 {
                     if(strspn(buffer, format) != strlen(buffer))
                     {
-    
                         print_error("\n! Invalid input. Please enter a value that matches the format \"%s\"\n", format);
                         continue;
                     }
