@@ -39,6 +39,7 @@ void main()
         printf("Last Deposit Amount: %.2f\n\n", user->deposit);
 
         print_menu(user);
+        system("cls");
     }
 }
 
@@ -106,7 +107,7 @@ Account *account_login()
 {
     while(1)
     {
-        char *pin_number = get_text(STRING, "\nPIN Number >> ", "1234567890");
+        char *pin_number = get_text(STRING, "PIN Number >> ", "1234567890");
         for(int i = 0; i < sizeof(users)/sizeof(users[0]); i++)
         {
             if(strcmp(pin_number, users[i].pin_number) == 0)
