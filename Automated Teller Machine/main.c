@@ -63,6 +63,7 @@ void main_menu(Account *user)
             {
                 balance_inquiry(user);
                 char answer = yes_or_no("\nWould you like to do another transaction? (Y/N) >> ");
+                system("cls");
                 if(answer == 'N' || answer == 'n')
                 {
                     answer = yes_or_no("\nWould you like to exit(Y) or logout(N)? >> ");
@@ -76,6 +77,7 @@ void main_menu(Account *user)
             {
                 deposit(user);
                 char answer = yes_or_no("\nWould you like to do another transaction? (Y/N) >> ");
+                system("cls");
                 if(answer == 'N' || answer == 'n')
                 {
                     answer = yes_or_no("\nWould you like to exit(Y) or logout(N) >> ");
@@ -89,6 +91,7 @@ void main_menu(Account *user)
             {
                 withdrawal(user);
                 char answer = yes_or_no("\nWould you like to do another transaction? (Y/N) >> ");
+                system("cls");
                 if(answer == 'N' || answer == 'n')
                 {
                     answer = yes_or_no("\nWould you like to exit(Y) or logout(N) >> ");
@@ -101,6 +104,7 @@ void main_menu(Account *user)
             case 4:
             {
                 char answer = yes_or_no("\nAre you sure you want to logout? (Y/N) >> ");
+                system("cls");
                 if(answer == 'Y' || answer == 'y')
                 {
                     answer = yes_or_no("\nWould you like to exit(Y) or logout(N) >> ");
@@ -113,6 +117,7 @@ void main_menu(Account *user)
             case 5:
             {
                 char answer = yes_or_no("\nAre you sure you want to exit? (Y/N) >> ");
+                system("cls");
                 if(answer == 'N' || answer == 'n')
                     break;
                 exit_prompt("\nThank you for banking with us!\n");
