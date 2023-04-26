@@ -28,6 +28,7 @@ typedef enum TextColor {
 
 void cprintf(const TextColor INPUT, const char *buffer, ...);
 
+void is_null(const char *buffer);
 int is_empty(const char *buffer);
 int has_whitespace(const char *buffer);
 int starts_or_ends_with_dot(const char *buffer);
@@ -79,6 +80,7 @@ void *get_number(const DataType type, const char *prompt, ...)
             case INTEGER:
             {
                 user_input = malloc(sizeof(int));
+                is_null(user_input);
 
                 if(sscanf(buffer, "%d", user_input) != 1)
                 {
@@ -95,13 +97,13 @@ void *get_number(const DataType type, const char *prompt, ...)
 
                 if(sscanf(buffer, "%d%[.]%s", user_input, remaining, remaining) != 1)
                 {
-                    cprintf(RED, "\n! Invalid input. Please enter a whole number.\n");
+                    cprintf(YELLOW, "\n! Invalid input. Please enter a whole number.\n");
                     continue;
                 }
 
                 if(*(int *)user_input < (int)min || *(int *)user_input > (int)max) 
                 {
-                    cprintf(RED, "\n! Input out of range. Please enter a number between %d and %d (inclusive).\n", (int)min, (int)max);
+                    cprintf(YELLOW, "\n! Input out of range. Please enter a number between %d and %d (inclusive).\n", (int)min, (int)max);
                     continue;
                 }
                 
@@ -110,6 +112,7 @@ void *get_number(const DataType type, const char *prompt, ...)
             case FLOAT:
             {
                 user_input = malloc(sizeof(float));
+                is_null(user_input);
 
                 if(sscanf(buffer, "%f", user_input) != 1)
                 {
@@ -120,13 +123,13 @@ void *get_number(const DataType type, const char *prompt, ...)
                 char remaining[MAX];
                 if(sscanf(buffer, "%f%s", user_input, remaining) != 1)
                 {
-                    cprintf(RED, "\n! Invalid input. Please enter a whole number.\n");
+                    cprintf(YELLOW, "\n! Invalid input. Please enter a whole number.\n");
                     continue;
                 }
 
                 if(*(float *)user_input < (float)min || *(float *)user_input > (float)max) 
                 {
-                    cprintf(RED, "\n! Input out of range. Please enter a number between %f and %f (inclusive).\n", (float)min, (float)max);
+                    cprintf(YELLOW, "\n! Input out of range. Please enter a number between %f and %f (inclusive).\n", (float)min, (float)max);
                     continue;
                 }
                 
@@ -135,6 +138,7 @@ void *get_number(const DataType type, const char *prompt, ...)
             case DOUBLE:
             {
                 user_input = malloc(sizeof(double));
+                is_null(user_input);
 
                 if(sscanf(buffer, "%lf", user_input) != 1)
                 {
@@ -145,13 +149,13 @@ void *get_number(const DataType type, const char *prompt, ...)
                 char remaining[MAX];
                 if(sscanf(buffer, "%lf%s", user_input, remaining) != 1)
                 {
-                    cprintf(RED, "\n! Invalid input. Please enter a whole number.\n");
+                    cprintf(YELLOW, "\n! Invalid input. Please enter a whole number.\n");
                     continue;
                 }
 
                 if(*(double *)user_input < (double)min || *(double *)user_input > (double)max) 
                 {
-                    cprintf(RED, "\n! Input out of range. Please enter a number between %lf and %lf (inclusive).\n", (double)min, (double)max);
+                    cprintf(YELLOW, "\n! Input out of range. Please enter a number between %lf and %lf (inclusive).\n", (double)min, (double)max);
                     continue;
                 }
                 
@@ -164,6 +168,7 @@ void *get_number(const DataType type, const char *prompt, ...)
 void *get_text(const DataType type, const char *input, ...)
 {
     char *prompt = malloc(strlen(input)+1);
+    is_null(prompt);
 
     va_list args;
     va_start(args, input);
@@ -193,16 +198,17 @@ void *get_text(const DataType type, const char *input, ...)
             case CHAR:
             {
                 user_input = malloc(sizeof(char));
+                is_null(user_input);
 
                 if(sscanf(buffer, "%s", user_input) != 1)
                 {
-                    cprintf(RED, "\n! Invalid input. Please enter a single character.\n");
+                    cprintf(YELLOW, "\n! Invalid input. Please enter a single character.\n");
                     continue;
                 }
 
                 if(strlen((char *)user_input) != 1) 
                 {
-                    cprintf(RED, "\n! Invalid input. Please enter a single character.\n");
+                    cprintf(YELLOW, "\n! Invalid input. Please enter a single character.\n");
                     continue;
                 }
 
@@ -210,17 +216,18 @@ void *get_text(const DataType type, const char *input, ...)
             }
             case STRING:
             {
-                user_input = malloc(sizeof(char) * MAX);
+                user_input = malloc(strlen(buffer)+1);
+                is_null(user_input);
 
                 if(sscanf(buffer, "%s", user_input) != 1)
                 {
-                    cprintf(RED, "\n! Invalid input. Please enter a string of characters.\n");
+                    cprintf(YELLOW, "\n! Invalid input. Please enter a string of characters.\n");
                     continue;
                 }
 
                 if(strlen((char *)user_input) > MAX) 
                 {
-                    cprintf(RED, "\n! Invalid input. Character limit is %d characters.\n", MAX);
+                    cprintf(YELLOW, "\n! Invalid input. Character limit is %d characters.\n", MAX);
                     continue;
                 }
 
@@ -228,6 +235,15 @@ void *get_text(const DataType type, const char *input, ...)
             }
         }
 	}
+}
+
+void is_null(const char *buffer)
+{
+    if(buffer == NULL)
+    {
+        cprintf(RED, "\n! Unable to reserve memory. Exiting Program...\n");
+        exit(1);
+    }
 }
 
 int is_empty(const char *buffer)
@@ -286,7 +302,7 @@ char yes_or_no(const char *prompt)
         
         if(strspn(buffer, "YyNn") != strlen(buffer))
         {
-            cprintf(RED, "\n! Invalid input. Please enter Y or N to continue.\n");
+            cprintf(YELLOW, "\n! Invalid input. Please enter Y or N to continue.\n");
             continue;
         }
         return buffer[0];
