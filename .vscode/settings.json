@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "valdez.h": "c",
-        "limits": "c"
+        "limits": "c",
+        "ctype.h": "c"
     }
 }
