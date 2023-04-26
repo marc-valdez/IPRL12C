@@ -32,11 +32,11 @@ void main()
     {
         Account *user = account_login();
         
-        // printf("\nAccount Name: %s\n", user->name);
-        // printf("PIN Number: %s\n", user->pin_number);
-        // printf("Account Balance: %.2f\n", user->balance);
-        // printf("Last Withdrawal Amount: %.2f\n", user->withdrawal_amount);
-        // printf("Last Deposit Amount: %.2f\n\n", user->deposit);
+        printf("%s[%dm\nAccount Name: %s\n", COLOR, DEFAULT, user->name);
+        printf("PIN Number: %s\n", user->pin_number);
+        printf("Account Balance: %.2f\n", user->balance);
+        printf("Last Withdrawal Amount: %.2f\n", user->withdrawal_amount);
+        printf("Last Deposit Amount: %.2f\n", user->deposit);
 
         main_menu(user);
         system("cls");
@@ -45,18 +45,18 @@ void main()
 
 void main_menu(Account *user)
 {
-    cprintf(WHITE, "\nWelcome to %s[1;%dmLPU%s[0;%dm Bank\n", COLOR, RED, COLOR, WHITE);
+    cprintf(DEFAULT, "\nWelcome to %s[1;%dmLPU%s[0;%dm Bank\n", COLOR, RED, COLOR, DEFAULT);
 
     while(1)
     {
-        printf("\n%s[%dm[1]%s[%dm Balance Inquiry\n", COLOR, CYAN, COLOR, WHITE);
-        printf("%s[%dm[2]%s[%dm Deposit\n", COLOR, CYAN, COLOR, WHITE);
-        printf("%s[%dm[3]%s[%dm Withdrawal\n", COLOR, CYAN, COLOR, WHITE);
-        printf("%s[%dm[4]%s[%dm Logout \\ Change Account\n", COLOR, CYAN, COLOR, WHITE);
-        printf("%s[%dm[5]%s[%dm Exit\n", COLOR, CYAN, COLOR, WHITE);
+        printf("\n%s[%dm[1]%s[%dm Balance Inquiry\n", COLOR, CYAN, COLOR, DEFAULT);
+        printf("%s[%dm[2]%s[%dm Deposit\n", COLOR, CYAN, COLOR, DEFAULT);
+        printf("%s[%dm[3]%s[%dm Withdrawal\n", COLOR, CYAN, COLOR, DEFAULT);
+        printf("%s[%dm[4]%s[%dm Logout \\ Change Account\n", COLOR, CYAN, COLOR, DEFAULT);
+        printf("%s[%dm[5]%s[%dm Exit\n", COLOR, CYAN, COLOR, DEFAULT);
 
         char prompt[MAX];
-        sprintf(prompt, "%s[%dm\nEnter transaction number %s[0;%dm>> ", COLOR, WHITE, COLOR, DEFAULT);
+        sprintf(prompt, "\nEnter transaction number >> ");
         int transaction = *(int *)get_number(INTEGER, prompt, 1.0, 5.0);
 
         switch(transaction)
@@ -132,7 +132,7 @@ Account *account_login()
 {
     while(1)
     {
-        char *pin_number = (char *)get_text(STRING, "%s[%dm\nPIN Number %s[0;%dm>> ", COLOR, WHITE, COLOR, CYAN);
+        char *pin_number = (char *)get_text(STRING, "%s[%dm\nPIN Number %s[0;%dm>> ", COLOR, DEFAULT, COLOR, CYAN);
 
         if(strspn(pin_number, "1234567890") != strlen(pin_number))
         {
@@ -159,6 +159,7 @@ Account *account_login()
 
 void balance_inquiry(Account *user)
 {
+    system("cls");
     printf("\nYour current balance is %.2f\n", user->balance);
 }
 
