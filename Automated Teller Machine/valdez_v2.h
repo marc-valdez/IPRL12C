@@ -4,30 +4,41 @@
 #include <stdarg.h>
 
 #define MAX 256
-#define ERROR_COLOR "\033[1;31m"
-#define RESET_COLOR "\033[0m"
+#define COLOR "\x1B"
 
-int is_empty(char *buffer);
-int has_whitespace(char *buffer);
-int starts_or_ends_with_dot(char *buffer);
-void print_error(const char *buffer, ...);
-
-
-enum data_type {
+typedef enum DataType {
     CHAR,
     STRING,
     INTEGER,
     FLOAT,
     DOUBLE
-};
+} DataType;
 
-void *get_number(enum data_type type, const char *PROMPT, ...)
+typedef enum TextColor {
+    BLACK = 30,
+    RED = 31,
+    GREEN = 32,
+    YELLOW = 33,
+    BLUE = 34,
+    MAGENTA = 35,
+    CYAN = 36,
+    WHITE = 37,
+    DEFAULT = 0
+} TextColor;
+
+void cprintf(const TextColor INPUT, const char *buffer, ...);
+
+int is_empty(const char *buffer);
+int has_whitespace(const char *buffer);
+int starts_or_ends_with_dot(const char *buffer);
+
+void *get_number(const DataType type, const char *prompt, ...)
 {
     double min = INT_MIN, max = INT_MAX;
     int arg_count = 0;
 
     va_list args, args_copy;
-    va_start(args, PROMPT);
+    va_start(args, prompt);
 
     va_copy(args_copy, args);
     for(int i = 0; i < 2; i++)
@@ -52,7 +63,7 @@ void *get_number(enum data_type type, const char *PROMPT, ...)
 
 	while(1)
 	{
-        printf("%s", PROMPT);
+        printf("%s", prompt);
 		fgets(buffer, sizeof(buffer), stdin);
         buffer[strcspn(buffer, "\n")] = '\0';
         
@@ -71,26 +82,26 @@ void *get_number(enum data_type type, const char *PROMPT, ...)
 
                 if(sscanf(buffer, "%d", user_input) != 1)
                 {
-                    print_error("\n! Invalid input. Please enter a numeric value.\n");
+                    cprintf(RED, "\n! Invalid input. Please enter a numeric value.\n");
                     continue;
                 }
 
                 char remaining[MAX];
                 if(sscanf(buffer, "%f%s", user_input, remaining) != 1)
                 {
-                    print_error("\n! Invalid input. Please refrain from using non-numeric characters.\n");
+                    cprintf(RED, "\n! Invalid input. Please refrain from using non-numeric characters.\n");
                     continue;
                 }
 
                 if(sscanf(buffer, "%d%[.]%s", user_input, remaining, remaining) != 1)
                 {
-                    print_error("\n! Invalid input. Please enter a whole number.\n");
+                    cprintf(RED, "\n! Invalid input. Please enter a whole number.\n");
                     continue;
                 }
 
                 if(*(int *)user_input < (int)min || *(int *)user_input > (int)max) 
                 {
-                    print_error("\n! Input out of range. Please enter a number between %d and %d (inclusive).\n", (int)min, (int)max);
+                    cprintf(RED, "\n! Input out of range. Please enter a number between %d and %d (inclusive).\n", (int)min, (int)max);
                     continue;
                 }
                 
@@ -102,20 +113,20 @@ void *get_number(enum data_type type, const char *PROMPT, ...)
 
                 if(sscanf(buffer, "%f", user_input) != 1)
                 {
-                    print_error("\n! Invalid input. Please enter a numeric value.\n");
+                    cprintf(RED, "\n! Invalid input. Please enter a numeric value.\n");
                     continue;
                 }
 
                 char remaining[MAX];
                 if(sscanf(buffer, "%f%s", user_input, remaining) != 1)
                 {
-                    print_error("\n! Invalid input. Please enter a whole number.\n");
+                    cprintf(RED, "\n! Invalid input. Please enter a whole number.\n");
                     continue;
                 }
 
                 if(*(float *)user_input < (float)min || *(float *)user_input > (float)max) 
                 {
-                    print_error("\n! Input out of range. Please enter a number between %f and %f (inclusive).\n", (float)min, (float)max);
+                    cprintf(RED, "\n! Input out of range. Please enter a number between %f and %f (inclusive).\n", (float)min, (float)max);
                     continue;
                 }
                 
@@ -127,20 +138,20 @@ void *get_number(enum data_type type, const char *PROMPT, ...)
 
                 if(sscanf(buffer, "%lf", user_input) != 1)
                 {
-                    print_error("\n! Invalid input. Please enter a numeric value.\n");
+                    cprintf(RED, "\n! Invalid input. Please enter a numeric value.\n");
                     continue;
                 }
 
                 char remaining[MAX];
                 if(sscanf(buffer, "%lf%s", user_input, remaining) != 1)
                 {
-                    print_error("\n! Invalid input. Please enter a whole number.\n");
+                    cprintf(RED, "\n! Invalid input. Please enter a whole number.\n");
                     continue;
                 }
 
                 if(*(double *)user_input < (double)min || *(double *)user_input > (double)max) 
                 {
-                    print_error("\n! Input out of range. Please enter a number between %lf and %lf (inclusive).\n", (double)min, (double)max);
+                    cprintf(RED, "\n! Input out of range. Please enter a number between %lf and %lf (inclusive).\n", (double)min, (double)max);
                     continue;
                 }
                 
@@ -150,14 +161,23 @@ void *get_number(enum data_type type, const char *PROMPT, ...)
 	}
 }
 
-void *get_text(enum data_type type, const char *PROMPT)
+void *get_text(const DataType type, const char *input, ...)
 {
+    char *prompt = malloc(strlen(input)+1);
+
+    va_list args;
+    va_start(args, input);
+
+    vsprintf(prompt, input, args);
+
+    va_end(args);
+
     char buffer[MAX];
     void *user_input;
 
 	while(1)
 	{
-        printf("%s", PROMPT);
+        printf("%s", prompt);
 		fgets(buffer, sizeof(buffer), stdin);
         buffer[strcspn(buffer, "\n")] = '\0';
 
@@ -176,13 +196,13 @@ void *get_text(enum data_type type, const char *PROMPT)
 
                 if(sscanf(buffer, "%s", user_input) != 1)
                 {
-                    print_error("\n! Invalid input. Please enter a single character.\n");
+                    cprintf(RED, "\n! Invalid input. Please enter a single character.\n");
                     continue;
                 }
 
                 if(strlen((char *)user_input) != 1) 
                 {
-                    print_error("\n! Invalid input. Please enter a single character.\n");
+                    cprintf(RED, "\n! Invalid input. Please enter a single character.\n");
                     continue;
                 }
 
@@ -194,13 +214,13 @@ void *get_text(enum data_type type, const char *PROMPT)
 
                 if(sscanf(buffer, "%s", user_input) != 1)
                 {
-                    print_error("\n! Invalid input. Please enter a string of characters.\n");
+                    cprintf(RED, "\n! Invalid input. Please enter a string of characters.\n");
                     continue;
                 }
 
                 if(strlen((char *)user_input) > MAX) 
                 {
-                    print_error("\n! Invalid input. Character limit is %d characters.\n", MAX);
+                    cprintf(RED, "\n! Invalid input. Character limit is %d characters.\n", MAX);
                     continue;
                 }
 
@@ -210,64 +230,63 @@ void *get_text(enum data_type type, const char *PROMPT)
 	}
 }
 
-int is_empty(char *buffer)
+int is_empty(const char *buffer)
 {
     if(buffer[0] == '\0')
     {
-        strcpy(buffer, "");
-        print_error("\n! Input cannot be empty. Please enter a value.\n");
+        cprintf(RED, "\n! Input cannot be empty. Please enter a value.\n");
         return 1;
     }
     return 0;
 }
 
-int has_whitespace(char *buffer)
+int has_whitespace(const char *buffer)
 {
     if(strchr(buffer, ' ') != NULL)
     {
-        strcpy(buffer, "");
-        print_error("\n! Invalid input. Please try again without using whitespace characters.\n");
+        cprintf(RED, "\n! Invalid input. Please try again without using whitespace characters.\n");
         return 1;
     }
     return 0;
 }
 
-int starts_or_ends_with_dot(char *buffer)
+int starts_or_ends_with_dot(const char *buffer)
 {
     if(buffer[0] == '.' || buffer[strlen(buffer)-1] == '.')
     {
-        strcpy(buffer, "");
-        print_error("\n! Invalid input. Please enter a value that does not start or end with a period (.) character.\n");
+        cprintf(RED, "\n! Invalid input. Please enter a value that does not start or end with a period (.) character.\n");
         return 1;
     }
     return 0;
 }
 
-void print_error(const char *buffer, ...)
+void cprintf(const TextColor INPUT, const char *buffer, ...)
 {
     va_list args;
     va_start(args, buffer);
-    printf(ERROR_COLOR);
+
+    printf("%s[%dm", COLOR, INPUT);
     vprintf(buffer, args);
-    printf(RESET_COLOR);
+    printf("%s[%dm", COLOR, DEFAULT);
+
     va_end(args);
 }
 
-void exit_prompt(const char *PROMPT)
+void exit_prompt(const char *prompt)
 {
-    printf(PROMPT);
+    printf(prompt);
     exit(0);
 }
 
-char yes_or_no(const char *PROMPT)
+char yes_or_no(const char *prompt)
 {
     while(1)
     {
-        char *buffer = (char *)get_text(CHAR, PROMPT);
+        char *buffer = (char *)get_text(CHAR, prompt);
         
         if(strspn(buffer, "YyNn") != strlen(buffer))
         {
-            print_error("\n! Invalid input. Please enter Y or N to continue.\n");
+            cprintf(RED, "\n! Invalid input. Please enter Y or N to continue.\n");
             continue;
         }
         return buffer[0];
