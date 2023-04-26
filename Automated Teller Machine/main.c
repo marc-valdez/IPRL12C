@@ -32,11 +32,11 @@ void main()
     {
         Account *user = account_login();
         
-        printf("\nAccount Name: %s\n", user->name);
-        printf("PIN Number: %s\n", user->pin_number);
-        printf("Account Balance: %.2f\n", user->balance);
-        printf("Last Withdrawal Amount: %.2f\n", user->withdrawal_amount);
-        printf("Last Deposit Amount: %.2f\n\n", user->deposit);
+        // printf("\nAccount Name: %s\n", user->name);
+        // printf("PIN Number: %s\n", user->pin_number);
+        // printf("Account Balance: %.2f\n", user->balance);
+        // printf("Last Withdrawal Amount: %.2f\n", user->withdrawal_amount);
+        // printf("Last Deposit Amount: %.2f\n\n", user->deposit);
 
         main_menu(user);
         system("cls");
@@ -45,17 +45,19 @@ void main()
 
 void main_menu(Account *user)
 {
-    printf("WELCOME TO LPU BANK\n");
+    cprintf(WHITE, "\nWelcome to %s[1;%dmLPU%s[0;%dm Bank\n", COLOR, RED, COLOR, WHITE);
 
     while(1)
     {
-        printf("\n[1] Balance Inquiry\n");
-        printf("[2] Deposit\n");
-        printf("[3] Withdrawal\n");
-        printf("[4] Logout \\ Change Account\n");
-        printf("[5] Exit\n");
+        printf("\n%s[%dm[1]%s[%dm Balance Inquiry\n", COLOR, CYAN, COLOR, WHITE);
+        printf("%s[%dm[2]%s[%dm Deposit\n", COLOR, CYAN, COLOR, WHITE);
+        printf("%s[%dm[3]%s[%dm Withdrawal\n", COLOR, CYAN, COLOR, WHITE);
+        printf("%s[%dm[4]%s[%dm Logout \\ Change Account\n", COLOR, CYAN, COLOR, WHITE);
+        printf("%s[%dm[5]%s[%dm Exit\n", COLOR, CYAN, COLOR, WHITE);
 
-        int transaction = *(int *)get_number(INTEGER, "\nEnter transaction number >> ", 1.0, 5.0);
+        char prompt[MAX];
+        sprintf(prompt, "%s[%dm\nEnter transaction number %s[0;%dm>> ", COLOR, WHITE, COLOR, DEFAULT);
+        int transaction = *(int *)get_number(INTEGER, prompt, 1.0, 5.0);
 
         switch(transaction)
         {
@@ -130,17 +132,17 @@ Account *account_login()
 {
     while(1)
     {
-        char *pin_number = (char *)get_text(STRING, "\nPIN Number >> ");
+        char *pin_number = (char *)get_text(STRING, "%s[%dm\nPIN Number %s[0;%dm>> ", COLOR, WHITE, COLOR, CYAN);
 
         if(strspn(pin_number, "1234567890") != strlen(pin_number))
         {
-            print_error("\n! Invalid PIN format. Please remove any non-numeric characters and try again (ex: 1234).\n");
+            cprintf(RED, "\n! Invalid PIN format. Please remove any non-numeric characters and try again (ex: 1234).\n");
             continue;
         }
         
         if(strlen(pin_number) != 4)
         {
-            print_error("\n! Invalid PIN format. PIN must be exactly 4 digits long.\n");
+            cprintf(RED, "\n! Invalid PIN format. PIN must be exactly 4 digits long.\n");
             continue;
         }
 
@@ -151,7 +153,7 @@ Account *account_login()
             else
                 continue;
         }
-        print_error("\n! Wrong PIN.\n");
+        cprintf(RED, "\n! Wrong PIN.\n");
     }
 }
 
@@ -168,7 +170,7 @@ void deposit(Account *user)
         user->deposit = *(float *)get_number(FLOAT, "\nDeposit amount >> ");
 
         if(user->deposit <= 0.0)
-            print_error("\n! Deposit amount should be greater than zero.\n");
+            cprintf(RED, "\n! Deposit amount should be greater than zero.\n");
         else
         {
             user->balance += user->deposit;
@@ -186,11 +188,11 @@ void withdrawal(Account *user)
         user->withdrawal_amount = *(float *)get_number(FLOAT, "\nWithdrawal amount >> ");
 
         if(user->withdrawal_amount <= 0.0)
-            print_error("\n! Withdrawal amount should be greater than zero.\n");
+            cprintf(RED, "\n! Withdrawal amount should be greater than zero.\n");
         else if(user->withdrawal_amount > MAX_WITHDRAW)
-            print_error("\n! Withdrawal exceeded the maximum amount of %.2f\n", MAX_WITHDRAW);    
+            cprintf(RED, "\n! Withdrawal exceeded the maximum amount of %.2f\n", MAX_WITHDRAW);    
         else if(user->withdrawal_amount > user->balance)
-            print_error("\n! Withdrawal exceeds the available balance of %.2f\n", user->balance);
+            cprintf(RED, "\n! Withdrawal exceeds the available balance of %.2f\n", user->balance);
         else
         {
             user->balance -= user->withdrawal_amount;
