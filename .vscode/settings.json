@@ -2,6 +2,7 @@
     "files.associations": {
         "valdez.h": "c",
         "limits": "c",
-        "ctype.h": "c"
+        "ctype.h": "c",
+        "string.h": "c"
     }
 }
