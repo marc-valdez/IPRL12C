@@ -1,17 +1,15 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-#include <ctype.h>
-#include <stdbool.h>
+#include <string.h>
 #include <stdarg.h>
 
 #define MAX 256
 #define ERROR_COLOR "\033[1;31m"
 #define RESET_COLOR "\033[0m"
 
-bool is_empty(char *buffer);
-bool has_whitespace(char *buffer);
-bool starts_or_ends_with_dot(char *buffer);
+int is_empty(char *buffer);
+int has_whitespace(char *buffer);
+int starts_or_ends_with_dot(char *buffer);
 void print_error(const char *buffer, ...);
 
 
@@ -52,7 +50,7 @@ void *get_number(enum data_type type, const char *PROMPT, ...)
     char buffer[MAX];
     void *user_input;
 
-	while(true)
+	while(1)
 	{
         printf("%s", PROMPT);
 		fgets(buffer, sizeof(buffer), stdin);
@@ -212,37 +210,37 @@ void *get_text(enum data_type type, const char *PROMPT)
 	}
 }
 
-bool is_empty(char *buffer)
+int is_empty(char *buffer)
 {
     if(buffer[0] == '\0')
     {
         strcpy(buffer, "");
         print_error("\n! Input cannot be empty. Please enter a value.\n");
-        return true;
+        return 1;
     }
-    return false;
+    return 0;
 }
 
-bool has_whitespace(char *buffer)
+int has_whitespace(char *buffer)
 {
     if(strchr(buffer, ' ') != NULL)
     {
         strcpy(buffer, "");
         print_error("\n! Invalid input. Please try again without using whitespace characters.\n");
-        return true;
+        return 1;
     }
-    return false;
+    return 0;
 }
 
-bool starts_or_ends_with_dot(char *buffer)
+int starts_or_ends_with_dot(char *buffer)
 {
     if(buffer[0] == '.' || buffer[strlen(buffer)-1] == '.')
     {
         strcpy(buffer, "");
         print_error("\n! Invalid input. Please enter a value that does not start or end with a period (.) character.\n");
-        return true;
+        return 1;
     }
-    return false;
+    return 0;
 }
 
 void print_error(const char *buffer, ...)
