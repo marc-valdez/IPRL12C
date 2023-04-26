@@ -136,13 +136,13 @@ Account *account_login()
 
         if(strspn(pin_number, "1234567890") != strlen(pin_number))
         {
-            cprintf(RED, "\n! Invalid PIN format. Please remove any non-numeric characters and try again (ex: 1234).\n");
+            cprintf(YELLOW, "\n! Invalid PIN format. Please remove any non-numeric characters and try again (ex: 1234).\n");
             continue;
         }
         
         if(strlen(pin_number) != 4)
         {
-            cprintf(RED, "\n! Invalid PIN format. PIN must be exactly 4 digits long.\n");
+            cprintf(YELLOW, "\n! Invalid PIN format. PIN must be exactly 4 digits long.\n");
             continue;
         }
 
