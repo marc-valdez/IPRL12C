@@ -33,31 +33,31 @@ int is_empty(const char *buffer);
 int has_whitespace(const char *buffer);
 int starts_or_ends_with_dot(const char *buffer);
 
-void *get_number(const DataType type, const char *prompt, ...)
+void *get_number(const DataType type, const char *prompt, const double min, const double max)
 {
-    double min = INT_MIN, max = INT_MAX;
-    int arg_count = 0;
+    // double min = INT_MIN, max = INT_MAX;
+    // int arg_count = 0;
 
-    va_list args, args_copy;
-    va_start(args, prompt);
+    // va_list args, args_copy;
+    // va_start(args, prompt);
 
-    va_copy(args_copy, args);
-    for(int i = 0; i < 2; i++)
-    {
-        if(va_arg(args_copy, void *) == NULL)
-            arg_count += 1;
-        else
-            break;
-    }
+    // va_copy(args_copy, args);
+    // for(int i = 0; i < 2; i++)
+    // {
+    //     if(va_arg(args_copy, void *) == NULL)
+    //         arg_count += 1;
+    //     else
+    //         break;
+    // }
 
-    if(arg_count != 0)
-    {
-        min = va_arg(args, double);
-        max = va_arg(args, double);
-    }
+    // if(arg_count != 0)
+    // {
+    //     min = va_arg(args, double);
+    //     max = va_arg(args, double);
+    // }
 
-    va_end(args);
-    va_end(args_copy);
+    // va_end(args);
+    // va_end(args_copy);
 
     char buffer[MAX];
     void *user_input;
@@ -291,6 +291,8 @@ void cprintf(const TextColor INPUT, const char *buffer, ...)
 void exit_prompt(const char *prompt)
 {
     printf(prompt);
+    printf("\nPress any key to continue...\n");
+    getchar();
     exit(0);
 }
 

@@ -4,20 +4,27 @@
 #include "valdez_v2.h"
 
 #define INITIAL_BALANCE 5000.0
-#define MAX_WITHDRAW 4000.0
+#define MAX_WITHDRAWAL_AMOUNT 4000.0
 
 typedef struct Account {
     char *name;
     char *pin_number;
+
     float balance;
-    float withdrawal_amount;
-    float deposit;
+
+    int withdrawal_count;
+    float amount_withdrawn;
+
+    int deposit_count;
+    float amount_deposited;
 } Account;
 
 Account users[] = {
-    {"Valdez, Marc Joshua", "1111", INITIAL_BALANCE, 0.0, 0.0},
-    {"Binegas, John Daniel", "2222", INITIAL_BALANCE, 0.0, 0.0},
-    {"Bautista, Glen Angelo", "3333", INITIAL_BALANCE, 0.0, 0.0}
+    {"Valdez, Marc Joshua", "1111", INITIAL_BALANCE, 0, 0.0, 0, 0.0},
+    {"Binegas, John Daniel", "2222", INITIAL_BALANCE, 0, 0.0, 0, 0.0},
+    {"Bautista, Glen Angelo", "3333", INITIAL_BALANCE, 0, 0.0, 0, 0.0},
+    {"Ubaldo, Rhay Allein", "4444", INITIAL_BALANCE, 0, 0.0, 0, 0.0},
+    {"Manuel, Joshua", "5555", INITIAL_BALANCE, 0, 0.0, 0, 0.0}
 };
 
 Account *account_login();
@@ -25,18 +32,13 @@ void main_menu(Account *user);
 void balance_inquiry(Account *user);
 void deposit(Account *user);
 void withdrawal(Account *user);
+void generate_report(Account *user);
 
 void main()
 {
     while(1)
     {
         Account *user = account_login();
-        
-        printf("%s[%dm\nAccount Name: %s\n", COLOR, DEFAULT, user->name);
-        printf("PIN Number: %s\n", user->pin_number);
-        printf("Account Balance: %.2f\n", user->balance);
-        printf("Last Withdrawal Amount: %.2f\n", user->withdrawal_amount);
-        printf("Last Deposit Amount: %.2f\n", user->deposit);
 
         main_menu(user);
         system("cls");
@@ -55,9 +57,11 @@ void main_menu(Account *user)
         printf("%s[%dm[4]%s[%dm Logout \\ Change Account\n", COLOR, CYAN, COLOR, DEFAULT);
         printf("%s[%dm[5]%s[%dm Exit\n", COLOR, CYAN, COLOR, DEFAULT);
 
+        printf("\n%s[%dm[6]%s[%dm Generate Reports\n", COLOR, CYAN, COLOR, DEFAULT);
+
         char prompt[MAX];
         sprintf(prompt, "\nEnter transaction number >> ");
-        int transaction = *(int *)get_number(INTEGER, prompt, 1.0, 5.0);
+        int transaction = *(int *)get_number(INTEGER, prompt, 1.0, 6.0);
 
         switch(transaction)
         {
@@ -70,7 +74,7 @@ void main_menu(Account *user)
                 {
                     answer = yes_or_no("\nWould you like to exit(Y) or logout(N)? >> ");
                     if(answer == 'Y' || answer == 'y')
-                        exit_prompt("\nThank you for banking with us!\n");
+                        exit_prompt("Thank you for banking with us!\n");
                     return;
                 }
                 break;
@@ -84,7 +88,7 @@ void main_menu(Account *user)
                 {
                     answer = yes_or_no("\nWould you like to exit(Y) or logout(N) >> ");
                     if(answer == 'Y' || answer == 'y')
-                        exit_prompt("\nThank you for banking with us!\n");
+                        exit_prompt("Thank you for banking with us!\n");
                     return;
                 }
                 break;
@@ -96,9 +100,9 @@ void main_menu(Account *user)
                 system("cls");
                 if(answer == 'N' || answer == 'n')
                 {
-                    answer = yes_or_no("\nWould you like to exit(Y) or logout(N) >> ");
+                    answer = yes_or_no("\nWould you like to exit(Y) or logout(N)? >> ");
                     if(answer == 'Y' || answer == 'y')
-                        exit_prompt("\nThank you for banking with us!\n");
+                        exit_prompt("Thank you for banking with us!\n");
                     return;
                 }
                 break;
@@ -108,12 +112,7 @@ void main_menu(Account *user)
                 char answer = yes_or_no("\nAre you sure you want to logout? (Y/N) >> ");
                 system("cls");
                 if(answer == 'Y' || answer == 'y')
-                {
-                    answer = yes_or_no("\nWould you like to exit(Y) or logout(N) >> ");
-                    if(answer == 'Y' || answer == 'y')
-                        exit_prompt("\nThank you for banking with us!\n");
                     return;
-                }
                 break;
             }
             case 5:
@@ -122,7 +121,16 @@ void main_menu(Account *user)
                 system("cls");
                 if(answer == 'N' || answer == 'n')
                     break;
-                exit_prompt("\nThank you for banking with us!\n");
+                exit_prompt("Thank you for banking with us!\n");
+            }
+            case 6:
+            {
+                generate_report(user);
+                char answer = yes_or_no("\nWould you like to exit? (Y/N) >> ");
+                system("cls");
+                if(answer == 'N' || answer == 'n')
+                    break;
+                exit_prompt("Thank you for banking with us!\n");
             }
         }
     }
@@ -153,6 +161,7 @@ Account *account_login()
             else
                 continue;
         }
+        
         cprintf(RED, "\n! Wrong PIN.\n");
     }
 }
@@ -167,14 +176,15 @@ void deposit(Account *user)
 {
     while(1)
     {
-        float min = INT_MIN, max = INT_MAX;
-        user->deposit = *(float *)get_number(FLOAT, "\nDeposit amount >> ");
+        float deposit = *(float *)get_number(FLOAT, "\nDeposit amount >> ", INT_MIN, INT_MAX);
 
-        if(user->deposit <= 0.0)
-            cprintf(RED, "\n! Deposit amount should be greater than zero.\n");
+        if(deposit <= 0.0)
+            cprintf(YELLOW, "\n! Deposit amount should be greater than zero.\n");
         else
         {
-            user->balance += user->deposit;
+            user->balance += deposit;
+            user->amount_deposited += deposit;
+            user->deposit_count += 1;
             balance_inquiry(user);
             break;
         }
@@ -185,20 +195,37 @@ void withdrawal(Account *user)
 {
     while(1)
     {
-        float min = INT_MIN, max = INT_MAX;
-        user->withdrawal_amount = *(float *)get_number(FLOAT, "\nWithdrawal amount >> ");
+        float withdrawal = *(float *)get_number(FLOAT, "\nWithdrawal amount >> ", INT_MIN, INT_MAX);
 
-        if(user->withdrawal_amount <= 0.0)
-            cprintf(RED, "\n! Withdrawal amount should be greater than zero.\n");
-        else if(user->withdrawal_amount > MAX_WITHDRAW)
-            cprintf(RED, "\n! Withdrawal exceeded the maximum amount of %.2f\n", MAX_WITHDRAW);    
-        else if(user->withdrawal_amount > user->balance)
+        if(withdrawal <= 0.0)
+            cprintf(YELLOW, "\n! Withdrawal amount should be greater than zero.\n");
+        else if(withdrawal > MAX_WITHDRAWAL_AMOUNT)
+            cprintf(YELLOW, "\n! Withdrawal exceeded the maximum amount of %.2f\n", MAX_WITHDRAWAL_AMOUNT);
+        else if(withdrawal > user->balance)
             cprintf(RED, "\n! Withdrawal exceeds the available balance of %.2f\n", user->balance);
         else
         {
-            user->balance -= user->withdrawal_amount;
+            user->balance -= withdrawal;
+            user->amount_withdrawn += withdrawal;
+            user->withdrawal_count++;
             balance_inquiry(user);
             break;
         }
     }
+}
+
+void generate_report(Account *user)
+{
+    cprintf(CYAN, "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+    cprintf(CYAN, "\tAccount name: %s[%dm%s\n", COLOR, DEFAULT, user->name);
+    cprintf(CYAN, "\tPIN number: %s[%dm%s\n", COLOR, DEFAULT, user->pin_number);
+
+    cprintf(CYAN, "\n\tNo. of times deposited: %s[%dm%d\n", COLOR, DEFAULT, user->deposit_count);
+    cprintf(CYAN, "\tTotal amount deposited: %s[%dm%.2f\n", COLOR, DEFAULT, user->amount_deposited);
+    
+    cprintf(CYAN, "\n\tNo. of times withdrawn: %s[%dm%d\n", COLOR, DEFAULT, user->withdrawal_count);
+    cprintf(CYAN, "\tTotal amount withdrawn: %s[%dm%.2f\n", COLOR, DEFAULT, user->amount_withdrawn);
+    
+    cprintf(CYAN, "\n\tAccount balance: %s[%dm%.2f", COLOR, DEFAULT, user->balance);
+    cprintf(CYAN, "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 }
