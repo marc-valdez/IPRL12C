@@ -59,9 +59,7 @@ void main_menu(Account *user)
 
         printf("\n%s[%dm[6]%s[%dm Generate Reports\n", COLOR, CYAN, COLOR, DEFAULT);
 
-        char prompt[MAX];
-        sprintf(prompt, "\nEnter transaction number >> ");
-        int transaction = *(int *)get_number(INTEGER, prompt, 1.0, 6.0);
+        int transaction = *(int *)get_number(INTEGER, "\nEnter transaction number >> ", 1.0, 6.0);
 
         switch(transaction)
         {

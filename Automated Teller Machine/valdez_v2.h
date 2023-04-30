@@ -33,31 +33,17 @@ int is_empty(const char *buffer);
 int has_whitespace(const char *buffer);
 int starts_or_ends_with_dot(const char *buffer);
 
-void *get_number(const DataType type, const char *prompt, const double min, const double max)
+void *get_number(const DataType type, const char *input, const double min, const double max, ...)
 {
-    // double min = INT_MIN, max = INT_MAX;
-    // int arg_count = 0;
+    char *prompt = malloc(strlen(input)+1);
+    is_null(input);
 
-    // va_list args, args_copy;
-    // va_start(args, prompt);
+    va_list args;
+    va_start(args, max);
 
-    // va_copy(args_copy, args);
-    // for(int i = 0; i < 2; i++)
-    // {
-    //     if(va_arg(args_copy, void *) == NULL)
-    //         arg_count += 1;
-    //     else
-    //         break;
-    // }
+    vsprintf(prompt, input, args);
 
-    // if(arg_count != 0)
-    // {
-    //     min = va_arg(args, double);
-    //     max = va_arg(args, double);
-    // }
-
-    // va_end(args);
-    // va_end(args_copy);
+    va_end(args);
 
     char buffer[MAX];
     void *user_input;
