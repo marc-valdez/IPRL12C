@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include <stdarg.h>
 
 #define MAX 256
@@ -48,7 +49,7 @@ void *get_number(const DataType type, const char *input, const double min, const
     char buffer[MAX];
     void *user_input;
 
-	while(1)
+	while(true)
 	{
         printf("%s", prompt);
 		fgets(buffer, sizeof(buffer), stdin);
@@ -166,7 +167,7 @@ void *get_text(const DataType type, const char *input, ...)
     char buffer[MAX];
     void *user_input;
 
-	while(1)
+	while(true)
 	{
         printf("%s", prompt);
 		fgets(buffer, sizeof(buffer), stdin);
@@ -284,7 +285,7 @@ void exit_prompt(const char *prompt)
 
 char yes_or_no(const char *prompt)
 {
-    while(1)
+    while(true)
     {
         char *buffer = (char *)get_text(CHAR, prompt);
         

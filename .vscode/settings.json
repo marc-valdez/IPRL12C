@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "valdez.h": "c"
+        "valdez.h": "c",
+        "stdlib.h": "c",
+        "stdio.h": "c"
     }
 }

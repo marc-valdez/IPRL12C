@@ -3,31 +3,36 @@
 #include <limits.h>
 #include "valdez_v2.h"
 
+#define MAX_PIN_ATTEMPTS 3
 #define INITIAL_BALANCE 5000.0
 #define MAX_WITHDRAWAL_AMOUNT 4000.0
 
 typedef struct Account {
-    char *name;
+    bool is_locked;
+    int pin_tries;
+    
+    char *account_number;
     char *pin_number;
+    char *account_name;
 
-    float balance;
+    float account_balance;
+    float amount_withdrawn;
+    float amount_deposited;
 
     int withdrawal_count;
-    float amount_withdrawn;
-
     int deposit_count;
-    float amount_deposited;
 } Account;
 
 Account users[] = {
-    {"Valdez, Marc Joshua", "1111", INITIAL_BALANCE, 0, 0.0, 0, 0.0},
-    {"Binegas, John Daniel", "2222", INITIAL_BALANCE, 0, 0.0, 0, 0.0},
-    {"Bautista, Glen Angelo", "3333", INITIAL_BALANCE, 0, 0.0, 0, 0.0},
-    {"Ubaldo, Rhay Allein", "4444", INITIAL_BALANCE, 0, 0.0, 0, 0.0},
-    {"Manuel, Joshua", "5555", INITIAL_BALANCE, 0, 0.0, 0, 0.0}
+    {false, MAX_PIN_ATTEMPTS, "2022-1-01130", "1111", "Valdez, Marc Joshua", INITIAL_BALANCE, 0.0, 0.0, 0, 0},
+    {true, MAX_PIN_ATTEMPTS, "2022-1-01377", "2222", "Binegas, John Daniel", INITIAL_BALANCE, 0.0, 0.0, 0, 0},
+    {false, MAX_PIN_ATTEMPTS, "2022-1-01604", "3333", "Bautista, Glen Angelo", INITIAL_BALANCE, 0.0, 0.0, 0, 0},
+    {true, MAX_PIN_ATTEMPTS, "2022-1-01764", "4444", "Ubaldo, Rhay Allein", INITIAL_BALANCE, 0.0, 0.0, 0, 0},
+    {false, MAX_PIN_ATTEMPTS, "2022-1-01643", "5555", "Manuel, Joshua", INITIAL_BALANCE, 0.0, 0.0, 0, 0}
 };
 
 Account *account_login();
+void pin_login(Account *user);
 void main_menu(Account *user);
 void balance_inquiry(Account *user);
 void deposit(Account *user);
@@ -36,9 +41,13 @@ void generate_report(Account *user);
 
 void main()
 {
-    while(1)
+    while(true)
     {
         Account *user = account_login();
+        pin_login(user);
+
+        if(user->is_locked)
+            continue;
 
         main_menu(user);
         system("cls");
@@ -49,7 +58,7 @@ void main_menu(Account *user)
 {
     cprintf(DEFAULT, "\nWelcome to %s[1;%dmLPU%s[0;%dm Bank\n", COLOR, RED, COLOR, DEFAULT);
 
-    while(1)
+    while(true)
     {
         printf("\n%s[%dm[1]%s[%dm Balance Inquiry\n", COLOR, CYAN, COLOR, DEFAULT);
         printf("%s[%dm[2]%s[%dm Deposit\n", COLOR, CYAN, COLOR, DEFAULT);
@@ -136,7 +145,51 @@ void main_menu(Account *user)
 
 Account *account_login()
 {
-    while(1)
+    while(true)
+    {
+        char *account_number = (char *)get_text(STRING, "%s[%dm\nStudent ID %s[0;%dm>> ", COLOR, DEFAULT, COLOR, CYAN);
+
+        if(strspn(account_number, "1234567890-") != strlen(account_number))
+        {
+            cprintf(YELLOW, "\n! Invalid Student ID format. Please remove any alphabetical characters and try again (ex: 20XX-1-12345).\n");
+            continue;
+        }
+
+        if(account_number[4] != '-' || account_number[6] != '-')
+        {
+            cprintf(YELLOW, "\n! Invalid Student ID format. Please be mindful of the dashes (ex: 20XX-1-12345).\n");
+            continue;
+        }
+        
+        if(strlen(account_number) != 12)
+        {
+            cprintf(YELLOW, "\n! Invalid Student ID format. ID must be exactly 12 digits long.\n");
+            continue;
+        }
+        
+        int i;
+        for(i = 0; i < sizeof(users)/sizeof(users[0]); i++)
+        {
+            if(strcmp(account_number, users[i].account_number) == 0)
+            {
+                if(users[i].is_locked)
+                    break;
+                return &users[i];
+            }
+            else
+                continue;
+        }
+        
+        if(users[i].is_locked)
+            cprintf(RED, "\n! Your account has been locked. Please contact the IT department to reset your account.\n");
+        else
+            cprintf(RED, "\n! Account does not exist.\n");
+    }
+}
+
+void pin_login(Account *user)
+{
+    while(true)
     {
         char *pin_number = (char *)get_text(STRING, "%s[%dm\nPIN Number %s[0;%dm>> ", COLOR, DEFAULT, COLOR, CYAN);
 
@@ -154,25 +207,34 @@ Account *account_login()
 
         for(int i = 0; i < sizeof(users)/sizeof(users[0]); i++)
         {
-            if(strcmp(pin_number, users[i].pin_number) == 0)
-                return &users[i];
+            if(strcmp(pin_number, user->pin_number) == 0)
+                return;
             else
                 continue;
         }
         
-        cprintf(RED, "\n! Wrong PIN.\n");
+        if(user->pin_tries != 1)
+            cprintf(RED, "\n! Wrong PIN. You have %d tries left before your account is locked.\n", --user->pin_tries);
+        else
+        {
+            user->is_locked = true;
+            system("cls");
+            cprintf(RED, "\n! You entered the wrong PIN too many times. Your account has been locked.");
+            cprintf(RED, "\n! Please contact the IT department to reset your account.\n");
+            return;
+        }
     }
 }
 
 void balance_inquiry(Account *user)
 {
     system("cls");
-    printf("\nYour current balance is %.2f\n", user->balance);
+    printf("\nYour current balance is %.2f\n", user->account_balance);
 }
 
 void deposit(Account *user)
 {
-    while(1)
+    while(true)
     {
         float deposit = *(float *)get_number(FLOAT, "\nDeposit amount >> ", INT_MIN, INT_MAX);
 
@@ -180,7 +242,7 @@ void deposit(Account *user)
             cprintf(YELLOW, "\n! Deposit amount should be greater than zero.\n");
         else
         {
-            user->balance += deposit;
+            user->account_balance += deposit;
             user->amount_deposited += deposit;
             user->deposit_count += 1;
             balance_inquiry(user);
@@ -191,7 +253,7 @@ void deposit(Account *user)
 
 void withdrawal(Account *user)
 {
-    while(1)
+    while(true)
     {
         float withdrawal = *(float *)get_number(FLOAT, "\nWithdrawal amount >> ", INT_MIN, INT_MAX);
 
@@ -199,11 +261,11 @@ void withdrawal(Account *user)
             cprintf(YELLOW, "\n! Withdrawal amount should be greater than zero.\n");
         else if(withdrawal > MAX_WITHDRAWAL_AMOUNT)
             cprintf(YELLOW, "\n! Withdrawal exceeded the maximum amount of %.2f\n", MAX_WITHDRAWAL_AMOUNT);
-        else if(withdrawal > user->balance)
-            cprintf(RED, "\n! Withdrawal exceeds the available balance of %.2f\n", user->balance);
+        else if(withdrawal > user->account_balance)
+            cprintf(RED, "\n! Withdrawal exceeds the available balance of %.2f\n", user->account_balance);
         else
         {
-            user->balance -= withdrawal;
+            user->account_balance -= withdrawal;
             user->amount_withdrawn += withdrawal;
             user->withdrawal_count++;
             balance_inquiry(user);
@@ -215,7 +277,7 @@ void withdrawal(Account *user)
 void generate_report(Account *user)
 {
     cprintf(CYAN, "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-    cprintf(CYAN, "\tAccount name: %s[%dm%s\n", COLOR, DEFAULT, user->name);
+    cprintf(CYAN, "\tAccount name: %s[%dm%s\n", COLOR, DEFAULT, user->account_name);
     cprintf(CYAN, "\tPIN number: %s[%dm%s\n", COLOR, DEFAULT, user->pin_number);
 
     cprintf(CYAN, "\n\tNo. of times deposited: %s[%dm%d\n", COLOR, DEFAULT, user->deposit_count);
@@ -224,6 +286,6 @@ void generate_report(Account *user)
     cprintf(CYAN, "\n\tNo. of times withdrawn: %s[%dm%d\n", COLOR, DEFAULT, user->withdrawal_count);
     cprintf(CYAN, "\tTotal amount withdrawn: %s[%dm%.2f\n", COLOR, DEFAULT, user->amount_withdrawn);
     
-    cprintf(CYAN, "\n\tAccount balance: %s[%dm%.2f", COLOR, DEFAULT, user->balance);
+    cprintf(CYAN, "\n\tAccount balance: %s[%dm%.2f", COLOR, DEFAULT, user->account_balance);
     cprintf(CYAN, "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 }
