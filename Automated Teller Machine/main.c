@@ -8,9 +8,6 @@
 #define MAX_WITHDRAWAL_AMOUNT 4000.0
 
 typedef struct Account {
-    bool is_locked;
-    int pin_tries;
-
     char *account_number;
     char *pin_number;
     char *account_name;
@@ -21,23 +18,28 @@ typedef struct Account {
 
     int withdrawal_count;
     int deposit_count;
+
+    bool is_locked;
+    int pin_tries;
 } Account;
 
+// Think of the struct above as a database table.
+// The fields look like this, with one sample record:
+// | PK_student_id | pin  | student_name         | account_balance  | withdraw_history | deposit_history | withrawal_count | deposit_count | is_locked | login_attempts_left |
+// | 2022-1-01130  | 1111 | Valdez, Marc Joshua  | 5000.0           | 18000.0          | 25000.0         | 3               | 7             | true      | 0                   |
+// | 2022-1-01377  | 2222 | Binegas, John Daniel | 17000.0          | 200.0            | 17200.0         | 1               | 18            | false     | 2                   |
+
 Account users[] = {
-    {false, MAX_PIN_ATTEMPTS, "2022-1-01130", "1111", "Valdez, Marc Joshua", INITIAL_BALANCE, 0.0, 0.0, 0, 0},
-    {true, MAX_PIN_ATTEMPTS, "2022-1-01377", "2222", "Binegas, John Daniel", INITIAL_BALANCE, 0.0, 0.0, 0, 0},
-    {false, MAX_PIN_ATTEMPTS, "2022-1-01604", "3333", "Bautista, Glen Angelo", INITIAL_BALANCE, 0.0, 0.0, 0, 0},
-    {true, MAX_PIN_ATTEMPTS, "2022-1-01764", "4444", "Ubaldo, Rhay Allein", INITIAL_BALANCE, 0.0, 0.0, 0, 0},
-    {false, MAX_PIN_ATTEMPTS, "2022-1-01643", "5555", "Manuel, Joshua", INITIAL_BALANCE, 0.0, 0.0, 0, 0}
+    {"2022-1-01130", "1111", "Valdez, Marc Joshua", INITIAL_BALANCE, 0.0, 0.0, 0, 0, false, MAX_PIN_ATTEMPTS},
+    {"2022-1-01377", "2222", "Binegas, John Daniel", INITIAL_BALANCE, 0.0, 0.0, 0, 0, true, MAX_PIN_ATTEMPTS},
+    {"2022-1-01604", "3333", "Bautista, Glen Angelo", INITIAL_BALANCE, 0.0, 0.0, 0, 0, false, MAX_PIN_ATTEMPTS},
+    {"2022-1-01764", "4444", "Ubaldo, Rhay Allein", INITIAL_BALANCE, 0.0, 0.0, 0, 0, true, MAX_PIN_ATTEMPTS},
+    {"2022-1-01643", "5555", "Manuel, Joshua", INITIAL_BALANCE, 0.0, 0.0, 0, 0, false, MAX_PIN_ATTEMPTS}
 };
 
 Account *account_login();
 void pin_login(Account *user);
 void main_menu(Account *user);
-void balance_inquiry(Account *user);
-void deposit(Account *user);
-void withdrawal(Account *user);
-void generate_report(Account *user);
 
 void main()
 {
@@ -172,100 +174,6 @@ void extract_name(Account *user, char *first_name, char *last_name)
     }
 }
 
-void main_menu(Account *user)
-{
-    char last_name[MAX];
-    char first_name[MAX];
-    extract_name(user, first_name, last_name);
-
-    cprintf(DEFAULT, "\nGreetings, %s %s!", first_name, last_name);
-    cprintf(DEFAULT, "\nWelcome to %s[1;%dmLPU%s[0;%dm Bank!\n", COLOR, RED, COLOR, DEFAULT);
-
-    while(true)
-    {
-        printf("\n%s[%dm[1]%s[%dm Balance Inquiry\n", COLOR, CYAN, COLOR, DEFAULT);
-        printf("%s[%dm[2]%s[%dm Deposit\n", COLOR, CYAN, COLOR, DEFAULT);
-        printf("%s[%dm[3]%s[%dm Withdrawal\n", COLOR, CYAN, COLOR, DEFAULT);
-        printf("%s[%dm[4]%s[%dm Logout \\ Change Account\n", COLOR, CYAN, COLOR, DEFAULT);
-        printf("%s[%dm[5]%s[%dm Exit\n", COLOR, CYAN, COLOR, DEFAULT);
-
-        printf("\n%s[%dm[6]%s[%dm Generate Reports\n", COLOR, CYAN, COLOR, DEFAULT);
-
-        int transaction = *(int *)get_number(INTEGER, "\nEnter transaction number >> ", 1.0, 6.0);
-
-        switch(transaction)
-        {
-            case 1:
-            {
-                balance_inquiry(user);
-                char answer = yes_or_no("\nWould you like to do another transaction? (Y/N) >> ");
-                system("cls");
-                if(answer == 'N' || answer == 'n')
-                {
-                    answer = yes_or_no("\nWould you like to exit(Y) or logout(N)? >> ");
-                    if(answer == 'Y' || answer == 'y')
-                        exit_prompt("Thank you for banking with us!\n");
-                    return;
-                }
-                break;
-            }
-            case 2:
-            {
-                deposit(user);
-                char answer = yes_or_no("\nWould you like to do another transaction? (Y/N) >> ");
-                system("cls");
-                if(answer == 'N' || answer == 'n')
-                {
-                    answer = yes_or_no("\nWould you like to exit(Y) or logout(N) >> ");
-                    if(answer == 'Y' || answer == 'y')
-                        exit_prompt("Thank you for banking with us!\n");
-                    return;
-                }
-                break;
-            }
-            case 3:
-            {
-                withdrawal(user);
-                char answer = yes_or_no("\nWould you like to do another transaction? (Y/N) >> ");
-                system("cls");
-                if(answer == 'N' || answer == 'n')
-                {
-                    answer = yes_or_no("\nWould you like to exit(Y) or logout(N)? >> ");
-                    if(answer == 'Y' || answer == 'y')
-                        exit_prompt("Thank you for banking with us!\n");
-                    return;
-                }
-                break;
-            }
-            case 4:
-            {
-                char answer = yes_or_no("\nAre you sure you want to logout? (Y/N) >> ");
-                system("cls");
-                if(answer == 'Y' || answer == 'y')
-                    return;
-                break;
-            }
-            case 5:
-            {
-                char answer = yes_or_no("\nAre you sure you want to exit? (Y/N) >> ");
-                system("cls");
-                if(answer == 'N' || answer == 'n')
-                    break;
-                exit_prompt("Thank you for banking with us!\n");
-            }
-            case 6:
-            {
-                generate_report(user);
-                char answer = yes_or_no("\nWould you like to exit? (Y/N) >> ");
-                system("cls");
-                if(answer == 'N' || answer == 'n')
-                    break;
-                exit_prompt("Thank you for banking with us!\n");
-            }
-        }
-    }
-}
-
 void balance_inquiry(Account *user)
 {
     system("cls");
@@ -328,4 +236,122 @@ void generate_report(Account *user)
     
     cprintf(CYAN, "\n\tAccount balance: %s[%dm%.2f", COLOR, DEFAULT, user->account_balance);
     cprintf(CYAN, "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+}
+
+char yes_or_no(const char *prompt)
+{
+    while(true)
+    {
+        char *buffer = (char *)get_text(CHAR, prompt);
+        
+        if(strspn(buffer, "YyNn") != strlen(buffer))
+        {
+            cprintf(YELLOW, "\n! Invalid input. Please enter Y or N to continue.\n");
+            continue;
+        }
+        return buffer[0];
+    }
+}
+
+void main_menu(Account *user)
+{
+    char last_name[MAX];
+    char first_name[MAX];
+    extract_name(user, first_name, last_name);
+
+    cprintf(DEFAULT, "\nGreetings, %s %s!", first_name, last_name);
+    cprintf(DEFAULT, "\nWelcome to %s[1;%dmLPU%s[0;%dm Bank!\n", COLOR, RED, COLOR, DEFAULT);
+
+    while(true)
+    {
+        printf("\n%s[%dm[1]%s[%dm Balance Inquiry\n", COLOR, CYAN, COLOR, DEFAULT);
+        printf("%s[%dm[2]%s[%dm Deposit\n", COLOR, CYAN, COLOR, DEFAULT);
+        printf("%s[%dm[3]%s[%dm Withdrawal\n", COLOR, CYAN, COLOR, DEFAULT);
+        printf("%s[%dm[4]%s[%dm Logout \\ Change Account\n", COLOR, CYAN, COLOR, DEFAULT);
+        printf("%s[%dm[5]%s[%dm Exit\n", COLOR, CYAN, COLOR, DEFAULT);
+
+        printf("\n%s[%dm[6]%s[%dm Generate Reports\n", COLOR, CYAN, COLOR, DEFAULT);
+
+        int transaction = *(int *)get_number(INTEGER, "\nEnter transaction number >> ", 1.0, 6.0);
+
+        switch(transaction)
+        {
+            case 1:
+            {
+                balance_inquiry(user);
+                char answer = yes_or_no("\nWould you like to do another transaction? (Y/N) >> ");
+                system("cls");
+                if(answer == 'N' || answer == 'n')
+                {
+                    answer = yes_or_no("\nWould you like to exit(Y) or logout(N)? >> ");
+                    if(answer == 'Y' || answer == 'y')
+                        exit_prompt("Thank you for banking with us!\n");
+                    return;
+                }
+                break;
+            }
+            case 2:
+            {
+                deposit(user);
+                char answer = yes_or_no("\nWould you like to do another transaction? (Y/N) >> ");
+                system("cls");
+                if(answer == 'N' || answer == 'n')
+                {
+                    answer = yes_or_no("\nWould you like to exit(Y) or logout(N) >> ");
+                    if(answer == 'Y' || answer == 'y')
+                        exit_prompt("Thank you for banking with us!\n");
+                    return;
+                }
+                break;
+            }
+            case 3:
+            {
+                withdrawal(user);
+                char answer = yes_or_no("\nWould you like to do another transaction? (Y/N) >> ");
+                system("cls");
+                if(answer == 'N' || answer == 'n')
+                {
+                    answer = yes_or_no("\nWould you like to exit the program (Y) or logout (N)? >> ");
+                    if(answer == 'Y' || answer == 'y')
+                        exit_prompt("Thank you for banking with us!\n");
+                    return;
+                }
+                break;
+            }
+            case 4:
+            {
+                char answer = yes_or_no("\nAre you sure you want to logout? (Y/N) >> ");
+                system("cls");
+                if(answer == 'Y' || answer == 'y')
+                    return;
+                break;
+            }
+            case 5:
+            {
+                char answer = yes_or_no("\nAre you sure you want to exit the program? (Y/N) >> ");
+                system("cls");
+                if(answer == 'N' || answer == 'n')
+                    break;
+                exit_prompt("Thank you for banking with us!\n");
+            }
+            case 6:
+            {
+                generate_report(user);
+                char answer = yes_or_no("\nWould you like to exit the program? (Y/N) >> ");
+                if(answer == 'N' || answer == 'n')
+                {
+                    system("cls");
+                    answer = yes_or_no("\nWould you like to switch accounts? (Y/N) >> ");
+                    if(answer == 'N' || answer == 'n')
+                    {
+                        system("cls");
+                        break;
+                    }
+                    system("cls");
+                    return;
+                }
+                exit_prompt("Thank you for banking with us!\n");
+            }
+        }
+    }
 }

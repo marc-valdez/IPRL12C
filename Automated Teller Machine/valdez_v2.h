@@ -277,23 +277,9 @@ void cprintf(const TextColor INPUT, const char *buffer, ...)
 
 void exit_prompt(const char *prompt)
 {
+    system("cls");
     printf(prompt);
     printf("\nPress any key to continue...\n");
     getchar();
     exit(0);
-}
-
-char yes_or_no(const char *prompt)
-{
-    while(true)
-    {
-        char *buffer = (char *)get_text(CHAR, prompt);
-        
-        if(strspn(buffer, "YyNn") != strlen(buffer))
-        {
-            cprintf(YELLOW, "\n! Invalid input. Please enter Y or N to continue.\n");
-            continue;
-        }
-        return buffer[0];
-    }
 }
