@@ -10,7 +10,7 @@
 typedef struct Account {
     bool is_locked;
     int pin_tries;
-    
+
     char *account_number;
     char *pin_number;
     char *account_name;
@@ -56,7 +56,43 @@ void main()
 
 void main_menu(Account *user)
 {
-    cprintf(DEFAULT, "\nWelcome to %s[1;%dmLPU%s[0;%dm Bank\n", COLOR, RED, COLOR, DEFAULT);
+    char last_name[MAX];
+    char first_name[MAX];
+    
+    int i = 0;
+    while (true)
+    {
+        last_name[i] = user->account_name[i];
+        i++;
+
+        if(user->account_name[i] == ',')
+        {
+            last_name[i] = '\0';
+            i += 2;
+            break;
+        }
+        else
+            continue;
+    }
+
+    int j = 0;
+    while (true)
+    {
+        first_name[j] = user->account_name[i];
+        i++;
+        j++;
+        
+        if(user->account_name[i] == '\0')
+        {
+            first_name[j] = '\0';
+            break;
+        }
+        else
+            continue;
+    }
+    
+    cprintf(DEFAULT, "\nGreetings, %s %s!", first_name, last_name);
+    cprintf(DEFAULT, "\nWelcome to %s[1;%dmLPU%s[0;%dm Bank!\n", COLOR, RED, COLOR, DEFAULT);
 
     while(true)
     {
