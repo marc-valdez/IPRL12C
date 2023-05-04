@@ -54,11 +54,8 @@ void main()
     }
 }
 
-void main_menu(Account *user)
+void extract_name(Account *user, char *first_name, char *last_name)
 {
-    char last_name[MAX];
-    char first_name[MAX];
-    
     int i = 0;
     while (true)
     {
@@ -90,7 +87,14 @@ void main_menu(Account *user)
         else
             continue;
     }
-    
+}
+
+void main_menu(Account *user)
+{
+    char last_name[MAX];
+    char first_name[MAX];
+    extract_name(user, first_name, last_name);
+
     cprintf(DEFAULT, "\nGreetings, %s %s!", first_name, last_name);
     cprintf(DEFAULT, "\nWelcome to %s[1;%dmLPU%s[0;%dm Bank!\n", COLOR, RED, COLOR, DEFAULT);
 
