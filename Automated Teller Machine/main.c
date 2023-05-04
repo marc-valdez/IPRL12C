@@ -131,7 +131,7 @@ void pin_login(Account *user)
         else
         {
             user->is_locked = true;
-            cprintf(RED, "\n! You entered the wrong PIN too many times. Your account has been locked.\nPlease contact the IT department to reset your account.");
+            cprintf(RED, "\n! You entered the wrong PIN too many times. Your account has been locked.\nPlease contact the IT department to reset your account.\n");
             printf("\nPress any key to return to login screen...\n");
             getchar();
             system("cls");
