@@ -54,6 +54,89 @@ void main()
     }
 }
 
+Account *account_login()
+{
+    while(true)
+    {
+        char *account_number = (char *)get_text(STRING, "%s[%dm\nStudent ID %s[0;%dm>> ", COLOR, DEFAULT, COLOR, CYAN);
+
+        if(strspn(account_number, "1234567890-") != strlen(account_number))
+        {
+            cprintf(YELLOW, "\n! Invalid Student ID format. Please remove any alphabetical characters and try again (ex: 20XX-1-12345).\n");
+            continue;
+        }
+
+        if(account_number[4] != '-' || account_number[6] != '-')
+        {
+            cprintf(YELLOW, "\n! Invalid Student ID format. Please be mindful of the dashes (ex: 20XX-1-12345).\n");
+            continue;
+        }
+        
+        if(strlen(account_number) != 12)
+        {
+            cprintf(YELLOW, "\n! Invalid Student ID format. ID must be exactly 12 digits long.\n");
+            continue;
+        }
+        
+        int i;
+        for(i = 0; i < sizeof(users)/sizeof(users[0]); i++)
+        {
+            if(strcmp(account_number, users[i].account_number) == 0)
+            {
+                if(users[i].is_locked)
+                    break;
+                return &users[i];
+            }
+            else
+                continue;
+        }
+        
+        if(users[i].is_locked)
+            cprintf(RED, "\n! Your account has been locked. Please contact the IT department to reset your account.\n");
+        else
+            cprintf(RED, "\n! Account does not exist.\n");
+    }
+}
+
+void pin_login(Account *user)
+{
+    while(true)
+    {
+        char *pin_number = (char *)get_text(STRING, "%s[%dm\nPIN Number %s[0;%dm>> ", COLOR, DEFAULT, COLOR, CYAN);
+
+        if(strspn(pin_number, "1234567890") != strlen(pin_number))
+        {
+            cprintf(YELLOW, "\n! Invalid PIN format. Please remove any non-numeric characters and try again (ex: 1234).\n");
+            continue;
+        }
+        
+        if(strlen(pin_number) != 4)
+        {
+            cprintf(YELLOW, "\n! Invalid PIN format. PIN must be exactly 4 digits long.\n");
+            continue;
+        }
+
+        for(int i = 0; i < sizeof(users)/sizeof(users[0]); i++)
+        {
+            if(strcmp(pin_number, user->pin_number) == 0)
+                return;
+            else
+                continue;
+        }
+        
+        if(user->pin_tries != 1)
+            cprintf(RED, "\n! Wrong PIN. You have %d tries left before your account is locked.\n", --user->pin_tries);
+        else
+        {
+            user->is_locked = true;
+            system("cls");
+            cprintf(RED, "\n! You entered the wrong PIN too many times. Your account has been locked.");
+            cprintf(RED, "\n! Please contact the IT department to reset your account.\n");
+            return;
+        }
+    }
+}
+
 void extract_name(Account *user, char *first_name, char *last_name)
 {
     int i = 0;
@@ -179,89 +262,6 @@ void main_menu(Account *user)
                     break;
                 exit_prompt("Thank you for banking with us!\n");
             }
-        }
-    }
-}
-
-Account *account_login()
-{
-    while(true)
-    {
-        char *account_number = (char *)get_text(STRING, "%s[%dm\nStudent ID %s[0;%dm>> ", COLOR, DEFAULT, COLOR, CYAN);
-
-        if(strspn(account_number, "1234567890-") != strlen(account_number))
-        {
-            cprintf(YELLOW, "\n! Invalid Student ID format. Please remove any alphabetical characters and try again (ex: 20XX-1-12345).\n");
-            continue;
-        }
-
-        if(account_number[4] != '-' || account_number[6] != '-')
-        {
-            cprintf(YELLOW, "\n! Invalid Student ID format. Please be mindful of the dashes (ex: 20XX-1-12345).\n");
-            continue;
-        }
-        
-        if(strlen(account_number) != 12)
-        {
-            cprintf(YELLOW, "\n! Invalid Student ID format. ID must be exactly 12 digits long.\n");
-            continue;
-        }
-        
-        int i;
-        for(i = 0; i < sizeof(users)/sizeof(users[0]); i++)
-        {
-            if(strcmp(account_number, users[i].account_number) == 0)
-            {
-                if(users[i].is_locked)
-                    break;
-                return &users[i];
-            }
-            else
-                continue;
-        }
-        
-        if(users[i].is_locked)
-            cprintf(RED, "\n! Your account has been locked. Please contact the IT department to reset your account.\n");
-        else
-            cprintf(RED, "\n! Account does not exist.\n");
-    }
-}
-
-void pin_login(Account *user)
-{
-    while(true)
-    {
-        char *pin_number = (char *)get_text(STRING, "%s[%dm\nPIN Number %s[0;%dm>> ", COLOR, DEFAULT, COLOR, CYAN);
-
-        if(strspn(pin_number, "1234567890") != strlen(pin_number))
-        {
-            cprintf(YELLOW, "\n! Invalid PIN format. Please remove any non-numeric characters and try again (ex: 1234).\n");
-            continue;
-        }
-        
-        if(strlen(pin_number) != 4)
-        {
-            cprintf(YELLOW, "\n! Invalid PIN format. PIN must be exactly 4 digits long.\n");
-            continue;
-        }
-
-        for(int i = 0; i < sizeof(users)/sizeof(users[0]); i++)
-        {
-            if(strcmp(pin_number, user->pin_number) == 0)
-                return;
-            else
-                continue;
-        }
-        
-        if(user->pin_tries != 1)
-            cprintf(RED, "\n! Wrong PIN. You have %d tries left before your account is locked.\n", --user->pin_tries);
-        else
-        {
-            user->is_locked = true;
-            system("cls");
-            cprintf(RED, "\n! You entered the wrong PIN too many times. Your account has been locked.");
-            cprintf(RED, "\n! Please contact the IT department to reset your account.\n");
-            return;
         }
     }
 }
