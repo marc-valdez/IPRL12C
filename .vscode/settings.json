@@ -1,8 +1,5 @@
 {
     "files.associations": {
-        "valdez.h": "c",
-        "limits": "c",
-        "ctype.h": "c",
-        "string.h": "c"
+        "valdez.h": "c"
     }
 }
