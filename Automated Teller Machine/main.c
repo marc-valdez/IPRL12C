@@ -62,7 +62,7 @@ Account *account_login()
 
         if(strspn(account_number, "1234567890-") != strlen(account_number))
         {
-            cprintf(YELLOW, "\n! Invalid Student ID format. Please remove any alphabetical characters and try again (ex: 20XX-1-12345).\n");
+            cprintf(YELLOW, "\n! Invalid Student ID format. Please remove any non-numeric characters and try again (ex: 20XX-1-12345).\n");
             continue;
         }
 
