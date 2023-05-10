@@ -203,7 +203,7 @@ void *get_text(const DataType type, const char *input, ...)
             }
             case STRING:
             {
-                user_input = malloc(strlen(buffer)+1);
+                user_input = malloc(strlen(buffer) + 1);
                 is_null(user_input);
 
                 if(sscanf(buffer, "%s", user_input) != 1)
