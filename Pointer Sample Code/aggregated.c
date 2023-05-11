@@ -46,12 +46,12 @@ void sample2()
     *p1 = 10; // note that i will be also be 10
 
     // access the value 10 directly via i
-    printf("i = % d\n", i);
+    printf("i = %d\n", i);
 
     // access the same value indirectly via pointers p1, p2 and p3
-    printf("*p1 = % d\n", *p1);
-    printf("*p2 = % d\n", *p2);
-    printf("*p3 = % d\n", *p3);
+    printf("*p1 = %d\n", *p1);
+    printf("*p2 = %d\n", *p2);
+    printf("*p3 = %d\n", *p3);
 }
 
 void sample3()
@@ -59,14 +59,14 @@ void sample3()
     int i;
     int *p1;
 
-    printf("p1 = % u\n", p1);   // ERROR: p1 not initialized
-    printf("*p1 = % d\n", *p1); // ERROR: no real memory block
+    printf("p1 = %d\n", p1);   // ERROR: p1 not initialized
+    printf("*p1 = %d\n", *p1); // ERROR: no real memory block
 
-    p1 = i;   // ERROR: p1 is pointer, i is integer
-    p1 = 100; // ERROR: not really a memory address
+    //p1 = i;   // ERROR: p1 is pointer, i is integer
+    //p1 = 100; // ERROR: not really a memory address
     p1 = &i;
 
-    printf("*p1 = % d\n", *p1); // ERROR: i  not initialized
+    printf("*p1 = %d\n", *p1); // ERROR: i  not initialized
 }
 
 void wrong_swap(int x, int y)
@@ -86,7 +86,7 @@ void sample4()
 
     wrong_swap(x, y);
 
-    printf("x = % d, y = % d\n", x, y);
+    printf("x = %d, y = %d\n", x, y);
 }
 
 void correct_swap(int *px, int *py)
@@ -106,41 +106,45 @@ void sample5()
 
     correct_swap(&x, &y); // pass the addresses of x and y as parameters
 
-    printf("x = % d, y = % d\n", x, y);
+    printf("x = %d, y = %d\n", x, y);
 }
 
 void sample6()
 {
     int a[5];
     int *pa;
-    int i;
 
     // initialize the array
-    for (i = 0; i < 5; i++)
+    for (int i = 0; i < 5; i++)
         a[i] = 5 - i;
 
+    puts("\n---------------------------------------\nExample 1:\n");
     // print the contents of the array
-    for (i = 0; i < 5; i++)
+    for (int i = 0; i < 5; i++)
     {
         pa = &a[i]; // get i’th element address
         printf("a[%d] = %d\n", i, *pa);
     }
 
+    puts("\n---------------------------------------\nExample 2:\n");
     // same as above but in a different syntax
-    for (i = 0; i < 5; i++)
+    pa = &a[0];
+    for (int i = 0; i < 5; i++)
     {
         printf("a[%d] = %d\n", i, *(pa + i));
     }
 
+    puts("\n---------------------------------------\nExample 3:\n");
     // print in reverse
     pa = &a[4];
-    for (i = 0; i < 5; i++)
+    for (int i  = 0; i < 5; i++)
     {
         printf("a[%d] = %d\n", i, *(pa - i));
     }
 
+    puts("\n---------------------------------------\nExample 4:\n");
     // through pointer arithmetic without using the pointer pa
-    for (i = 0; i < 5; i++)
+    for (int i = 0; i < 5; i++)
     {
         printf("a[%d] = %d\n", i, *(a + i));
     }
