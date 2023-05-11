@@ -280,7 +280,15 @@ void main()
         char *buffer = malloc(sizeof(char) * 256);
         int choice = 0;
 
-        printf("Enter a sample number [1-10] >> ");
+        puts("----------------------------------------------\n");
+        for(int i = 1; i <= 10; i++)
+        {
+            printf("\tSample [%d]", i);
+            ++i;
+            printf("\tSample [%d]\n", i);
+        }
+
+        printf("\nEnter a sample number [1-10] >> ");
         fgets(buffer, strlen(buffer) + 1, stdin);
         buffer[strcspn(buffer, "\n")] = '\0';
 
@@ -309,5 +317,9 @@ void main()
             case 9: sample9(); break;
             case 10: sample10(); break;
         }
+
+        puts("\nPress enter to continue...");
+        getchar();
+        system("cls");
     }
 }
