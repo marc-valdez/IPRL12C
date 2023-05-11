@@ -122,7 +122,7 @@ void sample6()
     // print the contents of the array
     for (int i = 0; i < 5; i++)
     {
-        pa = &a[i]; // get i’th element address
+        pa = &a[i]; // get i'th element address
         printf("a[%d] = %d\n", i, *pa);
     }
 
@@ -209,6 +209,70 @@ void sample8()
     }
 }
 
+void sample9()
+{
+    char *pch;
+    int *pi;
+    float *pf;
+    double *pd;
+
+    // allocate memory dynamically
+    pch = (char *)malloc(sizeof(char));
+    pi = (int *)malloc(sizeof(int));
+    pf = (float *)malloc(sizeof(float));
+    pd = (double *)malloc(sizeof(double));
+
+    // assign data to dynamically allocated memory
+    *pch = 'A';
+    *pi = 10;
+    *pf = 3.1416;
+    *pd = 88.3;
+
+    // some other operations…
+    printf("%c\n", *pch);
+    printf("%d\n", *pi);
+    printf("%f\n", *pf);
+    printf("%lf\n", *pd);
+
+    // free memory
+    free(pch);
+    free(pi);
+    free(pf);
+    free(pd);
+}
+
+void sample10()
+{
+    int *pa;
+    int i;
+
+    pa = (int *)malloc(sizeof(int) * 5);
+    if (pa == NULL)
+    {
+        printf("ERROR: no more memory.\n");
+        exit(1);
+    }
+
+    // initialize the memory block
+    for (i = 0; i < 5; i++)
+        *(pa + i) = 5 - i;
+
+    // print the contents of memory block
+    for (i = 0; i < 5; i++)
+        printf("Element %d = %d\n", i, *(pa + i));
+
+    puts("\n---------------------------------------\nAlternative:\n");
+    // initialize can be rewritten to this
+    for (i = 0; i < 5; i++)
+        pa[i] = 5 - i;
+    
+    // printing can be rewritten to this
+    for (i = 0; i < 5; i++)
+        printf("Element %d = %d\n", i, pa[i]);
+
+    free(pa);
+}
+
 void main()
 {
     while(1)
@@ -216,18 +280,20 @@ void main()
         char *buffer = malloc(sizeof(char) * 256);
         int choice = 0;
 
-        printf("Enter a sample number [1-8] >> ");
+        printf("Enter a sample number [1-10] >> ");
         fgets(buffer, strlen(buffer) + 1, stdin);
         buffer[strcspn(buffer, "\n")] = '\0';
 
         if(sscanf(buffer, "%d", &choice) != 1)
         {
             printf("! Please input a number.\n");
+            continue;
         }
 
-        if(choice <= 0 || choice >= 9)
+        if(choice < 1 || choice > 10)
         {
-            printf("! Input a number between 1 and 8.\n");
+            printf("! Input a number between 1 and 10.\n");
+            continue;
         }
 
         switch (choice)
@@ -240,6 +306,8 @@ void main()
             case 6: sample6(); break;
             case 7: sample7(); break;
             case 8: sample8(); break;
+            case 9: sample9(); break;
+            case 10: sample10(); break;
         }
     }
 }
