@@ -167,10 +167,12 @@ void sample6()
         printf("a[%d] = %d\n", i, *(pa + i));
     }
 
+    // *(pa + i) is the same as a[i]
+
     puts("\n---------------------------------------\nExample 3:\n");
     // print in reverse
     pa = &a[4];
-    for (int i  = 0; i < 5; i++)
+    for (int i = 0; i < 5; i++)
     {
         printf("a[%d] = %d\n", i, *(pa - i));
     }
@@ -247,6 +249,7 @@ void sample8()
 
     printf("*pa = %d\n", *pa);
 
+    puts("\n");
     // alternative array access
     // this for loop simplifies the process of incrementing pa by 1 memory block per loop
     pa = &(a[0]);
