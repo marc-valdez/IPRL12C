@@ -47,6 +47,7 @@ void exer2()
     printf("d = %lf\n", d);
 
     // The value of d is whatever the user decided to input.
+    getchar();
 }
 
 int sum(int a, int b)
@@ -259,8 +260,7 @@ void main()
         }
 
         puts("\nPress enter to continue...");
-        while(getchar() != '\n'); // consume newline character left by scanf()
-
+        getchar();
         system("cls");
     }
 }
