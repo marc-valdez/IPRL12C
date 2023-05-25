@@ -211,7 +211,7 @@ void exer10()
         *(pd + i) = i * 1.618;
 
     for(int i = 0; i < 10; i++)
-        printf("pf[%d] = %f\n", i, *(pd + i));
+        printf("pd[%d] = %f\n", i, *(pd + i));
 }
 
 void main()
