@@ -78,6 +78,141 @@ void exer3()
     printf("\nI prefer to use add() because its shorter.\n");
 }
 
+void float_array_average(float *array, int count, float *sum, float *average)
+{
+    for(int i = 0; i < count; i++)
+    {
+        printf("A[%d] = %f\n", i, array[i]);
+        *sum += array[i];
+    }
+    *average = *sum / count;
+}
+
+void exer4()
+{
+    // Assume that A is a one-dimensional array of 10 float data type values.
+    float A[10] = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0};
+    float sum = 0.0, average = 0.0;
+
+    // Write a function that will compute the sum and average of the elements of the array.
+    float_array_average(A, sizeof(A)/sizeof(A[0]), &sum, &average);
+
+    printf("sum = %f\n", sum);
+    printf("average = %f\n", average);
+}
+
+void exer5()
+{
+    // Assume that A is a one-dimensional array of 10 float data type values.
+    float A[10];
+    
+    // Assume also that pf is a float pointer.
+    float *pf;
+
+    // Write a program that will (1) initialize the array.
+    for(int i = 0; i < sizeof(A)/sizeof(A[0]); i++)
+        A[i] = i * 3.1416;
+    
+    // (2) set the pointer pf such that it points to the first element of the array
+    pf = A;
+
+    // (3) print all the elements of the array from the first down to the last
+    // by performing pointer arithmetic and dereferencing on pf.
+
+    for(int i = 0; i < sizeof(A)/sizeof(A[0]); i++)
+        printf("A[%d] = %f\n", i, *(pf + i));
+}
+
+void exer6()
+{
+    // Assume that A is a one-dimensional array of 10 double data type values.
+    double A[10];
+    
+    // Assume also that pf is a double pointer.
+    double *pd;
+
+    // Write a program that will (1) initialize the array.
+    for(int i = 0; i < sizeof(A)/sizeof(A[0]); i++)
+        A[i] = i * 1.618;
+    
+    // (2) set the pointer pf such that it points to the first element of the array
+    pd = A;
+
+    // (3) print all the elements of the array from the first down to the last
+    // by performing pointer arithmetic and dereferencing on pf.
+
+    for(int i = 0; i < sizeof(A)/sizeof(A[0]); i++)
+        printf("A[%d] = %lf\n", i, *(pd + i));
+}
+
+void exer7()
+{
+    // Assume that A is a one-dimensional array of 10 float data type values.
+    float A[10];
+    
+    // Assume also that pf is a float pointer.
+    float *pf;
+
+    // Write a program that will (1) initialize the array.
+    for(int i = 0; i < sizeof(A)/sizeof(A[0]); i++)
+        A[i] = i * 3.1416;
+    
+    // (2) set the pointer pf such that it points to the LAST element of the array
+    pf = &A[sizeof(A)/sizeof(A[0]) - 1];
+
+    // (3) print all the elements of the array from the last element up to the first
+    // by performing pointer arithmetic and dereferencing on pf.
+    for(int i = 0; i < sizeof(A)/sizeof(A[0]); i++)
+        printf("A[%d] = %f\n", i, *(pf - i));
+}
+
+void exer8()
+{
+    // Assume that A is a one-dimensional array of 10 double data type values.
+    double A[10];
+    
+    // Assume also that pf is a double pointer.
+    double *pd;
+
+    // Write a program that will (1) initialize the array.
+    for(int i = 0; i < sizeof(A)/sizeof(A[0]); i++)
+        A[i] = i * 1.618;
+    
+    // (2) set the pointer pf such that it points to the LAST element of the array
+    pd = &A[sizeof(A)/sizeof(A[0]) - 1];
+
+    // (3) print all the elements of the array from the last element up to the first
+    // by performing pointer arithmetic and dereferencing on pf.
+    for(int i = 0; i < sizeof(A)/sizeof(A[0]); i++)
+        printf("A[%d] = %lf\n", i, *(pd - i));
+}
+
+void exer9()
+{
+    // Write a program that will dynamically allocate contigous memory for 10 floating point values.
+    float *pf = malloc(sizeof(float) * 10);
+
+    // Initialize them to any value you like, and print the contents.
+    for(int i = 0; i < 10; i++)
+        *(pf + i) = i * 3.1416;
+
+    for(int i = 0; i < 10; i++)
+        printf("pf[%d] = %f\n", i, *(pf + i));
+}
+
+void exer10()
+{
+    // Write a program that will dynamically allocate contigous memory for 10 double point values.
+    float *pd = malloc(sizeof(double) * 10);
+
+    // Initialize them to any value you like, and print the contents.
+    for(int i = 0; i < 10; i++)
+        *(pd + i) = i * 1.618;
+
+    for(int i = 0; i < 10; i++)
+        printf("pf[%d] = %f\n", i, *(pd + i));
+}
+
 void main()
 {
     while(1)
@@ -114,11 +249,18 @@ void main()
             case 1: exer1(); break;
             case 2: exer2(); break;
             case 3: exer3(); break;
+            case 4: exer4(); break;
+            case 5: exer5(); break;
+            case 6: exer6(); break;
+            case 7: exer7(); break;
+            case 8: exer8(); break;
+            case 9: exer9(); break;
+            case 10: exer10(); break;
         }
 
         puts("\nPress enter to continue...");
         while(getchar() != '\n'); // consume newline character left by scanf()
-        while(getchar() != '\n'); // wait for user to press enter
+
         system("cls");
     }
 }
