@@ -79,7 +79,7 @@ void exer3()
     printf("\nI prefer to use add() because its shorter.\n");
 }
 
-void float_array_average(float *array, int count, float *sum, float *average)
+void array_average(float *array, int count, float *sum, float *average)
 {
     for(int i = 0; i < count; i++)
     {
@@ -96,7 +96,7 @@ void exer4()
     float sum = 0.0, average = 0.0;
 
     // Write a function that will compute the sum and average of the elements of the array.
-    float_array_average(A, sizeof(A)/sizeof(A[0]), &sum, &average);
+    array_average(A, sizeof(A)/sizeof(A[0]), &sum, &average);
 
     printf("sum = %f\n", sum);
     printf("average = %f\n", average);
