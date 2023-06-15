@@ -4,12 +4,16 @@
 
 void example1()
 {
+    // create a file pointer called inputf
+    // then declare an integer variable called c
     FILE *inputf;
-    int c;
+    char c;
 
-    // open text file for input
+    // open the text file for input
     if((inputf = fopen("test.txt", "r")) == NULL)
     {
+        // this error happens when the file cannot be opened
+        // it then exits the program with a value of 1 indicating an error
         printf("ERROR: test.txt cannot be opened.\n");
         exit(1);
     }
@@ -20,6 +24,56 @@ void example1()
     while((c = fgetc(inputf)) != EOF)
         printf("%c", c);
 
+    // safely close the file
+    fclose(inputf);
+}
+
+void example2()
+{
+    // create a file pointer called inputf
+    // then declare an character variable called c
+    // next create a string variable called filename
+    FILE *inputf;
+    char c;
+    char filename[40];
+
+    // ask the user for the filename to open
+    printf("Input name of text file: ");
+    scanf("%s", filename);
+
+    // open text file for input using the filename given by the user
+    if((inputf = fopen(filename, "r")) == NULL)
+    {
+        printf("ERROR: %s cannot be opened.\n", filename);
+        exit(1);
+    }
+
+    // simply print the contents of the file
+    while ((c = fgetc(inputf)) != EOF)
+        printf("%c", c);
+    
+    // safely close the file
+    fclose(inputf);
+}
+
+void example3()
+{
+    FILE *inputf;
+    char filename[40];
+    char c;
+
+    printf("Input name of text file: ");
+    scanf("%s", filename);
+
+    if((inputf = fopen(filename, "r")) == NULL)
+    {
+        printf("ERROR: %s cannot be opened.\n", filename);
+        exit(1);
+    }
+
+    while((c = fgetc(inputf)) != EOF)
+        fputc(c, stdout);
+    
     fclose(inputf);
 }
 
@@ -60,16 +114,18 @@ void main()
             case 1: example1(); break;
             case 2: example2(); break;
             case 3: example3(); break;
-            case 4: example4(); break;
-            case 5: example5(); break;
-            case 6: example6(); break;
-            case 7: example7(); break;
-            case 8: example8(); break;
-            case 9: example9(); break;
-            case 10: example10(); break;
+            // case 4: example4(); break
+            // case 5: example5(); break;
+            // case 6: example6(); break;
+            // case 7: example7(); break;
+            // case 8: example8(); break;
+            // case 9: example9(); break;
+            // case 10: example10(); break;
         }
 
         puts("\nPress enter to continue...");
+        if(choice >= 2 && choice <= 3)
+            getchar();
         getchar();
         system("cls");
     }
