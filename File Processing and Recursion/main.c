@@ -193,11 +193,6 @@ void Series1(int n)
     }
 }
 
-void example7()
-{
-    Series1(5);
-}
-
 void Series2(int n)
 {
     if (n > 0)
@@ -207,54 +202,71 @@ void Series2(int n)
     }
 }
 
-void example8()
+void example7()
 {
+    Series1(5);
+    puts("\n");
     Series2(5);
 }
 
-struct node
+int Mystery(int x, int y)
 {
-    int data;           // data, of course can be any type
-    struct node *left;  // pointer to the left subtree
-    struct node *right; // pointer to the right subtree
-};
-
-void Visit(struct node *p)
-{
-    // The visit operation can be any operation
-    // depending on the application. In this
-    // example, we simply print the value of the data.
-    printf("%d ", p->data);
+    if (y == 0)
+        return x;
+    else   
+        return (Mystery(y, x % y));
 }
 
-void PreOrder(struct node *p)
+void example8()
 {
-    if (p != NULL)
-    {
-        Visit(p);
-        PreOrder(p->left);
-        PreOrder(p->right);
-    }
-}
-void InOrder(struct node *p)
-{
-    if (p != NULL)
-    {
-        InOrder(p->left);
-        Visit(p);
-        InOrder(p->right);
-    }
+    printf("%d\n", Mystery(10, 25));
 }
 
-void PostOrder(struct node *p)
-{
-    if (p != NULL)
-    {
-        PostOrder(p->left);
-        PostOrder(p->right);
-        Visit(p);
-    }
-}
+// struct node
+// {
+//     int data;           // data, of course can be any type
+//     struct node *left;  // pointer to the left subtree
+//     struct node *right; // pointer to the right subtree
+// };
+
+// void Visit(struct node *p)
+// {
+//     // The visit operation can be any operation
+//     // depending on the application. In this
+//     // example, we simply print the value of the data.
+//     printf("%d ", p->data);
+// }
+
+// void PreOrder(struct node *p)
+// {
+//     if (p != NULL)
+//     {
+//         Visit(p);
+//         PreOrder(p->left);
+//         PreOrder(p->right);
+//     }
+// }
+// void InOrder(struct node *p)
+// {
+//     if (p != NULL)
+//     {
+//         InOrder(p->left);
+//         Visit(p);
+//         InOrder(p->right);
+//     }
+// }
+
+// void PostOrder(struct node *p)
+// {
+//     if (p != NULL)
+//     {
+//         PostOrder(p->left);
+//         PostOrder(p->right);
+//         Visit(p);
+//     }
+// }
+
+
 
 void main()
 {
@@ -265,14 +277,13 @@ void main()
         int choice = 0;
 
         puts("----------------------------------------------\n");
-        for (int i = 1; i <= 10; i++)
+        for (int i = 1, j = 6; i <= 5, j <= 10; i++, j++)
         {
             printf("\tExample [%d]", i);
-            ++i;
-            printf("\tExample [%d]\n", i);
+            printf("\tExample [%d]\n", j);
         }
 
-        printf("\nEnter a example number [1-10] >> ");
+        printf("\nEnter an example number [1-10] >> ");
         fgets(buffer, strlen(buffer) + 1, stdin);
         buffer[strcspn(buffer, "\n")] = '\0';
 
@@ -297,13 +308,13 @@ void main()
             case 5: example5(); break;
             case 6: example6(); break;
             case 7: example7(); break;
-            // case 8: example8(); break;
+            case 8: example8(); break;
             // case 9: example9(); break;
             // case 10: example10(); break;
         }
 
         puts("\nPress enter to continue...");
-        if (choice >= 2 && choice <= 10)
+        if (choice >= 2 && choice <= 6)
             getchar();
         getchar();
         system("cls");
