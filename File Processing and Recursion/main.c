@@ -209,19 +209,6 @@ void example7()
     Series2(5);
 }
 
-int Mystery(int x, int y)
-{
-    if (y == 0)
-        return x;
-    else   
-        return (Mystery(y, x % y));
-}
-
-void example8()
-{
-    printf("%d\n", Mystery(10, 25));
-}
-
 // struct node
 // {
 //     int data;           // data, of course can be any type
@@ -266,8 +253,6 @@ void example8()
 //     }
 // }
 
-
-
 void main()
 {
     // this is just a simple selection menu for the example codes above
@@ -277,10 +262,16 @@ void main()
         int choice = 0;
 
         puts("----------------------------------------------\n");
-        for (int i = 1, j = 6; i <= 5, j <= 10; i++, j++)
+        for (int i = 1; i <= 10; i++)
         {
             printf("\tExample [%d]", i);
-            printf("\tExample [%d]\n", j);
+			if(i == 7)
+			{
+				printf("\n");
+				break;
+			}
+			i++;	
+            printf("\tExample [%d]\n", i);
         }
 
         printf("\nEnter an example number [1-10] >> ");
@@ -308,7 +299,7 @@ void main()
             case 5: example5(); break;
             case 6: example6(); break;
             case 7: example7(); break;
-            case 8: example8(); break;
+            // case 8: example8(); break;
             // case 9: example9(); break;
             // case 10: example10(); break;
         }
