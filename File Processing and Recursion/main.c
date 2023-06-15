@@ -150,6 +150,112 @@ void example5()
     fclose(outputf);
 }
 
+void example6()
+{
+    FILE *inputf;
+    char inputfilename[40];
+    char ch;
+    int i;
+    float f;
+    double d;
+    char mystr[40];
+
+    // ask for filename, open text file for input
+    printf("Input name of output text file: ");
+    scanf("%s", inputfilename);
+
+    inputf = fopen(inputfilename, "w");
+
+    // input formatted data from text file
+    fscanf(inputf, "%c", &ch);
+    fscanf(inputf, "%d", &i);
+    fscanf(inputf, "%f", &f);
+    fscanf(inputf, "%lf", &d);
+    fscanf(inputf, "%s", mystr);
+
+    // output data - use fprintf()
+    // note that the output can also be done using prinf()
+    fprintf(stdout, "ch = %c\n", ch);
+    fprintf(stdout, "i = %d\n", i);
+    fprintf(stdout, "f = %f\n", f);
+    fprintf(stdout, "d = %lf\n", d);
+    fprintf(stdout, "mystr = %s\n", mystr);
+
+    fclose(inputf);
+}
+
+void Series1(int n)
+{
+    if (n > 0)
+    {
+        printf("n = %d\n", n);
+        Series1(n - 1);
+    }
+}
+
+void example7()
+{
+    Series1(5);
+}
+
+void Series2(int n)
+{
+    if (n > 0)
+    {
+        Series2(n - 1);
+        printf("n = %d\n", n);
+    }
+}
+
+void example8()
+{
+    Series2(5);
+}
+
+struct node
+{
+    int data;           // data, of course can be any type
+    struct node *left;  // pointer to the left subtree
+    struct node *right; // pointer to the right subtree
+};
+
+void Visit(struct node *p)
+{
+    // The visit operation can be any operation
+    // depending on the application. In this
+    // example, we simply print the value of the data.
+    printf("%d ", p->data);
+}
+
+void PreOrder(struct node *p)
+{
+    if (p != NULL)
+    {
+        Visit(p);
+        PreOrder(p->left);
+        PreOrder(p->right);
+    }
+}
+void InOrder(struct node *p)
+{
+    if (p != NULL)
+    {
+        InOrder(p->left);
+        Visit(p);
+        InOrder(p->right);
+    }
+}
+
+void PostOrder(struct node *p)
+{
+    if (p != NULL)
+    {
+        PostOrder(p->left);
+        PostOrder(p->right);
+        Visit(p);
+    }
+}
+
 void main()
 {
     // this is just a simple selection menu for the example codes above
@@ -189,15 +295,15 @@ void main()
             case 3: example3(); break;
             case 4: example4(); break;
             case 5: example5(); break;
-            // case 6: example6(); break;
-            // case 7: example7(); break;
+            case 6: example6(); break;
+            case 7: example7(); break;
             // case 8: example8(); break;
             // case 9: example9(); break;
             // case 10: example10(); break;
         }
 
         puts("\nPress enter to continue...");
-        if (choice >= 2 && choice <= 5)
+        if (choice >= 2 && choice <= 10)
             getchar();
         getchar();
         system("cls");
