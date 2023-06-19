@@ -33,7 +33,7 @@ void oneD()
             case 8: oneD_exer8(); break;
             case 9: oneD_exer9(); break;
             case 10: {
-                char answer = yes_or_no("Return to main menu? (y/n): ");
+                char answer = yes_or_no("Go back? (y/n): ");
                 system("cls");
                 if (answer == 'N' || answer == 'n')
                     break;
@@ -68,7 +68,7 @@ void prelim()
         switch (choice)
         {
             case 1: oneD(); break;
-            // case 2: twoD(); break;
+            case 2: twoD(); break;
             case 4: {
                 char answer = yes_or_no("Return to main menu? (y/n): ");
                 system("cls");

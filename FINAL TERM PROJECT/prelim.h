@@ -7,3 +7,5 @@
 #include "Valdez_1DExer7.h"
 #include "Valdez_1DExer8.h"
 #include "Valdez_1DExer9.h"
+
+#include "Valdez_2D.h"

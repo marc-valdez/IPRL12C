@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define MAX 100
 
 // Marc Valdez
 
@@ -13,17 +12,17 @@ double get_double(char *prompt, char *limit, double min, double max);
 // Edit these to change 2D array size (Max 10)
 const int row = 3, col = 3;
 
-void exercise_1(void);
-void exercise_2(void);
-void exercise_3(void);
-void exercise_4(void);
-void exercise_5(void);
-void exercise_6(void);
-void exercise_7(void);
-void exercise_8(void);
-void exit_prompt(void);
+void twoD_exer1(void);
+void twoD_exer2(void);
+void twoD_exer3(void);
+void twoD_exer4(void);
+void twoD_exer5(void);
+void twoD_exer6(void);
+void twoD_exer7(void);
+void twoD_exer8(void);
+void exit_prompt_2D(void);
 
-void main()
+void twoD()
 {
 	while(1)
 	{
@@ -31,28 +30,42 @@ void main()
 		
 		// I would prefer if you commented this out from here...
 		for(int i = 1, j = 5; i <= 8/2; i++, j++)
-			printf("[%d] Exercise %d\t\t[%d] Exercise %d\n", i, i, j, j);
-		printf("\n\t\t[9] Exit\n\n");
+			printf("  [%d] Exercise %d\t\t[%d] Exercise %d\n", i, i, j, j);
+		printf("\n  [9] Go back\t\t\t[10] Exit\n\n");
 		// ...to here.
 		
-		char *prompt = "> Enter Exercise Number [1-8] / Exit [9]: ";
-		int buffer = get_int(prompt, "0123456789\n", 1, 9);
+		char *prompt = "> Enter Exercise Number [1-8] / Go back [9] / Exit [10]: ";
+		int buffer = get_int(prompt, "0123456789\n", 1, 10);
 		
 		switch(buffer)
 		{
-			case 1: exercise_1(); break;
-			case 2: exercise_2(); break;
-			case 3: exercise_3(); break;
-			case 4: exercise_4(); break;
-			case 5: exercise_5(); break;
-			case 6: exercise_6(); break;
-			case 7: exercise_7(); break;
-			case 8: exercise_8(); break;
-			case 9: exit_prompt(); break;
+			case 1: system("cls"); twoD_exer1(); break;
+			case 2: system("cls"); twoD_exer2(); break;
+			case 3: system("cls"); twoD_exer3(); break;
+			case 4: system("cls"); twoD_exer4(); break;
+			case 5: system("cls"); twoD_exer5(); break;
+			case 6: system("cls"); twoD_exer6(); break;
+			case 7: system("cls"); twoD_exer7(); break;
+			case 8: system("cls"); twoD_exer8(); break;
+			case 9: {
+                char answer = yes_or_no("Go back? (y/n): ");
+                system("cls");
+                if (answer == 'N' || answer == 'n')
+                    break;
+                return;
+            }
+            case 10: {
+                char answer = yes_or_no("Are you sure you want to exit? (y/n): ");
+                system("cls");
+                if (answer == 'N' || answer == 'n')
+                    break;
+                exit_prompt("Thank you for using this program!\n");
+            }
 			default:
 				printf("\nInvalid Input.\n\n");
 				break;
 		}
+		system("pause");
 	}
 }
 
@@ -64,7 +77,7 @@ void d_init_zero(double arr[row][col])
 			arr[i][j] = 0.0;
 }
 
-void exercise_1(void)
+void twoD_exer1(void)
 {
 	printf("\n1. Write a function that will initialize the contents of a double data type 2D array to 0.0. \nPass the array as parameter.\n\n");
 	
@@ -94,7 +107,7 @@ void d_init_scan(double arr[row][col])
 	printf("\n");
 }
 
-void exercise_2(void)
+void twoD_exer2(void)
 {
 	printf("\n2. Same as problem 1, but allow the user to input the value of the array element via scanf() statement.\n\n");
 	
@@ -112,7 +125,7 @@ void exercise_2(void)
 }
 
 // Initializes a double 2D array
-void d_init(double arr[row][col])
+void d_init_2D(double arr[row][col])
 {
 	for(int i = 0; i < row; i++)
 		for(int j = 0; j < col; j++)
@@ -130,13 +143,13 @@ void print_arr(double arr[row][col])
 	}
 }
 
-void exercise_3(void)
+void twoD_exer3(void)
 {
 	printf("\n3. Write a function that will display all the elements of the 2D array.\n\nElements should be printed starting from the first row up to the last row,\nand from the first column to the last column within the same row.\n\nElements of the same row should be printed on the same line separated by two spaces.\nPass the array as parameter.\n\n");
 	
 	double d_arr[row][col];
 	
-	d_init(d_arr);
+	d_init_2D(d_arr);
 	print_arr(d_arr);
 	
 	printf("\n");
@@ -153,13 +166,13 @@ int count_negative(double arr[row][col])
 	return count;
 }
 
-void exercise_4(void)
+void twoD_exer4(void)
 {
 	printf("\n4. Write a function that will return the number of negative elements in the 2D array.\nPass the array as parameter\n\n");
 	
 	double d_arr[row][col];
 
-	d_init(d_arr);
+	d_init_2D(d_arr);
 	print_arr(d_arr);
 	printf("\nThe number of negative values are: %d\n", count_negative(d_arr));
 	
@@ -183,13 +196,13 @@ void print_diagonal(double arr[row][col])
 	}
 }
 
-void exercise_5()
+void twoD_exer5()
 {
 	printf("\n5. Write a function that will print only the elements on the main diagonal of the 2D array.\nPass the array as parameter.\n\n");
 	
 	double d_arr[row][col];
 	
-	d_init(d_arr);
+	d_init_2D(d_arr);
 	
 	for(int i = 0; i < row; i++)
 	{
@@ -211,13 +224,13 @@ int sum_row(double arr[row][col], int buffer)
 	return sum;
 }
 
-void exercise_6()
+void twoD_exer6()
 {
 	printf("\n6. Write a function that will return the sum of the elements on a specified row.\nPass the array and the row as parameters.\n\n");
 	
 	double d_arr[row][col];
 	
-	d_init(d_arr);
+	d_init_2D(d_arr);
 	
 	for(int i = 0; i < row; i++)
 	{
@@ -243,13 +256,13 @@ int sum_column(double arr[row][col], int buffer)
 	return sum;
 }
 
-void exercise_7()
+void twoD_exer7()
 {
 	printf("\n7. Write a function that will return the sum of the elements on a specified row.\nPass the array and the column as parameters.\n\n");
 	
 	double d_arr[row][col];
 	
-	d_init(d_arr);
+	d_init_2D(d_arr);
 	
 	for(int j = 0; j < col; j++)
 		printf("\tCol %d:", j+1);
@@ -275,7 +288,7 @@ void add_arrays(int A[3][3], int B[3][3], int C[3][3])
 			C[i][j] = A[i][j] + B[i][j];
 }
 
-void exercise_8(void)
+void twoD_exer8(void)
 {
 	printf("\n8. Assume three matrices of the same size, say matrix A, B and C.\n\nWrite a function that will add the two matrices A and B and store the sum to C.\nPass the three arrays as parameters.\n\n");
 	
@@ -320,18 +333,17 @@ void exercise_8(void)
 	printf("\n");
 }
 
-// // Prompts for exit
-// void exit_prompt(void)
-// {
-// 	printf("\n");
-// 	char in = get_char("Would you like to exit? [Y-N]: ", "YyNn\n");
-// 	if(in == 'Y' || in == 'y')
-// 		exit(0);
-// 	printf("\n");
-// }
+// Prompts for exit
+void exit_prompt_2D(void)
+{
+	printf("\n");
+	char in = get_char("Would you like to exit? [Y-N]: ", "YyNn\n");
+	if(in == 'Y' || in == 'y')
+		exit(0);
+	printf("\n");
+}
 
 // from valdez.h
-
 char get_char(char *prompt, char *limit)
 {
 	char buffer[MAX];
