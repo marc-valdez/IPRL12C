@@ -1,5 +1,7 @@
 #include "valdez_v3.h"
 #include "prelim.h"
+#include "midterm.h"
+// #include "finals.h"
 
 void main_menu()
 {
