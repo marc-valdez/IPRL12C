@@ -3,7 +3,7 @@
 #include "midterm.h"
 #include "finals.h"
 
-void main_menu()
+void main()
 {
     while(1)
     {
@@ -29,9 +29,4 @@ void main_menu()
             case 3: finals(); break;
         }
     }
-}
-
-void main()
-{
-    main_menu();
 }
