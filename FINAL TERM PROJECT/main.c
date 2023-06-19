@@ -1,7 +1,7 @@
 #include "valdez_v3.h"
 #include "prelim.h"
 #include "midterm.h"
-// #include "finals.h"
+#include "finals.h"
 
 void main_menu()
 {
@@ -26,7 +26,7 @@ void main_menu()
             }
             case 1: prelim(); break;
             case 2: midterm(); break;
-            // case 3: finals(); break;
+            case 3: finals(); break;
         }
     }
 }
@@ -34,5 +34,4 @@ void main_menu()
 void main()
 {
     main_menu();
-    // system("cls");
 }
