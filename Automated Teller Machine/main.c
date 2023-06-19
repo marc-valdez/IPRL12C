@@ -30,6 +30,21 @@ Account *account_login();
 void pin_login(Account *user);
 void main_menu(Account *user);
 
+void main()
+{
+    while (true)
+    {
+        Account *user = account_login();
+        pin_login(user);
+
+        if (user->is_locked)
+            continue;
+
+        main_menu(user);
+        system("cls");
+    }
+}
+
 void load_users()
 {
     FILE *input = fopen("users.bin", "rb");
@@ -52,21 +67,6 @@ void save_users()
     }
     fwrite(users, sizeof(Account), users_size, output);
     fclose(output);
-}
-
-void main()
-{
-    while (true)
-    {
-        Account *user = account_login();
-        pin_login(user);
-
-        if (user->is_locked)
-            continue;
-
-        main_menu(user);
-        system("cls");
-    }
 }
 
 Account *account_login()
