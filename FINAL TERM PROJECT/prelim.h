@@ -4,6 +4,8 @@
 #include "ValdezMJ_ME1.h"
 #include "ValdezMJ_ME2.h"
 
+#include "Binegas_Valdez_LRTSYS.h"
+
 void prelim()
 {
     while(1)
@@ -13,6 +15,7 @@ void prelim()
         printf("  [2] 2D Arrays\n");
         printf("  [3] Machine Exercises 1\n");
         printf("  [4] Machine Exercises 2\n");
+        printf("  [5] LRT System\n");
 
         int choice = *(int *)get_number(INTEGER, "> Please select an option: ", -1, 6);
         system("cls");
@@ -37,6 +40,7 @@ void prelim()
             case 2: twoD(); break;
             case 3: prelim_ME1(); system("pause"); break;
             case 4: prelim_ME2(); system("pause"); break;
+            case 5: lrt_main(); system("pause"); break;
         }
     }
 }
