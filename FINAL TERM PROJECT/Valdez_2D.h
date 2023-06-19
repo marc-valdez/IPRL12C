@@ -26,20 +26,32 @@ void twoD()
 {
 	while(1)
 	{
-		printf("=======================================================================================================\n\n");
-		
-		// I would prefer if you commented this out from here...
+		printf("=======================================================================================================\n");
+		printf("Two Dimensional Array Activities: | [0] Go back | [-1] Exit\n");
+
 		for(int i = 1, j = 5; i <= 8/2; i++, j++)
 			printf("  [%d] Exercise %d\t\t[%d] Exercise %d\n", i, i, j, j);
-		printf("\n  [9] Go back\t\t\t[10] Exit\n\n");
-		// ...to here.
 		
-		char *prompt = "> Enter Exercise Number [1-8] / Go back [9] / Exit [10]: ";
+		char *prompt = "> Please select an option: ";
 		int buffer = get_int(prompt, "0123456789\n", 1, 10);
 		system("cls");
 
 		switch(buffer)
 		{
+			case -1: {
+                char answer = yes_or_no("Are you sure you want to exit? (y/n): ");
+                system("cls");
+                if (answer == 'N' || answer == 'n')
+                    continue;
+                exit_prompt("Thank you for using this program!\n");
+            }
+			case 0: {
+                char answer = yes_or_no("Return to previous menu? (y/n): ");
+                system("cls");
+                if (answer == 'N' || answer == 'n')
+                    continue;
+                return;
+            }
 			case 1: twoD_exer1(); break;
 			case 2: twoD_exer2(); break;
 			case 3: twoD_exer3(); break;
@@ -48,20 +60,6 @@ void twoD()
 			case 6: twoD_exer6(); break;
 			case 7: twoD_exer7(); break;
 			case 8: twoD_exer8(); break;
-			case 9: {
-                char answer = yes_or_no("Go back? (y/n): ");
-                system("cls");
-                if (answer == 'N' || answer == 'n')
-                    continue;;
-                return;
-            }
-            case 10: {
-                char answer = yes_or_no("Are you sure you want to exit? (y/n): ");
-                system("cls");
-                if (answer == 'N' || answer == 'n')
-                    continue;
-                exit_prompt("Thank you for using this program!\n");
-            }
 		}
 		system("pause");
 	}
