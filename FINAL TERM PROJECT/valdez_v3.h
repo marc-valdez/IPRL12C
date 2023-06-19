@@ -41,9 +41,7 @@ void *get_number(const DataType type, const char *input, const double min, const
 
     va_list args;
     va_start(args, max);
-
     vsprintf(prompt, input, args);
-
     va_end(args);
 
     char buffer[MAX];
@@ -66,7 +64,7 @@ void *get_number(const DataType type, const char *input, const double min, const
         {
             case INTEGER:
             {
-                user_input = malloc(sizeof(int));
+                user_input = malloc(sizeof(char *) * sizeof(int));
                 is_null(user_input);
 
                 if(sscanf(buffer, "%d", user_input) != 1)
@@ -98,7 +96,7 @@ void *get_number(const DataType type, const char *input, const double min, const
             }
             case FLOAT:
             {
-                user_input = malloc(sizeof(float));
+                user_input = malloc(sizeof(char *) * sizeof(float));
                 is_null(user_input);
 
                 if(sscanf(buffer, "%f", user_input) != 1)
@@ -124,7 +122,7 @@ void *get_number(const DataType type, const char *input, const double min, const
             }
             case DOUBLE:
             {
-                user_input = malloc(sizeof(double));
+                user_input = malloc(sizeof(char *) * sizeof(double));
                 is_null(user_input);
 
                 if(sscanf(buffer, "%lf", user_input) != 1)
@@ -159,9 +157,7 @@ void *get_text(const DataType type, const char *input, ...)
 
     va_list args;
     va_start(args, input);
-
     vsprintf(prompt, input, args);
-
     va_end(args);
 
     char buffer[MAX];
@@ -224,7 +220,7 @@ void *get_text(const DataType type, const char *input, ...)
 	}
 }
 
-void is_null(void *buffer)
+void is_null(const char *buffer)
 {
     if(buffer == NULL)
     {
@@ -279,7 +275,21 @@ void exit_prompt(const char *prompt)
 {
     system("cls");
     printf(prompt);
-    printf("\nPress any key to continue...\n");
-    getchar();
+    system("pause");
     exit(0);
+}
+
+char yes_or_no(const char *prompt)
+{
+    while (true)
+    {
+        char *buffer = (char *)get_text(CHAR, prompt);
+
+        if (strspn(buffer, "YyNn") != strlen(buffer))
+        {
+            cprintf(YELLOW, "\n! Invalid input. Please enter Y or N to continue.\n");
+            continue;
+        }
+        return buffer[0];
+    }
 }
