@@ -12,9 +12,9 @@ void prelim()
     {
         printf("Prelim Activities | [0] Go back | [-1] Exit\n");
         printf("  [1] 1D Arrays\n");
-        printf("  [2] 2D Arrays\n");
-        printf("  [3] Machine Exercises 1\n");
-        printf("  [4] Machine Exercises 2\n");
+        printf("  [2] Machine Exercises 1\n");
+        printf("  [3] Machine Exercises 2\n");
+        printf("  [4] 2D Arrays\n");
         printf("  [5] LRT System\n");
 
         int choice = *(int *)get_number(INTEGER, "> Please select an option: ", -1, 6);
@@ -37,9 +37,9 @@ void prelim()
                 return;
             }
             case 1: oneD(); break;
-            case 2: twoD(); break;
-            case 3: prelim_ME1(); system("pause"); break;
-            case 4: prelim_ME2(); system("pause"); break;
+            case 2: prelim_ME1(); system("pause"); break;
+            case 3: prelim_ME2(); system("pause"); break;
+            case 4: twoD(); break;
             case 5: lrt_main(); system("pause"); break;
         }
     }
