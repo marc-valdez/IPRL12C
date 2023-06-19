@@ -25,7 +25,7 @@ void main_menu()
                 exit_prompt("Thank you for using this program!\n");
             }
             case 1: prelim(); break;
-            // case 2: midterms(); break;
+            case 2: midterm(); break;
             // case 3: finals(); break;
         }
     }
