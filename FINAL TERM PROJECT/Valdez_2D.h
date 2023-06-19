@@ -36,17 +36,18 @@ void twoD()
 		
 		char *prompt = "> Enter Exercise Number [1-8] / Go back [9] / Exit [10]: ";
 		int buffer = get_int(prompt, "0123456789\n", 1, 10);
-		
+		system("cls");
+
 		switch(buffer)
 		{
-			case 1: system("cls"); twoD_exer1(); break;
-			case 2: system("cls"); twoD_exer2(); break;
-			case 3: system("cls"); twoD_exer3(); break;
-			case 4: system("cls"); twoD_exer4(); break;
-			case 5: system("cls"); twoD_exer5(); break;
-			case 6: system("cls"); twoD_exer6(); break;
-			case 7: system("cls"); twoD_exer7(); break;
-			case 8: system("cls"); twoD_exer8(); break;
+			case 1: twoD_exer1(); break;
+			case 2: twoD_exer2(); break;
+			case 3: twoD_exer3(); break;
+			case 4: twoD_exer4(); break;
+			case 5: twoD_exer5(); break;
+			case 6: twoD_exer6(); break;
+			case 7: twoD_exer7(); break;
+			case 8: twoD_exer8(); break;
 			case 9: {
                 char answer = yes_or_no("Go back? (y/n): ");
                 system("cls");
