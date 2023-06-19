@@ -52,19 +52,16 @@ void twoD()
                 char answer = yes_or_no("Go back? (y/n): ");
                 system("cls");
                 if (answer == 'N' || answer == 'n')
-                    break;
+                    continue;;
                 return;
             }
             case 10: {
                 char answer = yes_or_no("Are you sure you want to exit? (y/n): ");
                 system("cls");
                 if (answer == 'N' || answer == 'n')
-                    break;
+                    continue;
                 exit_prompt("Thank you for using this program!\n");
             }
-			default:
-				printf("\nInvalid Input.\n\n");
-				break;
 		}
 		system("pause");
 	}
