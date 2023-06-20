@@ -39,7 +39,7 @@ void sample1()
 void sample2()
 {
     // variable and pointer declarations
-    int i, j;
+    int i;
     int *p1, *p2, *p3;
 
     // address assignments
@@ -358,6 +358,7 @@ void pointer_samples()
                 if(answer == 'N' || answer == 'n')
                     continue;
                 exit_prompt("Thank you for using this program!\n");
+                break;
             }
             case 0: {
                 char answer = yes_or_no("Return to previous menu? (y/n): ");
