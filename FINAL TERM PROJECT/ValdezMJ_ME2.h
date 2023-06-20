@@ -11,7 +11,8 @@ void prelim_ME2() {
     printf("=====================================================\n");
     printf("Machine Exercise 2 - March 23, 2023\n\n");
 
-    int messages = *(int *)get_number(INTEGER, "Please enter the number of text messages you sent: ", 0, 2000);
+    int messages, min = 0, max = 2000;
+    get_int(&messages, min, max, "Please enter the number of text messages you sent: ");
     
     printf("Your final charge is PHP %.2f\n", compute(messages));
 }

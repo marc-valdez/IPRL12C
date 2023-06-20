@@ -8,16 +8,17 @@ void oneD_exer4()
 {
 	printf("4. Return the sum of all elements\n\n");
 	
-	int n = *(int *)get_number(INTEGER, "Enter array size (0-4): ", 0.0, 4.0);
+    int n;
+    get_int(&n, 0, 4, "Enter array size (%d-%d): ", 0, 4);
 	
 	double d_arr[n];
 	d_init4(d_arr, n);
 	
 	for(int i = 0; i < n; i++)
-		printf("%.2f\t", d_arr[i]);
+		printf("%.2lf\t", d_arr[i]);
 	
 	double sum = summate(d_arr, n);
-	printf("\n\nSum: %.2f\n\n", sum);
+	printf("\n\nSum: %.2lf\n\n", sum);
 }
 
 // Initializes a double array that has element values decreasing by 1.0 from 0.0

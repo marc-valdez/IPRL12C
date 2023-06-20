@@ -7,16 +7,18 @@ double lowest(double arr[], int n);
 void oneD_exer3()
 {
 	printf("3. Return the lowest value\n\n");
-	int n = *(int *)get_number(INTEGER, "Enter array size (0-4): ", 0.0, 4.0);
+	
+	int n;
+    get_int(&n, 0, 4, "Enter array size (%d-%d): ", 0, 4);
 	
 	double d_arr[n];
 	d_init3(d_arr, n);
 	
 	for(int i = 0; i < n; i++)
-		printf("%.2f\t", d_arr[i]);
+		printf("%.2lf\t", d_arr[i]);
 	
 	double min = lowest(d_arr, n);
-	printf("\n\nLowest: %.2f\n\n", min);
+	printf("\n\nLowest: %.2lf\n\n", min);
 }
 
 // Initializes a double array that has element values decreasing by 1.0 from 0.0

@@ -133,13 +133,10 @@ void beep_reload(float *beep_card_balance)
 {
 	float reload_amount = 0.0;
 	
-	float min = MIN_RELOAD, max = MAX_RELOAD - *beep_card_balance;
-	char prompt[MAX];
-	// sprintf is similar to printf wherein it can read format specifiers but it instead outputs to a string/character array.
-	sprintf(prompt, "\nPlease enter your reload amount. [%.2f PHP - %.2f PHP] >> ", min, max);
-
 	// Get the reload amount from the user then add it to the beep balance.
-	reload_amount = *(float *)get_number(FLOAT, prompt, min, max);
+	float min = MIN_RELOAD, max = MAX_RELOAD - *beep_card_balance;
+	get_float(&reload_amount, min, max, "\nPlease enter your reload amount. [%.2f PHP - %.2f PHP] >> ", min, max);
+	
 	*beep_card_balance += reload_amount;
  
 	// Update the user on what happened.
@@ -163,7 +160,7 @@ void beep_avail(float *beep_card_balance, int *beep_card_status)
 {
 	float new_card_total = BEEP_CARD_PRICE + INITIAL_BEEP_CARD_BALANCE;
 	printf("\nA new beep card costs %.2f PHP, %.2f for the card, %.2f for the initial load.", new_card_total, BEEP_CARD_PRICE, INITIAL_BEEP_CARD_BALANCE);
-	char buffer = get_char("\nWould you like to avail a beep card? [Y/N] >> ", "YyNn\n");
+	char buffer = yes_or_no("\nWould you like to avail a beep card? [Y/N] >> ");
 
 	float payment = 0.0;
 	if(buffer == 'Y' || buffer == 'y') 
@@ -175,8 +172,7 @@ void beep_avail(float *beep_card_balance, int *beep_card_status)
 		float min = new_card_total, max = 1000;
 		char prompt[MAX];
 		sprintf(prompt, "\nPlease enter your payment amount. [%.2f PHP - %.2f PHP] >> ", min, max);
-
-		payment = *(float *)get_number(FLOAT, prompt, min, max);
+		get_float(&payment, min, max, prompt);
 		
 		// Print the user's change and update them on their new beep card balance.
 		printf("\nYour change is %.2f PHP.\n", payment - new_card_total);
@@ -185,7 +181,7 @@ void beep_avail(float *beep_card_balance, int *beep_card_status)
 		printf("\nYour new beep card has a balance of %.0f PHP.\n", *beep_card_balance = INITIAL_BEEP_CARD_BALANCE);
 
 		// Ask the user if they want to reload immediately.
-		char buffer = get_char("Would you like to immediately reload your new beep card? [Y/N] >> ", "YyNn\n");
+		char buffer = yes_or_no("Would you like to immediately reload your new beep card? [Y/N] >> ");
 		if(buffer == 'Y' || buffer == 'y')
 			beep_reload(beep_card_balance);
 	}
@@ -194,7 +190,7 @@ void beep_avail(float *beep_card_balance, int *beep_card_status)
 // This function checks the existence of a beep card and sells the user a new one if they don't already have it.
 void check_beep_card(float *beep_card_balance, int *beep_card_status)
 {	
-    char buffer = get_char("Do you have a beep card? [Y/N] >> ", "YyNn\n");
+    char buffer = yes_or_no("Do you have a beep card? [Y/N] >> ");
 
 	if(buffer == 'Y' || buffer == 'y')
     {
@@ -202,10 +198,7 @@ void check_beep_card(float *beep_card_balance, int *beep_card_status)
 		*beep_card_status = 1;
 
 		float min = 0, max = MAX_RELOAD;
-		char prompt[MAX];
-		sprintf(prompt, "\nPlease enter your beep card balance. [%.2f PHP - %.2f PHP] >> ", min, max);
-
-		*beep_card_balance = *(float *)get_number(FLOAT, prompt, min, max);
+		get_float(beep_card_status, min, max, "\nPlease enter your beep card balance. [%.2f PHP - %.2f PHP] >> ", min, max);
 		
 		// Check if the user has the minimum required balance of 13 pesos inside their beep card.
 		balance_check(beep_card_balance, MIN_RELOAD);
@@ -234,13 +227,8 @@ void get_stations(int *origin, int *destination)
 	    print_menu();
 
 		int min = 1, max = 20;
-		char prompt1[MAX], prompt2[MAX];;
-
-		sprintf(prompt1, "\nPlease enter your Current Station number. [%d-%d] >> ", min, max);
-		sprintf(prompt2, "\nPlease enter your Destination Station number. [%d-%d] >> ", min, max);
-
-		*origin = *(int *)get_number(INTEGER, prompt1, min, max);
-		*destination = *(int *)get_number(INTEGER, prompt2, min, max);
+		get_int(origin, min, max, "\nPlease enter your Current Station number. [%d-%d] >> ", min, max);
+		get_int(destination, min, max, "\nPlease enter your Destination Station number. [%d-%d] >> ", min, max);
 		
 		// This checks if the user inputted the same station twice.
 		if(*origin != *destination)
@@ -268,10 +256,7 @@ void calculate_change(int fare)
     while(1)
     {
         float min = 0.0, max = 1000.0;
-		char prompt[MAX];
-		sprintf(prompt, "\nPlease enter your payment amount. [%.2f PHP - %.2f PHP] >> ", min, max);
-		
-		change = *(float *)get_number(FLOAT, prompt, min, max);
+		get_float(&change, min, max, "\nPlease enter your payment amount. [%.2f PHP - %.2f PHP] >> ", min, max);
 
 		if(change >= fare)
 			break;

@@ -4,11 +4,6 @@
 
 // Marc Valdez
 
-char get_char(char *prompt, char *limit);
-int get_int(char *prompt, char *limit, int min, int max);
-float get_float(char *prompt, char *limit, float min, float max);
-double get_double(char *prompt, char *limit, double min, double max);
-
 // Edit these to change 2D array size (Max 10)
 const int row = 3, col = 3;
 
@@ -26,28 +21,27 @@ void twoD()
 {
 	while(1)
 	{
+		system("cls");
 		printf("=======================================================================================================\n");
 		printf("Two Dimensional Array Activities: | [0] Go back | [-1] Exit\n");
 
 		for(int i = 1, j = 5; i <= 8/2; i++, j++)
 			printf("  [%d] Exercise %d\t\t[%d] Exercise %d\n", i, i, j, j);
 		
-		char *prompt = "> Please select an option: ";
-		int buffer = get_int(prompt, "0123456789\n", 1, 10);
+		int buffer;
+		get_int(&buffer, -1, 8, "> Please select an option: ");
+		
 		system("cls");
-
 		switch(buffer)
 		{
 			case -1: {
                 char answer = yes_or_no("Are you sure you want to exit? (y/n): ");
-                system("cls");
                 if (answer == 'N' || answer == 'n')
                     continue;
                 exit_prompt("Thank you for using this program!\n");
             }
 			case 0: {
                 char answer = yes_or_no("Return to previous menu? (y/n): ");
-                system("cls");
                 if (answer == 'N' || answer == 'n')
                     continue;
                 return;
@@ -95,11 +89,7 @@ void d_init_scan(double arr[row][col])
 {
 	for(int i = 0; i < row; i++)
 		for(int j = 0; j < col; j++)
-		{
-			char prompt[50];
-            sprintf(prompt, "Enter value of array element [%d][%d]: ", i, j);
-			arr[i][j] = get_double(prompt, "0123456789.\n", 0.0, 100.0);
-		}
+			get_double(&arr[i][j], 0.0, 100.0, "Enter value of array element [%d][%d]: ", i, j);
 	printf("\n");
 }
 
@@ -236,7 +226,8 @@ void twoD_exer6()
 		printf("\n");
 	}
 	printf("\n");
-	int input = get_int("Please enter a row number: ", "1234567890\n", 1, row);
+	int input;
+	get_int(&input, 1, row, "Please enter a row number: ");
 	int sum = sum_row(d_arr, input);
 	printf("\nThe sum of row %d is %d\n\n", input, sum);
 }
@@ -271,7 +262,8 @@ void twoD_exer7()
 	}
 	
 	printf("\n");
-	int input = get_int("Please enter a column number: ", "1234567890\n", 1, col);
+	int input;
+	get_int(&input, 1, col, "Please enter a row number: ");
 	int sum = sum_column(d_arr, input);
 	printf("\nThe sum of column %d is %d\n\n", input, sum);
 }
@@ -337,144 +329,4 @@ void exit_prompt_2D(void)
 	if(in == 'Y' || in == 'y')
 		exit(0);
 	printf("\n");
-}
-
-// from valdez.h
-char get_char(char *prompt, char *limit)
-{
-	char buffer[MAX];
-	
-	while(1)
-	{
-        printf("%s", prompt);
-		fgets(buffer, sizeof(buffer), stdin);
-		
-        if(strlen(buffer) > 2)
-        {
-			strcpy(buffer, "");
-            printf("\n\t* Invalid input. Character limit is: %d\n\n", 1);
-            continue;
-        }
-        
-        if(strlen(buffer) < 2)
-        {
-			strcpy(buffer, "");
-            printf("\n\t* Invalid input. Please enter a character.\n\n");
-            continue;
-        }
-        
-		if(strspn(buffer, limit) != strlen(buffer))
-        {
-			strcpy(buffer, "");
-            printf("\n\t* Invalid input. Prompt only accepts: %s\n", limit);
-            continue;
-        }
-		
-        return buffer[0];
-	}
-}
-
-int get_int(char *prompt, char *limit, int min, int max)
-{
-	char buffer[MAX];
-	int user_input;
-	
-	while(1)
-	{
-        printf("%s", prompt);
-		fgets(buffer, sizeof(buffer), stdin);
-		
-		if(strspn(buffer, limit) != strlen(buffer))
-        {
-			strcpy(buffer, "");
-            printf("\n\t* Invalid input. Prompt only accepts %s\n", limit);
-            continue;
-        }
-        
-        if(sscanf(buffer, "%d", &user_input) != 1)
-        {
-            strcpy(buffer, "");
-            printf("\n\t* Invalid input. Please enter a number.\n\n");
-            continue;
-        }
-        
-        if(user_input < min || user_input > max) 
-        {
-            strcpy(buffer, "");
-            printf("\n\t* Invalid input. Please enter a number between %d and %d.\n\n", min, max);
-            continue;
-        }
-		
-        return user_input;
-	}
-}
-
-float get_float(char *prompt, char *limit, float min, float max)
-{
-	char buffer[MAX];
-	float user_input;
-	
-	while(1)
-	{
-        printf("%s", prompt);
-		fgets(buffer, sizeof(buffer), stdin);
-		
-		if(strspn(buffer, limit) != strlen(buffer))
-        {
-			strcpy(buffer, "");
-            printf("\n\t* Invalid input. Prompt only accepts %s\n", limit);
-            continue;
-        }
-        
-        if(sscanf(buffer, "%f", &user_input) != 1)
-        {
-            strcpy(buffer, "");
-            printf("\n\t* Invalid input. Please enter a number.\n\n");
-            continue;
-        }
-        
-        if(user_input < min || user_input > max) 
-        {
-            strcpy(buffer, "");
-            printf("\n\t* Invalid input. Please enter a number between %.2f and %.2f.\n\n", min, max);
-            continue;
-        }
-		
-        return user_input;
-	}
-}
-
-double get_double(char *prompt, char *limit, double min, double max)
-{
-	char buffer[MAX];
-	double user_input;
-	
-	while(1)
-	{
-        printf("%s", prompt);
-		fgets(buffer, sizeof(buffer), stdin);
-		
-		if(strspn(buffer, limit) != strlen(buffer))
-        {
-			strcpy(buffer, "");
-            printf("\n\t* Invalid input. Prompt only accepts %s\n", limit);
-            continue;
-        }
-        
-        if(sscanf(buffer, "%lf", &user_input) != 1)
-        {
-            strcpy(buffer, "");
-            printf("\n\t* Invalid input. Please enter a number.\n\n");
-            continue;
-        }
-        
-        if(user_input < min || user_input > max) 
-        {
-            strcpy(buffer, "");
-            printf("\n\t* Invalid input. Please enter a number between %.2f and %.2f.\n\n", min, max);
-            continue;
-        }
-		
-        return user_input;
-	}
 }
