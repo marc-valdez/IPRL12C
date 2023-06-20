@@ -98,6 +98,7 @@ void wrong_swap(int x, int y)
 
     // a workaround to this would be to perform any other operations that use x and y within this function
     // say printing x and y, you can do it inside here instead of main
+    printf("wrong swap: x = %d, y = %d\n", x, y);
     // however, do take note that x and y in main is still not swapped
 }
 
