@@ -170,9 +170,7 @@ void beep_avail(float *beep_card_balance, int *beep_card_status)
 
 		// Ask user for the payment, the minimum price of a beep card today is 100 pesos.
 		float min = new_card_total, max = 1000;
-		char prompt[MAX];
-		sprintf(prompt, "\nPlease enter your payment amount. [%.2f PHP - %.2f PHP] >> ", min, max);
-		get_float(&payment, min, max, prompt);
+		get_float(&payment, min, max, "\nPlease enter your payment amount. [%.2f PHP - %.2f PHP] >> ", min, max);
 		
 		// Print the user's change and update them on their new beep card balance.
 		printf("\nYour change is %.2f PHP.\n", payment - new_card_total);
@@ -198,7 +196,7 @@ void check_beep_card(float *beep_card_balance, int *beep_card_status)
 		*beep_card_status = 1;
 
 		float min = 0, max = MAX_RELOAD;
-		get_float(beep_card_status, min, max, "\nPlease enter your beep card balance. [%.2f PHP - %.2f PHP] >> ", min, max);
+		get_float(beep_card_balance, min, max, "\nPlease enter your beep card balance. [%.2f PHP - %.2f PHP] >> ", min, max);
 		
 		// Check if the user has the minimum required balance of 13 pesos inside their beep card.
 		balance_check(beep_card_balance, MIN_RELOAD);
