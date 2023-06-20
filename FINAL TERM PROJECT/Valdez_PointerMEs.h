@@ -227,9 +227,10 @@ void pointer_machine_exercises()
             printf("\t\tExercise [%d]\n", i);
         }
 
-        int choice = *(int *)get_number(INTEGER, "> Please select an option: ", -1, 10);
+        int choice, min = -1, max = 10;
+        get_int(&choice, min, max, "> Please select an option: ");
+        
         system("cls");
-
         switch (choice)
         {
             case -1: {

@@ -79,7 +79,8 @@ Account *account_login()
     load_users();
     while (true)
     {
-        char *account_number = (char *)get_text(STRING, "%s[%dm\nStudent ID %s[0;%dm>> ", COLOR, DEFAULT, COLOR, CYAN);
+        char account_number[MAX];
+        get_string(account_number, MAX, "%s[%dm\nStudent ID %s[0;%dm>> ", COLOR, DEFAULT, COLOR, CYAN);
 
         if (strspn(account_number, "1234567890-") != strlen(account_number))
         {
@@ -121,7 +122,8 @@ void pin_login(Account *user)
 {
     while (true)
     {
-        char *pin_number = (char *)get_text(STRING, "%s[%dm\nPIN Number %s[0;%dm>> ", COLOR, DEFAULT, COLOR, CYAN);
+        char pin_number[MAX];
+        get_string(pin_number, MAX, "%s[%dm\nPIN Number %s[0;%dm>> ", COLOR, DEFAULT, COLOR, CYAN);
 
         if (strspn(pin_number, "1234567890") != strlen(pin_number))
         {
@@ -149,8 +151,7 @@ void pin_login(Account *user)
         {
             user->is_locked = true;
             cprintf(RED, "\n! You entered the wrong PIN too many times. Your account has been locked.\nPlease contact the IT department to reset your account.\n");
-            printf("\nPress any key to return to login screen...\n");
-            getchar();
+            system("pause");
             system("cls");
             return;
         }
@@ -203,7 +204,8 @@ void deposit(Account *user)
 {
     while (true)
     {
-        float deposit = *(float *)get_number(FLOAT, "\nDeposit amount >> ", INT_MIN, INT_MAX);
+        float deposit;
+        get_float(&deposit, INT_MIN, INT_MAX, "\nDeposit amount >> ");
 
         if (deposit <= 0.0)
             cprintf(YELLOW, "\n! Deposit amount should be greater than zero.\n");
@@ -222,7 +224,8 @@ void withdrawal(Account *user)
 {
     while (true)
     {
-        float withdrawal = *(float *)get_number(FLOAT, "\nWithdrawal amount >> ", INT_MIN, INT_MAX);
+        float withdrawal;
+        get_float(&withdrawal, INT_MIN, INT_MAX, "\nWithdrawal amount >> ");
 
         if (withdrawal <= 0.0)
             cprintf(YELLOW, "\n! Withdrawal amount should be greater than zero.\n");
@@ -278,7 +281,8 @@ void transactions(Account *user)
 
         printf("\n%s[%dm[6]%s[%dm Generate Reports\n", COLOR, CYAN, COLOR, DEFAULT);
 
-        int transaction = *(int *)get_number(INTEGER, "\nEnter transaction number >> ", 1.0, 6.0);
+        int transaction;
+        get_int(&transaction, 1, 6, "\nEnter transaction number >> ");
 
         switch (transaction)
         {

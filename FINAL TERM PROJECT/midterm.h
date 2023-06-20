@@ -11,9 +11,10 @@ void midterm()
         printf("  [2] Pointer Machine Exercises\n");
         printf("  [3] Struct-based ATM System\n");
 
-        int choice = *(int *)get_number(INTEGER, "> Please select an option: ", -1, 6);
+        int choice, min = -1, max = 6;
+        get_int(&choice, min, max,"> Please select an option: ");
+        
         system("cls");
-
         switch (choice)
         {
             case -1: {
