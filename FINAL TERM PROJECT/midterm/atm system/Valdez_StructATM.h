@@ -24,6 +24,21 @@ typedef struct Account
     int pin_tries;
 } Account;
 
+
+// Think of the struct above as a database table.
+// The fields look like this, with one sample record:
+// | PK_student_id | pin  | student_name         | account_balance  | withdraw_history | deposit_history | withrawal_count | deposit_count | is_locked | login_attempts_left |
+// | 2022-1-01130  | 1111 | Valdez, Marc Joshua  | 5000.0           | 18000.0          | 25000.0         | 3               | 7             | true      | 0                   |
+// | 2022-1-01377  | 2222 | Binegas, John Daniel | 17000.0          | 200.0            | 17200.0         | 1               | 18            | false     | 2                   |
+
+// Account users[] = {
+//     {"2022-1-01130", "1111", "Valdez, Marc Joshua", 5000, 0.0, 0.0, 0, 0, false, 3},
+//     {"2022-1-01377", "2222", "Binegas, John Daniel", 5000, 0.0, 0.0, 0, 0, true, 3},
+//     {"2022-1-01604", "3333", "Bautista, Glen Angelo", 5000, 0.0, 0.0, 0, 0, false, 3},
+//     {"2022-1-01764", "4444", "Ubaldo, Rhay Allein", 5000, 0.0, 0.0, 0, 0, true, 3},
+//     {"2022-1-01643", "5555", "Manuel, Joshua", 5000, 0.0, 0.0, 0, 0, false, 3}
+// };
+
 Account users[MAX_ACCOUNTS];
 int users_size = sizeof(users) / sizeof(users[0]);
 
