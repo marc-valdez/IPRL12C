@@ -31,7 +31,7 @@ void get_int(int *user_input, const int min, const int max, const char *va_promp
 
     va_list args;
     va_start(args, va_prompt);
-    vsprintf(prompt, va_prompt, args);
+    vsprintf_s(prompt, strlen(va_prompt) + 1, va_prompt, args);
     va_end(args);
 
     char buffer[MAX];
@@ -48,26 +48,26 @@ void get_int(int *user_input, const int min, const int max, const char *va_promp
         if(starts_or_ends_with_dot(buffer))
             continue;
 
-        if(sscanf(buffer, "%d", user_input) != 1)
+        if(sscanf_s(buffer, "%d", user_input) != 1)
         {
             cprintf(RED, "\n! Invalid input. Please enter a numeric value.\n");
             continue;
         }
 
         char remaining[MAX];
-        if(sscanf(buffer, "%f%s", (float *)user_input, remaining) != 1)
+        if(sscanf_s(buffer, "%f%s", (float *)user_input, remaining) != 1)
         {
             cprintf(RED, "\n! Invalid input. Please refrain from using non-numeric characters.\n");
             continue;
         }
 
-        if(sscanf(buffer, "%d%[.]%s", user_input, remaining, remaining) != 1)
+        if(sscanf_s(buffer, "%d%[.]%s", user_input, remaining, remaining) != 1)
         {
             cprintf(YELLOW, "\n! Invalid input. Please enter a whole number.\n");
             continue;
         }
 
-        if(*user_input < (int)min || *user_input > (int)max)
+        if(*user_input < (int)min || *user_input >(int)max)
         {
             cprintf(YELLOW, "\n! Input out of range. Please enter a number between %d and %d (inclusive).\n", (int)min, (int)max);
             continue;
@@ -83,7 +83,7 @@ void get_float(float *user_input, const float min, const float max, const char *
 
     va_list args;
     va_start(args, va_prompt);
-    vsprintf(prompt, va_prompt, args);
+    vsprintf_s(prompt, strlen(va_prompt) + 1, va_prompt, args);
     va_end(args);
 
     char buffer[MAX];
@@ -100,14 +100,14 @@ void get_float(float *user_input, const float min, const float max, const char *
         if(starts_or_ends_with_dot(buffer))
             continue;
 
-        if(sscanf(buffer, "%f", user_input) != 1)
+        if(sscanf_s(buffer, "%f", user_input) != 1)
         {
             cprintf(RED, "\n! Invalid input. Please enter a numeric value.\n");
             continue;
         }
 
         char remaining[MAX];
-        if(sscanf(buffer, "%f%s", user_input, remaining) != 1)
+        if(sscanf_s(buffer, "%f%s", user_input, remaining) != 1)
         {
             cprintf(YELLOW, "\n! Invalid input. Please enter a whole number.\n");
             continue;
@@ -129,7 +129,7 @@ void get_double(double *user_input, const double min, const double max, const ch
 
     va_list args;
     va_start(args, va_prompt);
-    vsprintf(prompt, va_prompt, args);
+    vsprintf_s(prompt, strlen(va_prompt) + 1, va_prompt, args);
     va_end(args);
 
     char buffer[MAX];
@@ -146,14 +146,14 @@ void get_double(double *user_input, const double min, const double max, const ch
         if(starts_or_ends_with_dot(buffer))
             continue;
 
-        if(sscanf(buffer, "%lf", user_input) != 1)
+        if(sscanf_s(buffer, "%lf", user_input) != 1)
         {
             cprintf(RED, "\n! Invalid input. Please enter a numeric value.\n");
             continue;
         }
 
         char remaining[MAX];
-        if(sscanf(buffer, "%lf%s", user_input, remaining) != 1)
+        if(sscanf_s(buffer, "%lf%s", user_input, remaining) != 1)
         {
             cprintf(YELLOW, "\n! Invalid input. Please enter a whole number.\n");
             continue;
@@ -175,7 +175,7 @@ char get_char(const char *va_prompt, ...)
 
     va_list args;
     va_start(args, va_prompt);
-    vsprintf(prompt, va_prompt, args);
+    vsprintf_s(prompt, strlen(va_prompt) + 1, va_prompt, args);
     va_end(args);
 
     char buffer[MAX], user_input[MAX];
@@ -192,7 +192,7 @@ char get_char(const char *va_prompt, ...)
         if(starts_or_ends_with_dot(buffer))
             continue;
 
-        if(sscanf(buffer, "%s", user_input) != 1)
+        if(sscanf_s(buffer, "%s", user_input) != 1)
         {
             cprintf(YELLOW, "\n! Invalid input. Please enter a single character.\n");
             continue;
@@ -214,7 +214,7 @@ void get_string(char *user_input, const int limit, const char *va_prompt, ...)
 
     va_list args;
     va_start(args, va_prompt);
-    vsprintf(prompt, va_prompt, args);
+    vsprintf_s(prompt, strlen(va_prompt) + 1, va_prompt, args);
     va_end(args);
 
     char buffer[MAX];
@@ -231,7 +231,7 @@ void get_string(char *user_input, const int limit, const char *va_prompt, ...)
         if(starts_or_ends_with_dot(buffer))
             continue;
 
-        if(sscanf(buffer, "%s", user_input) != 1)
+        if(sscanf_s(buffer, "%s", user_input) != 1)
         {
             cprintf(YELLOW, "\n! Invalid input. Please enter a string of characters.\n");
             continue;

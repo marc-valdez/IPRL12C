@@ -39,7 +39,7 @@ void exer2()
     // The following statements asks the user for input.
     printf("Input a value: ");
     // Then places the scanned value inside pd, which is an address to d.
-    scanf("%lf", pd);
+    scanf_s("%lf", pd);
 
     // This works because scanf() typically looks for &d, and pd is equal to &d.
 
@@ -204,7 +204,7 @@ void exer9()
 void exer10()
 {
     // Write a program that will dynamically allocate contigous memory for 10 double point values.
-    float *pd = (float *)malloc(sizeof(double) * 10);
+    double *pd = (double *)malloc(sizeof(double) * 10);
 
     // Initialize them to any value you like, and print the contents.
     for(int i = 0; i < 10; i++)

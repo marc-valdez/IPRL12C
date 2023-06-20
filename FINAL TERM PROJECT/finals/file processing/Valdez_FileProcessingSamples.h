@@ -157,11 +157,11 @@ void example6()
     inputf = fopen(inputfilename, "r");
 
     // input formatted data from text file
-    fscanf(inputf, "%c", &ch);
-    fscanf(inputf, "%d", &i);
-    fscanf(inputf, "%f", &f);
-    fscanf(inputf, "%lf", &d);
-    fscanf(inputf, "%s", mystr);
+    fscanf_s(inputf, "%c", &ch);
+    fscanf_s(inputf, "%d", &i);
+    fscanf_s(inputf, "%f", &f);
+    fscanf_s(inputf, "%lf", &d);
+    fscanf_s(inputf, "%s", mystr);
 
     // output data - use fprintf()
     // note that the output can also be done using prinf()
