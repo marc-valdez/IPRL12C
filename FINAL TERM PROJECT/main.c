@@ -1,9 +1,9 @@
 #include "valdez_v3.h"
 #include "prelim.h"
 #include "midterm.h"
-// #include "finals.h"
+#include "finals.h"
 
-void main()
+int main()
 {
     while(1)
     {
@@ -28,7 +28,8 @@ void main()
             }
             case 1: prelim(); break;
             case 2: midterm(); break;
-            // case 3: finals(); break;
+            case 3: finals(); break;
         }
     }
+    return 0;
 }

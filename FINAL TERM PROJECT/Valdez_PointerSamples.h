@@ -336,6 +336,7 @@ void pointer_samples()
     // this is just a simple selection menu for the sample codes above
     while(1)
     {
+        system("cls");
         puts("----------------------------------------------\n");
         printf("Pointer Sample Programs | [0] Go back | [-1] Exit\n");
         for(int i = 1; i <= 10; i++)
@@ -353,14 +354,12 @@ void pointer_samples()
         {
             case -1: {
                 char answer = yes_or_no("Are you sure you want to exit? (y/n): ");
-                system("cls");
                 if (answer == 'N' || answer == 'n')
                     continue;
                 exit_prompt("Thank you for using this program!\n");
             }
 			case 0: {
                 char answer = yes_or_no("Return to previous menu? (y/n): ");
-                system("cls");
                 if (answer == 'N' || answer == 'n')
                     continue;
                 return;

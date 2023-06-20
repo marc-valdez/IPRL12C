@@ -10,7 +10,7 @@ void example1()
     char c;
 
     // open the text file for input
-    if ((inputf = fopen("input.txt", "r")) == NULL)
+    if((inputf = fopen("input.txt", "r")) == NULL)
     {
         // this error happens when the file cannot be opened
         // it then exits the program with a value of 1 indicating an error
@@ -21,7 +21,7 @@ void example1()
     // read one character at a time from the file
     // then output each chacracter read onto the screen
     // repeat until the end-of-file is reached
-    while ((c = fgetc(inputf)) != EOF)
+    while((c = fgetc(inputf)) != EOF)
         printf("%c", c);
 
     // safely close the file
@@ -35,19 +35,20 @@ void example2()
     // next create a string variable called filename
     FILE *inputf;
     char c;
-    
+
     // ask the user for the filename to open
-    char *filename = (char *)get_text(STRING, "> Input name of input text file: ");
+    char filename[MAX];
+    get_string(filename, MAX, "> Input name of input text file: ");
 
     // open text file for input using the filename given by the user
-    if ((inputf = fopen(filename, "r")) == NULL)
+    if((inputf = fopen(filename, "r")) == NULL)
     {
         printf("ERROR: %s cannot be opened.\n", filename);
         return;
     }
 
     // simply print the contents of the file
-    while ((c = fgetc(inputf)) != EOF)
+    while((c = fgetc(inputf)) != EOF)
         printf("%c", c);
 
     // safely close the file
@@ -57,16 +58,17 @@ void example2()
 void example3()
 {
     FILE *inputf;
-    char *filename = (char *)get_text(STRING, "> Input name of input text file: ");
+    char filename[MAX];
+    get_string(filename, MAX, "> Input name of input text file: ");
     char c;
 
-    if ((inputf = fopen(filename, "r")) == NULL)
+    if((inputf = fopen(filename, "r")) == NULL)
     {
         printf("ERROR: %s cannot be opened.\n", filename);
         return;
     }
 
-    while ((c = fgetc(inputf)) != EOF)
+    while((c = fgetc(inputf)) != EOF)
         fputc(c, stdout);
 
     fclose(inputf);
@@ -80,12 +82,15 @@ void example4()
 
     // create strings for the input and output file names
     // as well as the character variable to read from the input file
-    char *inputfilename = (char *)get_text(STRING, "> Input name of input text file: ");
-    char *outputfilename = (char *)get_text(STRING, "> Input name of output text file: ");
+    char inputfilename[MAX];
+    char outputfilename[MAX];
     char c;
 
+    get_string(inputfilename, MAX, "> Input name of input text file: ");
+    get_string(outputfilename, MAX, "> Input name of output text file: ");
+
     // open input file
-    if ((inputf = fopen(inputfilename, "r")) == NULL)
+    if((inputf = fopen(inputfilename, "r")) == NULL)
     {
         printf("ERROR: %s cannot be opened.\n", inputfilename);
         return;
@@ -96,7 +101,7 @@ void example4()
 
     // read one character at a time from input file
     // then output each character onto the output file
-    while ((c = fgetc(inputf)) != EOF)
+    while((c = fgetc(inputf)) != EOF)
         fputc(c, outputf);
 
     // safely close the files
@@ -108,7 +113,8 @@ void example5()
 {
     // declare the file pointer as well as the string variable
     FILE *outputf;
-    char *outputfilename = (char *)get_text(STRING, "> Input name of output text file: ");
+    char outputfilename[MAX];
+    get_string(outputfilename, MAX, "> Input name of output text file: ");
 
     // declare the following variables for reading later
     char ch;
@@ -145,7 +151,9 @@ void example6()
     char mystr[40];
 
     // ask for filename, open text file for input
-    char *inputfilename = (char *)get_text(STRING, "> Input name of input text file: ");
+    char inputfilename[MAX];
+    get_string(inputfilename, MAX, "> Input name of output text file: ");
+
     inputf = fopen(inputfilename, "r");
 
     // input formatted data from text file
@@ -168,7 +176,7 @@ void example6()
 
 void Series1(int n)
 {
-    if (n > 0)
+    if(n > 0)
     {
         printf("n = %d\n", n);
         Series1(n - 1);
@@ -177,7 +185,7 @@ void Series1(int n)
 
 void Series2(int n)
 {
-    if (n > 0)
+    if(n > 0)
     {
         Series2(n - 1);
         printf("n = %d\n", n);
@@ -240,27 +248,29 @@ void file_processing_examples()
     // this is just a simple selection menu for the example codes above
     while(1)
     {
+        system("cls");
         puts("----------------------------------------------\n");
         printf("File Processing Example Programs | [0] Go back | [-1] Exit\n");
         for(int i = 1; i <= 7; i++)
             printf("  Example [%d]\n", i);
 
-        int choice = *(int *)get_number(INTEGER, "> Please select an option: ", -1, 7);
+        int choice, min = -1, max = 7;
+        get_int(&choice, min, max, "> Please select an option: ");
         system("cls");
 
-        switch (choice)
+        switch(choice)
         {
             case -1: {
                 char answer = yes_or_no("Are you sure you want to exit? (y/n): ");
                 system("cls");
-                if (answer == 'N' || answer == 'n')
+                if(answer == 'N' || answer == 'n')
                     continue;
                 exit_prompt("Thank you for using this program!\n");
             }
-			case 0: {
+            case 0: {
                 char answer = yes_or_no("Return to previous menu? (y/n): ");
                 system("cls");
-                if (answer == 'N' || answer == 'n')
+                if(answer == 'N' || answer == 'n')
                     continue;
                 return;
             }
