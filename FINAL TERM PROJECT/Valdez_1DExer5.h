@@ -31,7 +31,7 @@ void d_init5(double arr[], int n)
 // Returns the number of negative values in a double array
 int count(double arr[], int n)
 {
-	int c;
+	int c = 0;
 	for(int i = 0; i < n; i++)
 		if(arr[i] < 0)
 			c++;

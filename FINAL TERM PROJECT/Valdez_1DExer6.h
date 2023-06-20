@@ -18,7 +18,7 @@ void oneD_exer6()
 	}
 
 	int x;
-    get_int(&x, 0, 1000, "n\nInput integer to find: ");
+    get_int(&x, 0, 1000, "\n\nInput integer to find: ");
 
 	if(find(i_arr, n, x) == 1)
 		printf("\n== Integer %d Found inside array! ==\n\n", x);
