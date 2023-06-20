@@ -25,7 +25,7 @@ int is_empty(const char *buffer);
 int has_whitespace(const char *buffer);
 int starts_or_ends_with_dot(const char *buffer);
 
-void get_int(void *user_input, const int min, const int max, const char *va_prompt, ...)
+void get_int(int *user_input, const int min, const int max, const char *va_prompt, ...)
 {
     char prompt[MAX];
 
@@ -35,12 +35,12 @@ void get_int(void *user_input, const int min, const int max, const char *va_prom
     va_end(args);
 
     char buffer[MAX];
-	while(true)
-	{
+    while(true)
+    {
         printf("%s", prompt);
-		fgets(buffer, sizeof(buffer), stdin);
+        fgets(buffer, sizeof(buffer), stdin);
         buffer[strcspn(buffer, "\n")] = '\0';
-        
+
         if(is_empty(buffer))
             continue;
         if(has_whitespace(buffer))
@@ -55,7 +55,7 @@ void get_int(void *user_input, const int min, const int max, const char *va_prom
         }
 
         char remaining[MAX];
-        if(sscanf(buffer, "%f%s", user_input, remaining) != 1)
+        if(sscanf(buffer, "%f%s", (float *)user_input, remaining) != 1)
         {
             cprintf(RED, "\n! Invalid input. Please refrain from using non-numeric characters.\n");
             continue;
@@ -67,17 +67,17 @@ void get_int(void *user_input, const int min, const int max, const char *va_prom
             continue;
         }
 
-        if(*(int *)user_input < (int)min || *(int *)user_input > (int)max) 
+        if(*user_input < (int)min || *user_input > (int)max)
         {
             cprintf(YELLOW, "\n! Input out of range. Please enter a number between %d and %d (inclusive).\n", (int)min, (int)max);
             continue;
         }
-        
+
         return;
-	}
+    }
 }
 
-void get_float(void *user_input, const float min, const float max, const char *va_prompt, ...)
+void get_float(float *user_input, const float min, const float max, const char *va_prompt, ...)
 {
     char prompt[MAX];
 
@@ -87,12 +87,12 @@ void get_float(void *user_input, const float min, const float max, const char *v
     va_end(args);
 
     char buffer[MAX];
-	while(true)
-	{
+    while(true)
+    {
         printf("%s", prompt);
-		fgets(buffer, sizeof(buffer), stdin);
+        fgets(buffer, sizeof(buffer), stdin);
         buffer[strcspn(buffer, "\n")] = '\0';
-        
+
         if(is_empty(buffer))
             continue;
         if(has_whitespace(buffer))
@@ -113,17 +113,17 @@ void get_float(void *user_input, const float min, const float max, const char *v
             continue;
         }
 
-        if(*(float *)user_input < (float)min || *(float *)user_input > (float)max) 
+        if(*user_input < (float)min || *user_input >(float)max)
         {
-            cprintf(YELLOW, "\n! Input out of range. Please enter a number between %f and %f (inclusive).\n", (float)min, (float)max);
+            cprintf(YELLOW, "\n! Input out of range. Please enter a number between %.2f and %.2f (inclusive).\n", (float)min, (float)max);
             continue;
         }
-        
+
         return;
-	}
+    }
 }
 
-void get_double(void *user_input, const double min, const double max, const char *va_prompt, ...)
+void get_double(double *user_input, const double min, const double max, const char *va_prompt, ...)
 {
     char prompt[MAX];
 
@@ -133,12 +133,12 @@ void get_double(void *user_input, const double min, const double max, const char
     va_end(args);
 
     char buffer[MAX];
-	while(true)
-	{
+    while(true)
+    {
         printf("%s", prompt);
-		fgets(buffer, sizeof(buffer), stdin);
+        fgets(buffer, sizeof(buffer), stdin);
         buffer[strcspn(buffer, "\n")] = '\0';
-        
+
         if(is_empty(buffer))
             continue;
         if(has_whitespace(buffer))
@@ -159,14 +159,14 @@ void get_double(void *user_input, const double min, const double max, const char
             continue;
         }
 
-        if(*(double *)user_input < (double)min || *(double *)user_input > (double)max) 
+        if(*(double *)user_input < (double)min || *(double *)user_input >(double)max)
         {
-            cprintf(YELLOW, "\n! Input out of range. Please enter a number between %lf and %lf (inclusive).\n", (double)min, (double)max);
+            cprintf(YELLOW, "\n! Input out of range. Please enter a number between %.2lf and %.2lf (inclusive).\n", (double)min, (double)max);
             continue;
         }
-        
+
         return;
-	}
+    }
 }
 
 char get_char(const char *va_prompt, ...)
@@ -179,10 +179,10 @@ char get_char(const char *va_prompt, ...)
     va_end(args);
 
     char buffer[MAX], user_input[MAX];
-	while(true)
-	{
+    while(true)
+    {
         printf("%s", prompt);
-		fgets(buffer, sizeof(buffer), stdin);
+        fgets(buffer, sizeof(buffer), stdin);
         buffer[strcspn(buffer, "\n")] = '\0';
 
         if(is_empty(buffer))
@@ -198,14 +198,14 @@ char get_char(const char *va_prompt, ...)
             continue;
         }
 
-        if(strlen((char *)user_input) != 1) 
+        if(strlen(user_input) != 1)
         {
             cprintf(YELLOW, "\n! Invalid input. Please enter a single character.\n");
             continue;
         }
 
         return user_input[0];
-	}
+    }
 }
 
 void get_string(char *user_input, const int limit, const char *va_prompt, ...)
@@ -218,10 +218,10 @@ void get_string(char *user_input, const int limit, const char *va_prompt, ...)
     va_end(args);
 
     char buffer[MAX];
-	while(true)
-	{
+    while(true)
+    {
         printf("%s", prompt);
-		fgets(buffer, sizeof(buffer), stdin);
+        fgets(buffer, sizeof(buffer), stdin);
         buffer[strcspn(buffer, "\n")] = '\0';
 
         if(is_empty(buffer))
@@ -237,14 +237,14 @@ void get_string(char *user_input, const int limit, const char *va_prompt, ...)
             continue;
         }
 
-        if(strlen((char *)user_input) > limit) 
+        if(strlen(user_input) > limit)
         {
             cprintf(YELLOW, "\n! Invalid input. Character limit is %d characters.\n", limit);
             continue;
         }
 
         return;
-	}
+    }
 }
 
 int is_empty(const char *buffer)
@@ -269,7 +269,7 @@ int has_whitespace(const char *buffer)
 
 int starts_or_ends_with_dot(const char *buffer)
 {
-    if(buffer[0] == '.' || buffer[strlen(buffer)-1] == '.')
+    if(buffer[0] == '.' || buffer[strlen(buffer) - 1] == '.')
     {
         cprintf(RED, "\n! Invalid input. Please enter a value that does not start or end with a period (.) character.\n");
         return 1;
@@ -299,12 +299,12 @@ void exit_prompt(const char *prompt)
 
 char yes_or_no(const char *prompt)
 {
-    while (true)
+    while(true)
     {
         char buffer[MAX];
         get_string(buffer, 1, prompt);
 
-        if (strspn(buffer, "YyNn") != strlen(buffer))
+        if(strspn(buffer, "YyNn") != strlen(buffer))
         {
             cprintf(YELLOW, "\n! Invalid input. Please enter Y or N to continue.\n");
             continue;
