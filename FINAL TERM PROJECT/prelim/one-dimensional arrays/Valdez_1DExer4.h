@@ -31,7 +31,7 @@ void d_init4(double arr[], int n)
 // Returns the sum of all elements in a double array
 double summate(double arr[], int n)
 {
-	double sum;
+	double sum = 0.0;
 	for(int i = 0; i < n; i++)
 		sum += arr[i];
 	return sum;
