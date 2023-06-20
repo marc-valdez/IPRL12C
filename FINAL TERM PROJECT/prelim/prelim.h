@@ -1,8 +1,8 @@
-#include "Valdez_1D.h"
-#include "ValdezMJ_ME1.h"
-#include "ValdezMJ_ME2.h"
-#include "Valdez_2D.h"
-#include "Binegas_Valdez_LRTSYS.h"
+#include ".\one-dimensional arrays\Valdez_1D.h"
+#include ".\machine exercises\ValdezMJ_ME1.h"
+#include ".\machine exercises\ValdezMJ_ME2.h"
+#include ".\two-dimensional arrays\Valdez_2D.h"
+#include ".\lrt system\Binegas_Valdez_LRTSYS.h"
 
 void prelim()
 {

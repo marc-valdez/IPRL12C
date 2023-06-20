@@ -1,17 +1,18 @@
-#include "Valdez_FileProcessingSamples.h"
-#include "Valdez_RecursionMEs.h"
+#include ".\pointers\Valdez_PointerSamples.h"
+#include ".\pointers\Valdez_PointerMEs.h"
+#include ".\atm system\Valdez_StructATM.h"
 
-void finals()
+void midterm()
 {
     while(1)
     {
         system("cls");
         printf("Midterm Activities | [0] Go back | [-1] Exit\n");
-        printf("  [1] File Processing Samples\n");
-        printf("  [2] Recursion Machine Exercises\n");
-        printf("  [ ] THIS PROGRAM!!!\n");
+        printf("  [1] Pointer Samples\n");
+        printf("  [2] Pointer Machine Exercises\n");
+        printf("  [3] Struct-based ATM System\n");
 
-        int choice, min = -1, max = 2;
+        int choice, min = -1, max = 6;
         get_int(&choice, min, max, "> Please select an option: ");
 
         system("cls");
@@ -29,8 +30,9 @@ void finals()
                     continue;
                 return;
             }
-            case 1: file_processing_examples(); break;
-            case 2: recursion_machine_exercises(); break;
+            case 1: pointer_samples(); break;
+            case 2: pointer_machine_exercises(); break;
+            case 3: struct_ATM(); break;
         }
     }
 }

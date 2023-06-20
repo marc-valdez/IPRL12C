@@ -66,10 +66,10 @@ void sample3()
     int *p1;
 
     // the first statement prints out garbage becuase i is not initialized, logic error
-    printf("p1 = %d\n", p1);   // ERROR: p1 not initialized
+    // printf("p1 = %d\n", p1);   // ERROR: p1 not initialized
 
     // the second statement also prints out garbage because pi isn't pointing to anything, logic error
-    printf("*p1 = %d\n", *p1); // ERROR: no real memory block
+    // printf("*p1 = %d\n", *p1); // ERROR: no real memory block
 
     // the first assignment is invalid because an int is being assigned to an int *, compile error
     // p1 = i;   // ERROR: p1 is pointer, i is integer

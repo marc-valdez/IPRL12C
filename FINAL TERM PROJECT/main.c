@@ -1,7 +1,7 @@
 #include "valdez_v3.h"
-#include "prelim.h"
-#include "midterm.h"
-#include "finals.h"
+#include ".\prelim\prelim.h"
+#include ".\midterm\midterm.h"
+#include ".\finals\finals.h"
 
 int main()
 {
