@@ -91,6 +91,7 @@ void recursion_machine_exercises()
                 if(answer == 'N' || answer == 'n')
                     continue;
                 exit_prompt("Thank you for using this program!\n");
+                break;
             }
             case 0: {
                 char answer = yes_or_no("Return to previous menu? (y/n): ");

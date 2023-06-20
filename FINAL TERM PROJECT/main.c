@@ -25,6 +25,7 @@ int main()
                 if(answer == 'N' || answer == 'n')
                     continue;
                 exit_prompt("Thank you for using this program!\n");
+                break;
             }
             case 1: prelim(); break;
             case 2: midterm(); break;
