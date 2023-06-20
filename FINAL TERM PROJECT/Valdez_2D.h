@@ -25,27 +25,27 @@ void twoD()
 		printf("=======================================================================================================\n");
 		printf("Two Dimensional Array Activities: | [0] Go back | [-1] Exit\n");
 
-		for(int i = 1, j = 5; i <= 8/2; i++, j++)
+		for(int i = 1, j = 5; i <= 8 / 2; i++, j++)
 			printf("  [%d] Exercise %d\t\t[%d] Exercise %d\n", i, i, j, j);
-		
+
 		int buffer;
 		get_int(&buffer, -1, 8, "> Please select an option: ");
-		
+
 		system("cls");
 		switch(buffer)
 		{
 			case -1: {
-                char answer = yes_or_no("Are you sure you want to exit? (y/n): ");
-                if (answer == 'N' || answer == 'n')
-                    continue;
-                exit_prompt("Thank you for using this program!\n");
-            }
+				char answer = yes_or_no("Are you sure you want to exit? (y/n): ");
+				if(answer == 'N' || answer == 'n')
+					continue;
+				exit_prompt("Thank you for using this program!\n");
+			}
 			case 0: {
-                char answer = yes_or_no("Return to previous menu? (y/n): ");
-                if (answer == 'N' || answer == 'n')
-                    continue;
-                return;
-            }
+				char answer = yes_or_no("Return to previous menu? (y/n): ");
+				if(answer == 'N' || answer == 'n')
+					continue;
+				return;
+			}
 			case 1: twoD_exer1(); break;
 			case 2: twoD_exer2(); break;
 			case 3: twoD_exer3(); break;
@@ -70,11 +70,11 @@ void d_init_zero(double arr[row][col])
 void twoD_exer1(void)
 {
 	printf("\n1. Write a function that will initialize the contents of a double data type 2D array to 0.0. \nPass the array as parameter.\n\n");
-	
+
 	double d_arr[row][col];
-	
+
 	d_init_zero(d_arr);
-	
+
 	for(int i = 0; i < row; i++)
 	{
 		for(int j = 0; j < col; j++)
@@ -96,11 +96,11 @@ void d_init_scan(double arr[row][col])
 void twoD_exer2(void)
 {
 	printf("\n2. Same as problem 1, but allow the user to input the value of the array element via scanf() statement.\n\n");
-	
+
 	double d_arr[row][col];
-	
+
 	d_init_scan(d_arr);
-	
+
 	for(int i = 0; i < row; i++)
 	{
 		for(int j = 0; j < col; j++)
@@ -115,7 +115,7 @@ void d_init_2D(double arr[row][col])
 {
 	for(int i = 0; i < row; i++)
 		for(int j = 0; j < col; j++)
-			arr[i][j] = 0.0+j-i;
+			arr[i][j] = 0.0 + j - i;
 }
 
 // Prints an array with double space
@@ -132,12 +132,12 @@ void print_arr(double arr[row][col])
 void twoD_exer3(void)
 {
 	printf("\n3. Write a function that will display all the elements of the 2D array.\n\nElements should be printed starting from the first row up to the last row,\nand from the first column to the last column within the same row.\n\nElements of the same row should be printed on the same line separated by two spaces.\nPass the array as parameter.\n\n");
-	
+
 	double d_arr[row][col];
-	
+
 	d_init_2D(d_arr);
 	print_arr(d_arr);
-	
+
 	printf("\n");
 }
 
@@ -155,13 +155,13 @@ int count_negative(double arr[row][col])
 void twoD_exer4(void)
 {
 	printf("\n4. Write a function that will return the number of negative elements in the 2D array.\nPass the array as parameter\n\n");
-	
+
 	double d_arr[row][col];
 
 	d_init_2D(d_arr);
 	print_arr(d_arr);
 	printf("\nThe number of negative values are: %d\n", count_negative(d_arr));
-	
+
 	printf("\n");
 }
 
@@ -185,18 +185,18 @@ void print_diagonal(double arr[row][col])
 void twoD_exer5()
 {
 	printf("\n5. Write a function that will print only the elements on the main diagonal of the 2D array.\nPass the array as parameter.\n\n");
-	
+
 	double d_arr[row][col];
-	
+
 	d_init_2D(d_arr);
-	
+
 	for(int i = 0; i < row; i++)
 	{
 		for(int j = 0; j < col; j++)
 			printf("%.2f\t", d_arr[i][j]);
 		printf("\n");
 	}
-	
+
 	print_diagonal(d_arr);
 }
 
@@ -213,14 +213,14 @@ int sum_row(double arr[row][col], int buffer)
 void twoD_exer6()
 {
 	printf("\n6. Write a function that will return the sum of the elements on a specified row.\nPass the array and the row as parameters.\n\n");
-	
+
 	double d_arr[row][col];
-	
+
 	d_init_2D(d_arr);
-	
+
 	for(int i = 0; i < row; i++)
 	{
-		printf("Row %d:\t", i+1);
+		printf("Row %d:\t", i + 1);
 		for(int j = 0; j < col; j++)
 			printf("%.2f\t", d_arr[i][j]);
 		printf("\n");
@@ -237,7 +237,7 @@ int sum_column(double arr[row][col], int buffer)
 {
 	--buffer;
 	int sum = 0;
-	
+
 	for(int i = 0; i < row; i++)
 		sum += arr[i][buffer];
 	return sum;
@@ -246,21 +246,21 @@ int sum_column(double arr[row][col], int buffer)
 void twoD_exer7()
 {
 	printf("\n7. Write a function that will return the sum of the elements on a specified row.\nPass the array and the column as parameters.\n\n");
-	
+
 	double d_arr[row][col];
-	
+
 	d_init_2D(d_arr);
-	
+
 	for(int j = 0; j < col; j++)
-		printf("\tCol %d:", j+1);
-	printf("\n");	
+		printf("\tCol %d:", j + 1);
+	printf("\n");
 	for(int i = 0; i < row; i++)
 	{
-		for(int j = 0; j < col; j++)		
+		for(int j = 0; j < col; j++)
 			printf("\t%.2f", d_arr[i][j]);
 		printf("\n");
 	}
-	
+
 	printf("\n");
 	int input;
 	get_int(&input, 1, col, "Please enter a row number: ");
@@ -279,26 +279,26 @@ void add_arrays(int A[3][3], int B[3][3], int C[3][3])
 void twoD_exer8(void)
 {
 	printf("\n8. Assume three matrices of the same size, say matrix A, B and C.\n\nWrite a function that will add the two matrices A and B and store the sum to C.\nPass the three arrays as parameters.\n\n");
-	
+
 	int A[3][3] = {
 		{1, 1, 1},
 		{2, 2, 2},
 		{3, 3, 3},
 	};
-	
+
 	int B[3][3] = {
 		{4, 5, 6},
 		{4, 5, 6},
 		{4, 5, 6},
 	};
-	
+
 	int C[3][3];
-	
+
 	add_arrays(A, B, C);
-	
+
 	printf("    A               B               C    ");
 	printf("\n\n");
-	
+
 	for(int i = 0; i < 3; i++)
 	{
 		for(int j = 0; j < 3; j++)
@@ -317,7 +317,7 @@ void twoD_exer8(void)
 			printf("[%d]", C[i][j]);
 		printf("\n");
 	}
-		
+
 	printf("\n");
 }
 

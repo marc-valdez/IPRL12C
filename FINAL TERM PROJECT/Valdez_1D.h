@@ -24,22 +24,22 @@ void oneD()
         printf("  [7] Exercise 7\n");
         printf("  [8] Exercise 8\n");
         printf("  [9] Exercise 9\n");
-        
+
         int choice, min = -1, max = 9;
         get_int(&choice, min, max, "> Please select an option: ");
-        
+
         system("cls");
-        switch (choice)
+        switch(choice)
         {
             case -1: {
                 char answer = yes_or_no("Are you sure you want to exit? (y/n): ");
-                if (answer == 'N' || answer == 'n')
+                if(answer == 'N' || answer == 'n')
                     continue;
                 exit_prompt("Thank you for using this program!\n");
             }
             case 0: {
                 char answer = yes_or_no("Return to previous menu? (y/n): ");
-                if (answer == 'N' || answer == 'n')
+                if(answer == 'N' || answer == 'n')
                     continue;
                 return;
             }

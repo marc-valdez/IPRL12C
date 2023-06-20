@@ -8,22 +8,22 @@ int arrcomp(int A[], int B[], int n);
 void oneD_exer9()
 {
 	printf("9. Check if both array A and B have the same values\n\n");
-	
+
 	int n = 5;
 	int A[] = {10, 20, 30, 40, 50};
 	int B[n];
-	
+
 	printf("Array A: ");
 	for(int i = 0; i < n; i++)
 		printf("%d\t", A[i]);
-	
-//	arrcpy2(A, B, n);
+
+	//	arrcpy2(A, B, n);
 	arrcpy_rev2(A, B, n);
-	
+
 	printf("\nArray B: ");
 	for(int i = 0; i < n; i++)
 		printf("%d\t", B[i]);
-		
+
 	if(arrcomp(A, B, n) == 1)
 		printf("\n\nArrays have the same values.\n\n");
 	else
@@ -42,7 +42,7 @@ void arrcpy2(int A[], int B[], int n)
 // Copies the contents of array A to B, but in reverse
 void arrcpy_rev2(int A[], int B[], int n)
 {
-	for(int i = 0, j = n-1; i < n; i++, j--)
+	for(int i = 0, j = n - 1; i < n; i++, j--)
 	{
 		B[j] = A[i];
 	}

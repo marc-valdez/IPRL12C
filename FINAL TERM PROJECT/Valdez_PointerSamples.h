@@ -90,7 +90,7 @@ void wrong_swap(int x, int y)
     // but these are local variables to the function
     // once the function gives the control back to main()
     // x and y in this function will cease to exist
-    
+
     int temp;
     temp = x;
     x = y;
@@ -135,7 +135,7 @@ void sample5()
     y = 10;
 
     correct_swap(&x, &y); // pass the addresses of x and y as parameters
-    
+
     // because the above function modifies the values inside the memory addresses,
     // x and y's values does swap properly
     printf("x = %d, y = %d\n", x, y);
@@ -148,12 +148,12 @@ void sample6()
     int *pa;
 
     // initialize the array
-    for (int i = 0; i < 5; i++)
+    for(int i = 0; i < 5; i++)
         a[i] = 5 - i;
 
     puts("\n---------------------------------------\nExample 1:\n");
     // print the contents of the array
-    for (int i = 0; i < 5; i++)
+    for(int i = 0; i < 5; i++)
     {
         pa = &a[i]; // get i'th element address
         printf("a[%d] = %d\n", i, *pa);
@@ -162,7 +162,7 @@ void sample6()
     puts("\n---------------------------------------\nExample 2:\n");
     // same as above but in a different syntax
     pa = &a[0];
-    for (int i = 0; i < 5; i++)
+    for(int i = 0; i < 5; i++)
     {
         printf("a[%d] = %d\n", i, *(pa + i));
     }
@@ -172,14 +172,14 @@ void sample6()
     puts("\n---------------------------------------\nExample 3:\n");
     // print in reverse
     pa = &a[4];
-    for (int i = 0; i < 5; i++)
+    for(int i = 0; i < 5; i++)
     {
         printf("a[%d] = %d\n", i, *(pa - i));
     }
 
     puts("\n---------------------------------------\nExample 4:\n");
     // through pointer arithmetic without using the pointer pa
-    for (int i = 0; i < 5; i++)
+    for(int i = 0; i < 5; i++)
     {
         printf("a[%d] = %d\n", i, *(a + i));
     }
@@ -193,7 +193,7 @@ void sample7()
     int i;
 
     // initialize the array
-    for (i = 0; i < 5; i++)
+    for(i = 0; i < 5; i++)
         a[i] = 5 - i;
 
     // assign the address of the first element to pa
@@ -228,7 +228,7 @@ void sample8()
     int i;
 
     // initialize the array
-    for (i = 0; i < 5; i++)
+    for(i = 0; i < 5; i++)
         a[i] = 5 - i;
 
     // assigns the address of the first element of array a to pa
@@ -253,7 +253,7 @@ void sample8()
     // alternative array access
     // this for loop simplifies the process of incrementing pa by 1 memory block per loop
     pa = &(a[0]);
-    for (i = 0; i < 5; i++)
+    for(i = 0; i < 5; i++)
     {
         printf("a[%d] = %d\n", i, *pa);
         pa++;
@@ -305,27 +305,27 @@ void sample10()
     // the code simply exits and sends a 1 to show that the program didn't exit properly
 
     pa = (int *)malloc(sizeof(int) * 5);
-    if (pa == NULL)
+    if(pa == NULL)
     {
         printf("ERROR: no more memory.\n");
         exit(1);
     }
 
     // initialize the memory block
-    for (i = 0; i < 5; i++)
+    for(i = 0; i < 5; i++)
         *(pa + i) = 5 - i;
 
     // print the contents of memory block
-    for (i = 0; i < 5; i++)
+    for(i = 0; i < 5; i++)
         printf("Element %d = %d\n", i, *(pa + i));
 
     puts("\n---------------------------------------\nAlternative:\n");
     // initialize can be rewritten to this
-    for (i = 0; i < 5; i++)
+    for(i = 0; i < 5; i++)
         pa[i] = 5 - i;
-    
+
     // printing can be rewritten to this
-    for (i = 0; i < 5; i++)
+    for(i = 0; i < 5; i++)
         printf("Element %d = %d\n", i, pa[i]);
 
     free(pa);
@@ -350,17 +350,17 @@ void pointer_samples()
         get_int(&choice, min, max, "> Please select an option: ");
 
         system("cls");
-        switch (choice)
+        switch(choice)
         {
             case -1: {
                 char answer = yes_or_no("Are you sure you want to exit? (y/n): ");
-                if (answer == 'N' || answer == 'n')
+                if(answer == 'N' || answer == 'n')
                     continue;
                 exit_prompt("Thank you for using this program!\n");
             }
-			case 0: {
+            case 0: {
                 char answer = yes_or_no("Return to previous menu? (y/n): ");
-                if (answer == 'N' || answer == 'n')
+                if(answer == 'N' || answer == 'n')
                     continue;
                 return;
             }

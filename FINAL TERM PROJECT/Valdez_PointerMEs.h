@@ -32,7 +32,7 @@ void exer2()
     double d, *pd;
 
     // Explain the result of the following statements:
-    
+
     // This assigns the address of d to the pointer pd.
     pd = &d;
 
@@ -96,7 +96,7 @@ void exer4()
     float sum = 0.0, average = 0.0;
 
     // Write a function that will compute the sum and average of the elements of the array.
-    array_average(A, sizeof(A)/sizeof(A[0]), &sum, &average);
+    array_average(A, sizeof(A) / sizeof(A[0]), &sum, &average);
 
     printf("sum = %f\n", sum);
     printf("average = %f\n", average);
@@ -106,21 +106,21 @@ void exer5()
 {
     // Assume that A is a one-dimensional array of 10 float data type values.
     float A[10];
-    
+
     // Assume also that pf is a float pointer.
     float *pf;
 
     // Write a program that will (1) initialize the array.
-    for(int i = 0; i < sizeof(A)/sizeof(A[0]); i++)
+    for(int i = 0; i < sizeof(A) / sizeof(A[0]); i++)
         A[i] = i * 3.1416;
-    
+
     // (2) set the pointer pf such that it points to the first element of the array
     pf = A;
 
     // (3) print all the elements of the array from the first down to the last
     // by performing pointer arithmetic and dereferencing on pf.
 
-    for(int i = 0; i < sizeof(A)/sizeof(A[0]); i++)
+    for(int i = 0; i < sizeof(A) / sizeof(A[0]); i++)
         printf("A[%d] = %f\n", i, *(pf + i));
 }
 
@@ -128,21 +128,21 @@ void exer6()
 {
     // Assume that A is a one-dimensional array of 10 double data type values.
     double A[10];
-    
+
     // Assume also that pf is a double pointer.
     double *pd;
 
     // Write a program that will (1) initialize the array.
-    for(int i = 0; i < sizeof(A)/sizeof(A[0]); i++)
+    for(int i = 0; i < sizeof(A) / sizeof(A[0]); i++)
         A[i] = i * 1.618;
-    
+
     // (2) set the pointer pf such that it points to the first element of the array
     pd = A;
 
     // (3) print all the elements of the array from the first down to the last
     // by performing pointer arithmetic and dereferencing on pf.
 
-    for(int i = 0; i < sizeof(A)/sizeof(A[0]); i++)
+    for(int i = 0; i < sizeof(A) / sizeof(A[0]); i++)
         printf("A[%d] = %lf\n", i, *(pd + i));
 }
 
@@ -150,20 +150,20 @@ void exer7()
 {
     // Assume that A is a one-dimensional array of 10 float data type values.
     float A[10];
-    
+
     // Assume also that pf is a float pointer.
     float *pf;
 
     // Write a program that will (1) initialize the array.
-    for(int i = 0; i < sizeof(A)/sizeof(A[0]); i++)
+    for(int i = 0; i < sizeof(A) / sizeof(A[0]); i++)
         A[i] = i * 3.1416;
-    
+
     // (2) set the pointer pf such that it points to the LAST element of the array
-    pf = &A[sizeof(A)/sizeof(A[0]) - 1];
+    pf = &A[sizeof(A) / sizeof(A[0]) - 1];
 
     // (3) print all the elements of the array from the last element up to the first
     // by performing pointer arithmetic and dereferencing on pf.
-    for(int i = 0; i < sizeof(A)/sizeof(A[0]); i++)
+    for(int i = 0; i < sizeof(A) / sizeof(A[0]); i++)
         printf("A[%d] = %f\n", i, *(pf - i));
 }
 
@@ -171,20 +171,20 @@ void exer8()
 {
     // Assume that A is a one-dimensional array of 10 double data type values.
     double A[10];
-    
+
     // Assume also that pf is a double pointer.
     double *pd;
 
     // Write a program that will (1) initialize the array.
-    for(int i = 0; i < sizeof(A)/sizeof(A[0]); i++)
+    for(int i = 0; i < sizeof(A) / sizeof(A[0]); i++)
         A[i] = i * 1.618;
-    
+
     // (2) set the pointer pf such that it points to the LAST element of the array
-    pd = &A[sizeof(A)/sizeof(A[0]) - 1];
+    pd = &A[sizeof(A) / sizeof(A[0]) - 1];
 
     // (3) print all the elements of the array from the last element up to the first
     // by performing pointer arithmetic and dereferencing on pf.
-    for(int i = 0; i < sizeof(A)/sizeof(A[0]); i++)
+    for(int i = 0; i < sizeof(A) / sizeof(A[0]); i++)
         printf("A[%d] = %lf\n", i, *(pd - i));
 }
 
@@ -230,19 +230,19 @@ void pointer_machine_exercises()
 
         int choice, min = -1, max = 10;
         get_int(&choice, min, max, "> Please select an option: ");
-        
+
         system("cls");
-        switch (choice)
+        switch(choice)
         {
             case -1: {
                 char answer = yes_or_no("Are you sure you want to exit? (y/n): ");
-                if (answer == 'N' || answer == 'n')
+                if(answer == 'N' || answer == 'n')
                     continue;
                 exit_prompt("Thank you for using this program!\n");
             }
-			case 0: {
+            case 0: {
                 char answer = yes_or_no("Return to previous menu? (y/n): ");
-                if (answer == 'N' || answer == 'n')
+                if(answer == 'N' || answer == 'n')
                     continue;
                 return;
             }

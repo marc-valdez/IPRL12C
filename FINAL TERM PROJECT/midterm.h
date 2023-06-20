@@ -13,20 +13,20 @@ void midterm()
         printf("  [3] Struct-based ATM System\n");
 
         int choice, min = -1, max = 6;
-        get_int(&choice, min, max,"> Please select an option: ");
-        
+        get_int(&choice, min, max, "> Please select an option: ");
+
         system("cls");
-        switch (choice)
+        switch(choice)
         {
             case -1: {
                 char answer = yes_or_no("Are you sure you want to exit? (y/n): ");
-                if (answer == 'N' || answer == 'n')
+                if(answer == 'N' || answer == 'n')
                     continue;
                 exit_prompt("Thank you for using this program!\n");
             }
             case 0: {
                 char answer = yes_or_no("Return to main menu? (y/n): ");
-                if (answer == 'N' || answer == 'n')
+                if(answer == 'N' || answer == 'n')
                     continue;
                 return;
             }
