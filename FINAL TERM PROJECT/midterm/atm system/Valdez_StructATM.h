@@ -40,7 +40,7 @@ typedef struct Account
 // };
 
 Account users[MAX_ACCOUNTS];
-int users_size = sizeof(users) / sizeof(users[0]);
+int users_size = (int)sizeof(users) / sizeof(users[0]);
 
 Account *account_login();
 void pin_login(Account *user);
@@ -152,7 +152,7 @@ void pin_login(Account *user)
             continue;
         }
 
-        for(int i = 0; i < sizeof(users) / sizeof(users[0]); i++)
+        for(int i = 0; i < users_size; i++)
         {
             if(strcmp(pin_number, user->pin_number) == 0)
                 return;

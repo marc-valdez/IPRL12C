@@ -237,7 +237,7 @@ void get_string(char *user_input, const int limit, const char *va_prompt, ...)
             continue;
         }
 
-        if(strlen(user_input) > limit)
+        if((int)strlen(user_input) > limit)
         {
             cprintf(YELLOW, "\n! Invalid input. Character limit is %d characters.\n", limit);
             continue;
