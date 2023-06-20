@@ -96,7 +96,7 @@ void exer4()
     float sum = 0.0, average = 0.0;
 
     // Write a function that will compute the sum and average of the elements of the array.
-    array_average(A, (int)sizeof(A) / sizeof(A[0]), &sum, &average);
+    array_average(A, (int)(sizeof(A) / sizeof(A[0])), &sum, &average);
 
     printf("sum = %f\n", sum);
     printf("average = %f\n", average);
@@ -111,7 +111,7 @@ void exer5()
     float *pf;
 
     // Write a program that will (1) initialize the array.
-    for(int i = 0; i < (int)sizeof(A) / sizeof(A[0]); i++)
+    for(int i = 0; i < (int)(sizeof(A) / sizeof(A[0])); i++)
         A[i] = i * 3.1416;
 
     // (2) set the pointer pf such that it points to the first element of the array
@@ -120,7 +120,7 @@ void exer5()
     // (3) print all the elements of the array from the first down to the last
     // by performing pointer arithmetic and dereferencing on pf.
 
-    for(int i = 0; i < (int)sizeof(A) / sizeof(A[0]); i++)
+    for(int i = 0; i < (int)(sizeof(A) / sizeof(A[0])); i++)
         printf("A[%d] = %f\n", i, *(pf + i));
 }
 
@@ -133,7 +133,7 @@ void exer6()
     double *pd;
 
     // Write a program that will (1) initialize the array.
-    for(int i = 0; i < (int)sizeof(A) / sizeof(A[0]); i++)
+    for(int i = 0; i < (int)(sizeof(A) / sizeof(A[0])); i++)
         A[i] = i * 1.618;
 
     // (2) set the pointer pf such that it points to the first element of the array
@@ -142,7 +142,7 @@ void exer6()
     // (3) print all the elements of the array from the first down to the last
     // by performing pointer arithmetic and dereferencing on pf.
 
-    for(int i = 0; i < (int)sizeof(A) / sizeof(A[0]); i++)
+    for(int i = 0; i < (int)(sizeof(A) / sizeof(A[0])); i++)
         printf("A[%d] = %lf\n", i, *(pd + i));
 }
 
@@ -155,15 +155,15 @@ void exer7()
     float *pf;
 
     // Write a program that will (1) initialize the array.
-    for(int i = 0; i < (int)sizeof(A) / sizeof(A[0]); i++)
+    for(int i = 0; i < (int)(sizeof(A) / sizeof(A[0])); i++)
         A[i] = i * 3.1416;
 
     // (2) set the pointer pf such that it points to the LAST element of the array
-    pf = &A[(int)sizeof(A) / sizeof(A[0]) - 1];
+    pf = &A[(int)(sizeof(A) / sizeof(A[0])) - 1];
 
     // (3) print all the elements of the array from the last element up to the first
     // by performing pointer arithmetic and dereferencing on pf.
-    for(int i = 0; i < (int)sizeof(A) / sizeof(A[0]); i++)
+    for(int i = 0; i < (int)(sizeof(A) / sizeof(A[0])); i++)
         printf("A[%d] = %f\n", i, *(pf - i));
 }
 
@@ -176,15 +176,15 @@ void exer8()
     double *pd;
 
     // Write a program that will (1) initialize the array.
-    for(int i = 0; i < (int)sizeof(A) / sizeof(A[0]); i++)
+    for(int i = 0; i < (int)(sizeof(A) / sizeof(A[0])); i++)
         A[i] = i * 1.618;
 
     // (2) set the pointer pf such that it points to the LAST element of the array
-    pd = &A[(int)sizeof(A) / sizeof(A[0]) - 1];
+    pd = &A[(int)(sizeof(A) / sizeof(A[0])) - 1];
 
     // (3) print all the elements of the array from the last element up to the first
     // by performing pointer arithmetic and dereferencing on pf.
-    for(int i = 0; i < (int)sizeof(A) / sizeof(A[0]); i++)
+    for(int i = 0; i < (int)(sizeof(A) / sizeof(A[0])); i++)
         printf("A[%d] = %lf\n", i, *(pd - i));
 }
 

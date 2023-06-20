@@ -40,7 +40,7 @@ typedef struct Account
 // };
 
 Account users[MAX_ACCOUNTS];
-int users_size = (int)sizeof(users) / sizeof(users[0]);
+int users_size = (int)(sizeof(users) / sizeof(users[0]));
 
 Account *account_login();
 void pin_login(Account *user);
@@ -115,21 +115,17 @@ Account *account_login()
             continue;
         }
 
-        int i;
         for(int i = 0; i < users_size; i++)
         {
             if(strcmp(account_number, users[i].account_number) == 0)
             {
-                if(users[i].is_locked)
-                    break;
-                return &users[i];
+                if(!users[i].is_locked)
+                    return &users[i];
+                cprintf(RED, "\n! Your account has been locked. Please contact the IT department to reset your account.\n");
+                break;
             }
         }
-
-        if(users[i].is_locked)
-            cprintf(RED, "\n! Your account has been locked. Please contact the IT department to reset your account.\n");
-        else
-            cprintf(RED, "\n! Account does not exist.\n");
+        cprintf(RED, "\n! Account does not exist.\n");
     }
 }
 
