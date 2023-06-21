@@ -8,6 +8,13 @@
 
 int return_code = 0;
 
+/*
+ The struct definition below can be treated as a database table.
+ The fields look like this, with two sample records:
+ | PK_student_id | pin  | student_name         | account_balance  | withdraw_history | deposit_history | withrawal_count | deposit_count | is_locked | login_attempts_left |
+ | 2022-1-01130  | 1111 | Valdez, Marc Joshua  | 5000.0           | 18000.0          | 25000.0         | 3               | 7             | true      | 0                   |
+ | 2022-1-01377  | 2222 | Binegas, John Daniel | 17000.0          | 200.0            | 17200.0         | 1               | 18            | false     | 2                   |
+*/
 typedef struct Account
 {
     char account_number[20];
@@ -25,13 +32,7 @@ typedef struct Account
     int pin_tries;
 } Account;
 
-
-// Think of the struct above as a database table.
-// The fields look like this, with one sample record:
-// | PK_student_id | pin  | student_name         | account_balance  | withdraw_history | deposit_history | withrawal_count | deposit_count | is_locked | login_attempts_left |
-// | 2022-1-01130  | 1111 | Valdez, Marc Joshua  | 5000.0           | 18000.0          | 25000.0         | 3               | 7             | true      | 0                   |
-// | 2022-1-01377  | 2222 | Binegas, John Daniel | 17000.0          | 200.0            | 17200.0         | 1               | 18            | false     | 2                   |
-
+/* The following array is for debug purposes only. */
 // Account users[] = {
 //     {"2022-1-01130", "1111", "Valdez, Marc Joshua", 5000, 0.0, 0.0, 0, 0, false, 3},
 //     {"2022-1-01377", "2222", "Binegas, John Daniel", 5000, 0.0, 0.0, 0, 0, true, 3},
@@ -47,6 +48,15 @@ Account *account_login();
 void pin_login(Account *user);
 void transactions(Account *user);
 
+/*
+ The program flow is as follows:
+ 1. Load users from a binary file.
+ 2. Login a user.
+ 3. Authenticate the user.
+ 4. Ask the user for a transaction/s
+ 5. Process the transaction
+ 6. Repeat until the user exits/logs off
+*/
 int main()
 {
     return_code = 0;
@@ -66,6 +76,8 @@ int main()
     }
 }
 
+/* The next two functions are used to load 
+ and save user data to and from a binary file. */
 void load_users()
 {
     FILE *input = fopen("users.bin", "rb");
@@ -90,6 +102,13 @@ void save_users()
     fclose(output);
 }
 
+/*
+ The following function is used to login a user.
+ It first checks if the input is a valid account number.
+ If it is, it then checks if the account is locked.
+ If it's not, it returns the address of that account.
+ Otherwise, it loops until it finds a valid account.
+*/
 Account *account_login()
 {
     load_users();
@@ -130,6 +149,14 @@ Account *account_login()
     }
 }
 
+/*
+ The following function is used to authenticate the user.
+ It first checks if the input is a valid PIN.
+ If it is, it then checks if the PIN is correct.
+ If it's not, it loops until it finds a valid PIN.
+ After too many wrong PIN attempts, the account is locked.
+ Otherwise, it allows the user to login.
+*/
 void pin_login(Account *user)
 {
     while(true)
@@ -170,6 +197,10 @@ void pin_login(Account *user)
     }
 }
 
+/*
+ The following function is used to extract the name of the user.
+ It is primarily used for greeting the user in the main menu.
+*/
 void extract_name(Account *user, char *first_name, char *last_name)
 {
     int i = 0;
@@ -205,6 +236,10 @@ void extract_name(Account *user, char *first_name, char *last_name)
     }
 }
 
+/*
+ The following function is used to display the balance of the user.
+ It also saves the transaction details to a binary file.
+*/
 void balance_inquiry(Account *user)
 {
     save_users();
@@ -212,6 +247,13 @@ void balance_inquiry(Account *user)
     printf("\nYour current balance is %.2f\n", user->account_balance);
 }
 
+/*
+ The following function is used to deposit money into the user's account.
+ It has no deposit limit.
+ It also tracks the number of deposits.
+ And lastly, it calls the balance_inquiry function
+  to update the user and save the data to a binary file.
+*/
 void deposit(Account *user)
 {
     while(true)
@@ -232,6 +274,13 @@ void deposit(Account *user)
     }
 }
 
+/*
+ The following function is used to withdraw money from the user's account.
+ It has a maximum withdrawal limit of 4000 PHP.
+ This limit can be changed by modifying the MAX_WITHDRAWAL_AMOUNT constant.
+ It also tracks the number of withdrawals.
+ It also calls the balance_inquiry function to update the user and save the data to a binary file.
+*/
 void withdrawal(Account *user)
 {
     while(true)
@@ -256,6 +305,10 @@ void withdrawal(Account *user)
     }
 }
 
+/*
+ The following function is used to generate a report of the user's account.
+ It then saves the data to a binary file.
+*/
 void generate_report(Account *user)
 {
     cprintf(CYAN, "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
@@ -274,6 +327,17 @@ void generate_report(Account *user)
     save_users();
 }
 
+/*
+ The next function is a selection menu for the user.
+ It displays the menu and waits for the user to select an option.
+ The following transactions are available:
+ 1. Balance Inquiry
+ 2. Deposit
+ 3. Withdrawal
+ 4. Logout / Change Account
+ 5. Exit
+ 6. Generate Report
+*/
 void transactions(Account *user)
 {
     char last_name[MAX];
@@ -291,7 +355,7 @@ void transactions(Account *user)
         printf("%s[%dm[4]%s[%dm Logout \\ Change Account\n", COLOR, CYAN, COLOR, DEFAULT);
         printf("%s[%dm[5]%s[%dm Exit\n", COLOR, CYAN, COLOR, DEFAULT);
 
-        printf("\n%s[%dm[6]%s[%dm Generate Reports\n", COLOR, CYAN, COLOR, DEFAULT);
+        printf("\n%s[%dm[6]%s[%dm Generate Report\n", COLOR, CYAN, COLOR, DEFAULT);
 
         int transaction;
         get_int(&transaction, 1, 6, "\nEnter transaction number >> ");
