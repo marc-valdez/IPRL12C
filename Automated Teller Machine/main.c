@@ -9,8 +9,7 @@
 int return_code = 0;
 
 /*
- The struct definition below can be treated as a database table.
- The fields look like this, with two sample records:
+ The struct definition below can be treated as a database table. The fields look like this, with two sample records:
  | PK_student_id | pin  | student_name         | account_balance  | withdraw_history | deposit_history | withrawal_count | deposit_count | is_locked | login_attempts_left |
  | 2022-1-01130  | 1111 | Valdez, Marc Joshua  | 5000.0           | 18000.0          | 25000.0         | 3               | 7             | true      | 0                   |
  | 2022-1-01377  | 2222 | Binegas, John Daniel | 17000.0          | 200.0            | 17200.0         | 1               | 18            | false     | 2                   |
@@ -76,8 +75,7 @@ int main()
     }
 }
 
-/* The next two functions are used to load 
- and save user data to and from a binary file. */
+/* The next two functions are used to load and save user data to and from a binary file. */
 void load_users()
 {
     FILE *input = fopen("users.bin", "rb");
@@ -215,8 +213,6 @@ void extract_name(Account *user, char *first_name, char *last_name)
             i += 2;
             break;
         }
-        else
-            continue;
     }
 
     int j = 0;
@@ -231,8 +227,6 @@ void extract_name(Account *user, char *first_name, char *last_name)
             first_name[j] = '\0';
             break;
         }
-        else
-            continue;
     }
 }
 
@@ -251,8 +245,7 @@ void balance_inquiry(Account *user)
  The following function is used to deposit money into the user's account.
  It has no deposit limit.
  It also tracks the number of deposits.
- And lastly, it calls the balance_inquiry function
-  to update the user and save the data to a binary file.
+ And lastly, it calls the balance_inquiry function to update the user and save the data to a binary file.
 */
 void deposit(Account *user)
 {
