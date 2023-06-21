@@ -6,11 +6,11 @@
 int main()
 {
     system("cls");
-    printf("=== IPRL12C Final Project ===\n");
-    printf("Author: Marc Joshua Valdez\n");
-    printf("Contact: marc.valdez@lpunetwork.edu.ph\n\n");
+    printf("     === IPRL12C Final Project ===\n");
+    printf("      Author: Marc Joshua Valdez\n");
+    printf(" Contact: marc.valdez@lpunetwork.edu.ph\n\n");
     system("pause");
-    
+
     while(1)
     {
         system("cls");
