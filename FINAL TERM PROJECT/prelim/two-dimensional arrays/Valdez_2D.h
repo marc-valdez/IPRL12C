@@ -15,7 +15,6 @@ void twoD_exer5(void);
 void twoD_exer6(void);
 void twoD_exer7(void);
 void twoD_exer8(void);
-void exit_prompt_2D(void);
 
 void twoD()
 {
@@ -319,15 +318,5 @@ void twoD_exer8(void)
 		printf("\n");
 	}
 
-	printf("\n");
-}
-
-// Prompts for exit
-void exit_prompt_2D(void)
-{
-	printf("\n");
-	char in = get_char("Would you like to exit? [Y-N]: ", "YyNn\n");
-	if(in == 'Y' || in == 'y')
-		exit(0);
 	printf("\n");
 }
