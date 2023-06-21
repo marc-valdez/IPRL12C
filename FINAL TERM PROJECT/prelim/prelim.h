@@ -9,6 +9,7 @@ void prelim()
     while(1)
     {
         system("cls");
+        printf("=====================================================================\n");
         printf("Prelim Activities | [0] Go back | [-1] Exit\n");
         printf("  [1] 1D Arrays\n");
         printf("  [2] Machine Exercises 1\n");

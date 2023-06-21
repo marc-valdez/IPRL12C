@@ -219,7 +219,7 @@ void pointer_machine_exercises()
     while(1)
     {
         system("cls");
-        puts("----------------------------------------------\n");
+        printf("=====================================================================\n");
         printf("Pointer Machine Exercises | [0] Go back | [-1] Exit\n");
         for(int i = 1; i <= 10; i++)
         {

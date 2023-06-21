@@ -5,10 +5,16 @@
 
 int main()
 {
+    system("cls");
+    printf("=== IPRL12C Final Project ===\n");
+    printf("Author: Marc Joshua Valdez\n");
+    printf("Contact: marc.valdez@lpunetwork.edu.ph\n\n");
+    system("pause");
+    
     while(1)
     {
         system("cls");
-        printf("Welcome to the FINAL PROJECT!!!\n\n");
+        printf("=====================================================================\n");
         printf("Main Menu | [0] Exit\n");
         printf("  [1] Prelim\n");
         printf("  [2] Midterm\n");

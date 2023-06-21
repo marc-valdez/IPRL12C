@@ -338,7 +338,7 @@ void pointer_samples()
     while(1)
     {
         system("cls");
-        puts("----------------------------------------------\n");
+        printf("=====================================================================\n");
         printf("Pointer Sample Programs | [0] Go back | [-1] Exit\n");
         for(int i = 1; i <= 10; i++)
         {

@@ -249,7 +249,7 @@ void file_processing_examples()
     while(1)
     {
         system("cls");
-        puts("----------------------------------------------\n");
+        printf("=====================================================================\n");
         printf("File Processing Example Programs | [0] Go back | [-1] Exit\n");
         for(int i = 1; i <= 7; i++)
             printf("  Example [%d]\n", i);

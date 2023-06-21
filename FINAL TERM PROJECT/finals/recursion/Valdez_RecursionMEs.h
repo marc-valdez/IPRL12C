@@ -75,7 +75,7 @@ void recursion_machine_exercises()
     while(1)
     {
         system("cls");
-        puts("----------------------------------------------\n");
+        printf("=====================================================================\n");
         printf("Recursion Machine Exercises | [0] Go back | [-1] Exit\n");
         for(int i = 1; i <= 4; i++)
             printf("  Exercise [%d]\n", i);

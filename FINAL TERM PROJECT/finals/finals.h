@@ -6,7 +6,8 @@ void finals()
     while(1)
     {
         system("cls");
-        printf("Midterm Activities | [0] Go back | [-1] Exit\n");
+        printf("=====================================================================\n");
+        printf("Finals Activities | [0] Go back | [-1] Exit\n");
         printf("  [1] File Processing Samples\n");
         printf("  [2] Recursion Machine Exercises\n");
         printf("  [ ] THIS PROGRAM!!!\n");

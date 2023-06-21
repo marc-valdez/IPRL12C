@@ -8,7 +8,7 @@ void prelim_ME2() {
     // You are to write a program that will ask the user to input the number of text messages incurred by SFT subscriber. 
     // The text messaging charge is then computed based on the number of text messages. The charge is zero for the first 200 messages. 
     // Text messages beyond that are charged by 0.5 peso per message. The program should output the charge incurred.
-    printf("=====================================================\n");
+    printf("=====================================================================\n");
     printf("Machine Exercise 2 - March 23, 2023\n\n");
 
     int messages, min = 0, max = 2000;

@@ -7,7 +7,7 @@ int product(int a, int b);
 void printMessage();
 
 void prelim_ME1() {
-    printf("=====================================================\n");
+    printf("=====================================================================\n");
     printf("Machine Exercise 1 - March 23, 2023\n\n");
     int x = 100, y = 250;
     printf("The sum of %d and %d is %d\n", x, y, sum(x, y)); // 1st function call

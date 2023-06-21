@@ -7,6 +7,7 @@ void midterm()
     while(1)
     {
         system("cls");
+        printf("=====================================================================\n");
         printf("Midterm Activities | [0] Go back | [-1] Exit\n");
         printf("  [1] Pointer Samples\n");
         printf("  [2] Pointer Machine Exercises\n");

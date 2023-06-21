@@ -13,7 +13,7 @@ void oneD()
     while(1)
     {
         system("cls");
-        printf("=======================================================================================================\n");
+        printf("=====================================================================\n");
         printf("One Dimensional Array Activities: | [0] Go back | [-1] Exit\n");
         printf("  [1] Exercise 1\n");
         printf("  [2] Exercise 2\n");
