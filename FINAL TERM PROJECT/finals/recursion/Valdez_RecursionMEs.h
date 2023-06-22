@@ -10,7 +10,7 @@ int Mystery(int x, int y)
         return (Mystery(y, x % y));
 }
 
-void exercise1()
+void rec_exer1()
 {
     printf("%d\n", Mystery(10, 25));
 }
@@ -33,7 +33,7 @@ void BLAP(int n)
     }
 }
 
-void exercise2()
+void rec_exer2()
 {
     BLAP(4);
 }
@@ -46,7 +46,7 @@ int fib(int n)
         return fib(n - 1) + fib(n - 2);
 }
 
-void exercise3()
+void rec_exer3()
 {
     printf("\nFibonnaci(6) = %d\n", fib(6));
 }
@@ -61,7 +61,7 @@ int ackermann(int m, int n)
         return ackermann(m - 1, ackermann(m, n - 1));
 }
 
-void exercise4()
+void rec_exer4()
 {
     printf("\nAckermann(0, 10) = %d\n", ackermann(0, 10));
     printf("Ackermann(1, 2) = %d\n", ackermann(1, 2));
@@ -71,7 +71,7 @@ void exercise4()
 
 void recursion_MEs()
 {
-    // this is just a simple selection menu for the exercise codes above
+    // this is just a simple selection menu for the rec_exer codes above
     while(1)
     {
         system("cls");
@@ -99,10 +99,10 @@ void recursion_MEs()
                     continue;
                 return;
             }
-            case 1: exercise1(); break;
-            case 2: exercise2(); break;
-            case 3: exercise3(); break;
-            case 4: exercise4(); break;
+            case 1: rec_exer1(); break;
+            case 2: rec_exer2(); break;
+            case 3: rec_exer3(); break;
+            case 4: rec_exer4(); break;
         }
         system("pause");
     }

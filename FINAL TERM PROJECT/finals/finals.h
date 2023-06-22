@@ -14,7 +14,7 @@ void finals()
         printf("  [3] File Processing Machine Exercises\n");
         printf("  [ ] THIS PROGRAM!!!\n");
 
-        int choice, min = -1, max = 2;
+        int choice, min = -1, max = 3;
         get_int(&choice, min, max, "> Please select an option: ");
 
         system("cls");
@@ -33,9 +33,9 @@ void finals()
                     continue;
                 return;
             }
-            case 1: file_processing_examples(); break;
+            case 1: fileprocessing_samples(); break;
             case 2: recursion_MEs(); break;
-            case 3: file_processing_MEs(); break;
+            case 3: fileprocessing_MEs(); break;
         }
     }
 }

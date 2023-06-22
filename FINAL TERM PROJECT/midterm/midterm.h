@@ -33,7 +33,7 @@ void midterm()
                 return;
             }
             case 1: pointer_samples(); break;
-            case 2: pointer_machine_exercises(); break;
+            case 2: pointer_MEs(); break;
             case 3: struct_ATM(); break;
         }
     }

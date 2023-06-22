@@ -1,4 +1,4 @@
-int exercise1()
+void fp_exer1()
 {
     system("cls");
 

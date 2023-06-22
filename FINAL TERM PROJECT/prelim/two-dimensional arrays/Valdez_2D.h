@@ -16,7 +16,7 @@ void twoD_exer6(void);
 void twoD_exer7(void);
 void twoD_exer8(void);
 
-void twoD()
+void twoD_MEs()
 {
 	while(1)
 	{

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void sample1()
+void ptr_sample1()
 {
     // variable declaration
     char ch;
@@ -22,7 +22,7 @@ void sample1()
     f = 3.1416;
     d = 105.1;
 
-    // sample use of the address-of operator
+    // ptr_sample use of the address-of operator
     // the addresses of each variable is assigned to their corresponding pointers
     pch = &ch;
     pi = &i;
@@ -36,7 +36,7 @@ void sample1()
     printf("d = %lf\n", *pd);
 }
 
-void sample2()
+void ptr_sample2()
 {
     // variable and pointer declarations
     int i;
@@ -59,7 +59,7 @@ void sample2()
     printf("*p3 = %d\n", *p3);
 }
 
-void sample3()
+void ptr_sample3()
 {
     // variable and pointer declaration
     int i;
@@ -102,7 +102,7 @@ void wrong_swap(int x, int y)
     // however, do take note that x and y in main is still not swapped
 }
 
-void sample4()
+void ptr_sample4()
 {
     int x, y;
 
@@ -128,7 +128,7 @@ void correct_swap(int *px, int *py)
     *py = temp;
 }
 
-void sample5()
+void ptr_sample5()
 {
     int x, y;
 
@@ -142,7 +142,7 @@ void sample5()
     printf("x = %d, y = %d\n", x, y);
 }
 
-void sample6()
+void ptr_sample6()
 {
     // declares an array of integers and an integer pointer
     int a[5];
@@ -186,7 +186,7 @@ void sample6()
     }
 }
 
-void sample7()
+void ptr_sample7()
 {
     // declares an integer array, along with an integer pointer and an integer variable
     int a[5];
@@ -221,7 +221,7 @@ void sample7()
     printf("a[4] = %d\n", *pa);
 }
 
-void sample8()
+void ptr_sample8()
 {
     // declarations
     int a[5];
@@ -261,7 +261,7 @@ void sample8()
     }
 }
 
-void sample9()
+void ptr_sample9()
 {
     // pointer declarations
     char *pch;
@@ -294,7 +294,7 @@ void sample9()
     free(pd);
 }
 
-void sample10()
+void ptr_sample10()
 {
     // declarations
     int *pa;
@@ -334,7 +334,7 @@ void sample10()
 
 void pointer_samples()
 {
-    // this is just a simple selection menu for the sample codes above
+    // this is just a simple selection menu for the ptr_sample codes above
     while(1)
     {
         system("cls");
@@ -366,16 +366,16 @@ void pointer_samples()
                     continue;
                 return;
             }
-            case 1: sample1(); break;
-            case 2: sample2(); break;
-            case 3: sample3(); break;
-            case 4: sample4(); break;
-            case 5: sample5(); break;
-            case 6: sample6(); break;
-            case 7: sample7(); break;
-            case 8: sample8(); break;
-            case 9: sample9(); break;
-            case 10: sample10(); break;
+            case 1: ptr_sample1(); break;
+            case 2: ptr_sample2(); break;
+            case 3: ptr_sample3(); break;
+            case 4: ptr_sample4(); break;
+            case 5: ptr_sample5(); break;
+            case 6: ptr_sample6(); break;
+            case 7: ptr_sample7(); break;
+            case 8: ptr_sample8(); break;
+            case 9: ptr_sample9(); break;
+            case 10: ptr_sample10(); break;
         }
         system("pause");
     }

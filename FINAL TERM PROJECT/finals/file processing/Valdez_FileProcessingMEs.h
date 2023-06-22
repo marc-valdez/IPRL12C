@@ -1,7 +1,7 @@
 #include ".\file processing\Valdez_FileProcessingMP1.h"
 #include ".\file processing\Valdez_FileProcessingMP2.h"
 
-void recursion_MEs()
+void fileprocessing_MEs()
 {
     while(1)
     {
@@ -30,8 +30,8 @@ void recursion_MEs()
                     continue;
                 return;
             }
-            case 1: exercise1(); break;
-            case 2: exercise2(); break;
+            case 1: fp_exer1(); break;
+            case 2: fp_exer2(); break;
         }
         system("pause");
     }

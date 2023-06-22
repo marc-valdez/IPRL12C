@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void example1()
+void fp_sample1()
 {
     // create a file pointer called inputf
     // then declare an integer variable called c
@@ -28,7 +28,7 @@ void example1()
     fclose(inputf);
 }
 
-void example2()
+void fp_sample2()
 {
     // create a file pointer called inputf
     // then declare an character variable called c
@@ -55,7 +55,7 @@ void example2()
     fclose(inputf);
 }
 
-void example3()
+void fp_sample3()
 {
     FILE *inputf;
     char filename[MAX];
@@ -74,7 +74,7 @@ void example3()
     fclose(inputf);
 }
 
-void example4()
+void fp_sample4()
 {
     // declare two file pointers, one for input, one for output
     FILE *inputf;
@@ -109,7 +109,7 @@ void example4()
     fclose(outputf);
 }
 
-void example5()
+void fp_sample5()
 {
     // declare the file pointer as well as the string variable
     FILE *outputf;
@@ -141,7 +141,7 @@ void example5()
     fclose(outputf);
 }
 
-void example6()
+void fp_sample6()
 {
     FILE *inputf;
     char ch;
@@ -192,7 +192,7 @@ void Series2(int n)
     }
 }
 
-void example7()
+void fp_sample7()
 {
     Series1(5);
     puts("\n");
@@ -210,7 +210,7 @@ void example7()
 // {
 //     // The visit operation can be any operation
 //     // depending on the application. In this
-//     // example, we simply print the value of the data.
+//     // fp_sample, we simply print the value of the data.
 //     printf("%d ", p->data);
 // }
 
@@ -243,9 +243,9 @@ void example7()
 //     }
 // }
 
-void file_processing_examples()
+void fileprocessing_samples()
 {
-    // this is just a simple selection menu for the example codes above
+    // this is just a simple selection menu for the fp_sample codes above
     while(1)
     {
         system("cls");
@@ -275,13 +275,13 @@ void file_processing_examples()
                     continue;
                 return;
             }
-            case 1: example1(); break;
-            case 2: example2(); break;
-            case 3: example3(); break;
-            case 4: example4(); break;
-            case 5: example5(); break;
-            case 6: example6(); break;
-            case 7: example7(); break;
+            case 1: fp_sample1(); break;
+            case 2: fp_sample2(); break;
+            case 3: fp_sample3(); break;
+            case 4: fp_sample4(); break;
+            case 5: fp_sample5(); break;
+            case 6: fp_sample6(); break;
+            case 7: fp_sample7(); break;
         }
         system("pause");
     }

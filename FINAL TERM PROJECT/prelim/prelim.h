@@ -11,10 +11,10 @@ void prelim()
         system("cls");
         printf("=====================================================================\n");
         printf("Prelim Activities | [0] Go back | [-1] Exit\n");
-        printf("  [1] 1D Arrays\n");
-        printf("  [2] Machine Exercises 1\n");
-        printf("  [3] Machine Exercises 2\n");
-        printf("  [4] 2D Arrays\n");
+        printf("  [1] 1D Array Machine Exercises\n");
+        printf("  [2] General Machine Exercise 1\n");
+        printf("  [3] General Machine Exercise 2\n");
+        printf("  [4] 2D Array Machine Exercises\n");
         printf("  [5] LRT System\n");
 
         int choice, min = -1, max = 5;
@@ -36,10 +36,10 @@ void prelim()
                     continue;
                 return;
             }
-            case 1: oneD(); break;
+            case 1: oneD_MEs(); break;
             case 2: prelim_ME1(); system("pause"); break;
             case 3: prelim_ME2(); system("pause"); break;
-            case 4: twoD(); break;
+            case 4: twoD_MEs(); break;
             case 5: lrt_main(); system("pause"); break;
         }
     }

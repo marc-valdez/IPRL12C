@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void exer1()
+void ptr_exer1()
 {
     // Write a program that declares one float variable and one double data type variable.
     float f;
@@ -27,7 +27,7 @@ void exer1()
     printf("d = %lf\n", *pd);
 }
 
-void exer2()
+void ptr_exer2()
 {
     double d, *pd;
 
@@ -62,7 +62,7 @@ void add(int *pc, int a, int b)
     *pc = a + b;
 }
 
-void exer3()
+void ptr_exer3()
 {
     int a = 10, b = 20;
     int c;
@@ -89,7 +89,7 @@ void array_average(float *array, int count, float *sum, float *average)
     *average = *sum / count;
 }
 
-void exer4()
+void ptr_exer4()
 {
     // Assume that A is a one-dimensional array of 10 float data type values.
     float A[10] = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0};
@@ -102,7 +102,7 @@ void exer4()
     printf("average = %f\n", average);
 }
 
-void exer5()
+void ptr_exer5()
 {
     // Assume that A is a one-dimensional array of 10 float data type values.
     float A[10];
@@ -124,7 +124,7 @@ void exer5()
         printf("A[%d] = %f\n", i, *(pf + i));
 }
 
-void exer6()
+void ptr_exer6()
 {
     // Assume that A is a one-dimensional array of 10 double data type values.
     double A[10];
@@ -146,7 +146,7 @@ void exer6()
         printf("A[%d] = %lf\n", i, *(pd + i));
 }
 
-void exer7()
+void ptr_exer7()
 {
     // Assume that A is a one-dimensional array of 10 float data type values.
     float A[10];
@@ -167,7 +167,7 @@ void exer7()
         printf("A[%d] = %f\n", i, *(pf - i));
 }
 
-void exer8()
+void ptr_exer8()
 {
     // Assume that A is a one-dimensional array of 10 double data type values.
     double A[10];
@@ -188,7 +188,7 @@ void exer8()
         printf("A[%d] = %lf\n", i, *(pd - i));
 }
 
-void exer9()
+void ptr_exer9()
 {
     // Write a program that will dynamically allocate contigous memory for 10 floating point values.
     float *pf = (float *)malloc(sizeof(float) * 10);
@@ -201,7 +201,7 @@ void exer9()
         printf("pf[%d] = %f\n", i, *(pf + i));
 }
 
-void exer10()
+void ptr_exer10()
 {
     // Write a program that will dynamically allocate contigous memory for 10 double point values.
     double *pd = (double *)malloc(sizeof(double) * 10);
@@ -214,7 +214,7 @@ void exer10()
         printf("pd[%d] = %f\n", i, *(pd + i));
 }
 
-void pointer_machine_exercises()
+void pointer_MEs()
 {
     while(1)
     {
@@ -247,16 +247,16 @@ void pointer_machine_exercises()
                     continue;
                 return;
             }
-            case 1: exer1(); break;
-            case 2: exer2(); break;
-            case 3: exer3(); break;
-            case 4: exer4(); break;
-            case 5: exer5(); break;
-            case 6: exer6(); break;
-            case 7: exer7(); break;
-            case 8: exer8(); break;
-            case 9: exer9(); break;
-            case 10: exer10(); break;
+            case 1: ptr_exer1(); break;
+            case 2: ptr_exer2(); break;
+            case 3: ptr_exer3(); break;
+            case 4: ptr_exer4(); break;
+            case 5: ptr_exer5(); break;
+            case 6: ptr_exer6(); break;
+            case 7: ptr_exer7(); break;
+            case 8: ptr_exer8(); break;
+            case 9: ptr_exer9(); break;
+            case 10: ptr_exer10(); break;
         }
         system("pause");
     }
