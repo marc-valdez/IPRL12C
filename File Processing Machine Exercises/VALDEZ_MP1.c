@@ -3,12 +3,12 @@
 int main()
 {
     system("cls");
-    
+
     // Write a program that will output the characters ‘A’ to ‘Z’ (one character per line) onto a text file whose filename is specified by the user.  
     // Use fputc() for character output.
     FILE *outputf;
     char outputfilename[MAX];
-    
+
     get_string(outputfilename, MAX, "> Input name of output text file: ");
     outputf = fopen(outputfilename, "w");
     if(outputf == NULL)
@@ -22,8 +22,7 @@ int main()
         fputc(i, outputf);
         fprintf(outputf, "\n");
     }
-    
-    fclose(outputf);
 
+    fclose(outputf);
     return 0;
 }
