@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "valdez_v3.h": "c"
+        "*.h": "c",
+        "*.c": "c"
     }
 }
