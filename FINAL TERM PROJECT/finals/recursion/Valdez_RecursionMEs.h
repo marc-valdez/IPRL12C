@@ -69,7 +69,7 @@ void exercise4()
     printf("Ackermann(3, 0) = %d\n", ackermann(3, 0));
 }
 
-void recursion_machine_exercises()
+void recursion_MEs()
 {
     // this is just a simple selection menu for the exercise codes above
     while(1)

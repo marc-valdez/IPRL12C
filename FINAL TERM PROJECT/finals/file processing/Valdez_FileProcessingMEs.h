@@ -1,18 +1,15 @@
-#include ".\file processing\Valdez_FileProcessingSamples.h"
-#include ".\recursion\Valdez_RecursionMEs.h"
-#include ".\file processing\Valdez_FileProcessingMEs.h"
+#include ".\file processing\Valdez_FileProcessingMP1.h"
+#include ".\file processing\Valdez_FileProcessingMP2.h"
 
-void finals()
+void recursion_MEs()
 {
     while(1)
     {
         system("cls");
         printf("=====================================================================\n");
-        printf("Finals Activities | [0] Go back | [-1] Exit\n");
-        printf("  [1] File Processing Samples\n");
-        printf("  [2] Recursion Machine Exercises\n");
-        printf("  [3] File Processing Machine Exercises\n");
-        printf("  [ ] THIS PROGRAM!!!\n");
+        printf("File Processing Machine Exercises | [0] Go back | [-1] Exit\n");
+        for(int i = 1; i <= 2; i++)
+            printf("  Exercise [%d]\n", i);
 
         int choice, min = -1, max = 2;
         get_int(&choice, min, max, "> Please select an option: ");
@@ -28,14 +25,14 @@ void finals()
                 break;
             }
             case 0: {
-                char answer = yes_or_no("Return to main menu? (y/n): ");
+                char answer = yes_or_no("Return to previous menu? (y/n): ");
                 if(answer == 'N' || answer == 'n')
                     continue;
                 return;
             }
-            case 1: file_processing_examples(); break;
-            case 2: recursion_MEs(); break;
-            case 3: file_processing_MEs(); break;
+            case 1: exercise1(); break;
+            case 2: exercise2(); break;
         }
+        system("pause");
     }
 }
