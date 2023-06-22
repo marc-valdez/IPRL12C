@@ -1,5 +1,5 @@
-#include ".\file processing\Valdez_FileProcessingMP1.h"
-#include ".\file processing\Valdez_FileProcessingMP2.h"
+#include "Valdez_FileProcessingMP1.h"
+#include "Valdez_FileProcessingMP2.h"
 
 void fileprocessing_MEs()
 {
