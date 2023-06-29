@@ -78,10 +78,10 @@ void ptr_sample3()
     // p1 = 100; // ERROR: not really a memory address
 
     // this is a valid assignment
-    p1 = &i;
+    // p1 = &i;
 
     // again, i doesn't contain anything so garbage values
-    printf("*p1 = %d\n", *p1); // ERROR: i not initialized
+    // printf("*p1 = %d\n", *p1); // ERROR: i not initialized
 }
 
 void wrong_swap(int x, int y)
@@ -340,12 +340,23 @@ void pointer_samples()
         system("cls");
         printf("=====================================================================\n");
         printf("Pointer Sample Programs | [0] Go back | [-1] Exit\n");
-        for(int i = 1; i <= 10; i++)
-        {
-            printf("  Sample [%d]", i);
-            ++i;
-            printf("\tSample [%d]\n", i);
-        }
+        printf("  [1] The following example shows the use of the address-of (&) and the dereferencing (*) operators with other basic data types.\n");
+        printf("  [2] The following example shows that a value can be accessed indirectly using several pointers to the same memory location.\n");
+        printf("  [3] The following example shows incorrect ways of using/accessing pointers.\n");
+        printf("  [4] WRONG way of swapping integer variables using pointers.\n");
+        printf("  [5] CORRECT way of swapping integer variables using pointers.\n");
+        printf("  [6] Pointer arithmetic examples.\n");
+        printf("  [7] Pointer dereferencing examples.\n");
+        printf("  [8] Pointer arithmetic using (++) and (--).\n");
+        printf("  [9] Variable declaration using malloc().\n");
+        printf("  [10] Array block declaraction using malloc().\n");
+
+        // for(int i = 1; i <= 10; i++)
+        // {
+        //     printf("  Sample [%d]", i);
+        //     ++i;
+        //     printf("\tSample [%d]\n", i);
+        // }
 
         int choice, min = -1, max = 10;
         get_int(&choice, min, max, "> Please select an option: ");
