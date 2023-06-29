@@ -1,6 +1,7 @@
 #include ".\file processing\Valdez_FileProcessingSamples.h"
 #include ".\recursion\Valdez_RecursionMEs.h"
 #include ".\file processing\Valdez_FileProcessingMEs.h"
+#include ".\file processing\Valdez_FileProcessingQuiz.h"
 
 void finals()
 {
@@ -12,9 +13,10 @@ void finals()
         printf("  [1] File Processing Samples\n");
         printf("  [2] Recursion Machine Exercises\n");
         printf("  [3] File Processing Machine Exercises\n");
+        printf("  [4] File Processing Quiz\n");
         printf("  [ ] THIS PROGRAM!!!\n");
 
-        int choice, min = -1, max = 3;
+        int choice, min = -1, max = 4;
         get_int(&choice, min, max, "> Please select an option: ");
 
         system("cls");
@@ -36,6 +38,7 @@ void finals()
             case 1: fileprocessing_samples(); break;
             case 2: recursion_MEs(); break;
             case 3: fileprocessing_MEs(); break;
+            case 4: fileprocessing_quiz(); break;
         }
     }
 }
