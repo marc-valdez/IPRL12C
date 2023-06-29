@@ -23,9 +23,14 @@ void twoD_MEs()
 		system("cls");
 		printf("=====================================================================\n");
 		printf("Two Dimensional Array Activities: | [0] Go back | [-1] Exit\n");
-
-		for(int i = 1, j = 5; i <= 8 / 2; i++, j++)
-			printf("  [%d] Exercise %d\t\t[%d] Exercise %d\n", i, i, j, j);
+		printf("  [1] Write a function that will initialize the contents of a double data type 2D array to 0.0.\n");
+		printf("  [2] Same as problem 1, but allow the user to input the value of the array element via scanf() statement.\n");
+		printf("  [3] Write a function that will display all the elements of the 2D array.\n");
+		printf("  [4] Write a function that will return the number of negative elements in the 2D array.\n");
+		printf("  [5] Write a function that will print only the elements on the main diagonal of the 2D array.\n");
+		printf("  [6] Write a function that will return the sum of the elements on a specified row.\n");
+		printf("  [7] Write a function that will return the sum of the elements on a specified column.\n");
+		printf("  [8] Write a function that will add two matrices, A and B, and store the sum to C.\n");
 
 		int buffer;
 		get_int(&buffer, -1, 8, "> Please select an option: ");
@@ -245,7 +250,7 @@ int sum_column(double arr[row][col], int buffer)
 
 void twoD_exer7()
 {
-	printf("\n7. Write a function that will return the sum of the elements on a specified row.\nPass the array and the column as parameters.\n\n");
+	printf("\n7. Write a function that will return the sum of the elements on a specified Column.\nPass the array and the column as parameters.\n\n");
 
 	double d_arr[row][col];
 
@@ -263,7 +268,7 @@ void twoD_exer7()
 
 	printf("\n");
 	int input;
-	get_int(&input, 1, col, "Please enter a row number: ");
+	get_int(&input, 1, col, "Please enter a column number: ");
 	int sum = sum_column(d_arr, input);
 	printf("\nThe sum of column %d is %d\n\n", input, sum);
 }
