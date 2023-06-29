@@ -174,75 +174,6 @@ void fp_sample6()
     fclose(inputf);
 }
 
-void Series1(int n)
-{
-    if(n > 0)
-    {
-        printf("n = %d\n", n);
-        Series1(n - 1);
-    }
-}
-
-void Series2(int n)
-{
-    if(n > 0)
-    {
-        Series2(n - 1);
-        printf("n = %d\n", n);
-    }
-}
-
-void fp_sample7()
-{
-    Series1(5);
-    puts("\n");
-    Series2(5);
-}
-
-// struct node
-// {
-//     int data;           // data, of course can be any type
-//     struct node *left;  // pointer to the left subtree
-//     struct node *right; // pointer to the right subtree
-// };
-
-// void Visit(struct node *p)
-// {
-//     // The visit operation can be any operation
-//     // depending on the application. In this
-//     // fp_sample, we simply print the value of the data.
-//     printf("%d ", p->data);
-// }
-
-// void PreOrder(struct node *p)
-// {
-//     if (p != NULL)
-//     {
-//         Visit(p);
-//         PreOrder(p->left);
-//         PreOrder(p->right);
-//     }
-// }
-// void InOrder(struct node *p)
-// {
-//     if (p != NULL)
-//     {
-//         InOrder(p->left);
-//         Visit(p);
-//         InOrder(p->right);
-//     }
-// }
-
-// void PostOrder(struct node *p)
-// {
-//     if (p != NULL)
-//     {
-//         PostOrder(p->left);
-//         PostOrder(p->right);
-//         Visit(p);
-//     }
-// }
-
 void fileprocessing_samples()
 {
     // this is just a simple selection menu for the fp_sample codes above
@@ -251,10 +182,17 @@ void fileprocessing_samples()
         system("cls");
         printf("=====================================================================\n");
         printf("File Processing Example Programs | [0] Go back | [-1] Exit\n");
-        for(int i = 1; i <= 7; i++)
-            printf("  Example [%d]\n", i);
+        printf("  [1] The following sample program opens a text file named “test.txt”, read its contents one character at a time, prints it and finally and closes the file.\n");
+        printf("  [2] The following program is an improvement of the previous program. In the following program, the user is allowed to input any filename.\n");
+        printf("  [3] This is a simple primitive version of the DOS command “type” or the UNIX command “cat”\n");
+        printf("  [4] This is a very simple text file copy utility program.\n");
+        printf("  [5] The following program shows how to perform formatted text file OUTPUT using the primitive data types.\n");
+        printf("  [6] The following program shows how to perform formatted text file INPUT using the primitive data types. \n");
 
-        int choice, min = -1, max = 7;
+        // for(int i = 1; i <= 7; i++)
+        //     printf("  Example [%d]\n", i);
+
+        int choice, min = -1, max = 6;
         get_int(&choice, min, max, "> Please select an option: ");
         system("cls");
 
@@ -281,7 +219,6 @@ void fileprocessing_samples()
             case 4: fp_sample4(); break;
             case 5: fp_sample5(); break;
             case 6: fp_sample6(); break;
-            case 7: fp_sample7(); break;
         }
         system("pause");
     }

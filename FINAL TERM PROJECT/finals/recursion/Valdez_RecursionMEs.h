@@ -2,6 +2,75 @@
 #include <stdlib.h>
 #include <string.h>
 
+void Series1(int n)
+{
+    if(n > 0)
+    {
+        printf("n = %d\n", n);
+        Series1(n - 1);
+    }
+}
+
+void Series2(int n)
+{
+    if(n > 0)
+    {
+        Series2(n - 1);
+        printf("n = %d\n", n);
+    }
+}
+
+void rec_sample1()
+{
+    Series1(5);
+    puts("\n");
+    Series2(5);
+}
+
+// struct node
+// {
+//     int data;           // data, of course can be any type
+//     struct node *left;  // pointer to the left subtree
+//     struct node *right; // pointer to the right subtree
+// };
+
+// void Visit(struct node *p)
+// {
+//     // The visit operation can be any operation
+//     // depending on the application. In this
+//     // fp_sample, we simply print the value of the data.
+//     printf("%d ", p->data);
+// }
+
+// void PreOrder(struct node *p)
+// {
+//     if (p != NULL)
+//     {
+//         Visit(p);
+//         PreOrder(p->left);
+//         PreOrder(p->right);
+//     }
+// }
+// void InOrder(struct node *p)
+// {
+//     if (p != NULL)
+//     {
+//         InOrder(p->left);
+//         Visit(p);
+//         InOrder(p->right);
+//     }
+// }
+
+// void PostOrder(struct node *p)
+// {
+//     if (p != NULL)
+//     {
+//         PostOrder(p->left);
+//         PostOrder(p->right);
+//         Visit(p);
+//     }
+// }
+
 int Mystery(int x, int y)
 {
     if(y == 0)
@@ -77,10 +146,16 @@ void recursion_MEs()
         system("cls");
         printf("=====================================================================\n");
         printf("Recursion Machine Exercises | [0] Go back | [-1] Exit\n");
-        for(int i = 1; i <= 4; i++)
-            printf("  Exercise [%d]\n", i);
+        printf("  [1] Series\n");
+        printf("  [2] Mystery\n");
+        printf("  [3] BLIP BLAP\n");
+        printf("  [4] Fibonnaci\n");
+        printf("  [5] Ackermann\n");
+        
+        // for(int i = 1; i <= 5; i++)
+        //     printf("  Exercise [%d]\n", i);
 
-        int choice, min = -1, max = 4;
+        int choice, min = -1, max = 5;
         get_int(&choice, min, max, "> Please select an option: ");
 
         system("cls");
@@ -99,10 +174,11 @@ void recursion_MEs()
                     continue;
                 return;
             }
-            case 1: rec_exer1(); break;
-            case 2: rec_exer2(); break;
-            case 3: rec_exer3(); break;
-            case 4: rec_exer4(); break;
+            case 1: rec_sample1(); break;
+            case 2: rec_exer1(); break;
+            case 3: rec_exer2(); break;
+            case 4: rec_exer3(); break;
+            case 5: rec_exer4(); break;
         }
         system("pause");
     }
