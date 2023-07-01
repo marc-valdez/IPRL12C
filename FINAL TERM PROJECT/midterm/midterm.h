@@ -1,5 +1,6 @@
 #include ".\pointers\Valdez_PointerSamples.h"
 #include ".\pointers\Valdez_PointerMEs.h"
+#include ".\structures\Valdez_StructSampes.h"
 #include ".\atm system\Valdez_StructATM.h"
 
 void midterm()
@@ -11,7 +12,8 @@ void midterm()
         printf("Midterm Activities | [0] Go back | [-1] Exit\n");
         printf("  [1] Pointer Samples\n");
         printf("  [2] Pointer Machine Exercises\n");
-        printf("  [3] Struct-based ATM System\n");
+        printf("  [3] Struct Samples\n");
+        printf("  [4] Struct-based ATM System\n");
 
         int choice, min = -1, max = 6;
         get_int(&choice, min, max, "> Please select an option: ");
@@ -34,7 +36,8 @@ void midterm()
             }
             case 1: pointer_samples(); break;
             case 2: pointer_MEs(); break;
-            case 3: struct_ATM(); break;
+            case 3: struct_samples(); break;
+            case 4: struct_ATM(); break;
         }
     }
 }

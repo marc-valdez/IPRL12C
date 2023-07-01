@@ -1,42 +1,52 @@
 // Marc Valdez
 
-void example_1(void);
-void example_2(void);
-void example_3(void);
-void example_4(void);
-void exit_prompt(void);
+void struct_sample_1(void);
+void struct_sample_2(void);
+void struct_sample_3(void);
+void struct_sample_4(void);
 
 void struct_samples()
 {
     while(1)
     {
-        printf("=======================================================================================================\n\n");
+        system("cls");
+        printf("=====================================================================\n");
+        printf("Midterm Activities | [0] Go back | [-1] Exit\n");
+        printf("  [1] Display the value of the members of structure variable.\n");
+        printf("  [2] Structure to structure assignment.\n");
+        printf("  [3] Passing Structure as a function parameter.\n");
+        printf("  [4] Structure Array\n");
 
-        //* I would prefer if you commented this out from here...
-        for(int i = 1; i < 5; i++)
-            printf("[%d] Example %d\t", i, i);
-        printf("[5] Exit\n\n");
-        // ...to here. */
+        int choice, min = -1, max = 4;
+        get_int(&choice, min, max, "> Please select an option: ");
 
-        char *prompt = "> Enter Example Number [1-4] / Exit [5]: ";
-        int buffer = get_int(prompt, "12345\n", 1, 4);
-
-        switch(buffer)
+        system("cls");
+        switch(choice)
         {
-            case 1: example_1(); break;
-            case 2: example_2(); break;
-            case 3: example_3(); break;
-            case 4: example_4(); break;
-            case 5: exit_prompt(); break;
-            default:
-                printf("\nInvalid Input.\n\n");
+            case -1: {
+                char answer = yes_or_no("Are you sure you want to exit? (y/n): ");
+                if(answer == 'N' || answer == 'n')
+                    continue;
+                exit_prompt("Thank you for using this program!\n");
                 break;
+            }
+            case 0: {
+                char answer = yes_or_no("Return to main menu? (y/n): ");
+                if(answer == 'N' || answer == 'n')
+                    continue;
+                return;
+            }
+            case 1: struct_sample_1(); break;
+            case 2: struct_sample_2(); break;
+            case 3: struct_sample_3(); break;
+            case 4: struct_sample_4(); break;
         }
+        system("pause");
     }
 }
 
 /* Example 1 */
-void example_1(void)
+void struct_sample_1(void)
 {
     printf("\nExample 1:\n");
 
@@ -50,13 +60,12 @@ void example_1(void)
     point.y = 5;
 
     //display the value of the members of structure variable point
-
-    printf("\nx=%d\t,y=%d\n\n", point.x, point.y);
+    printf("\nx=%d,\ty=%d\n\n", point.x, point.y);
 }
 /* Example 1 */
 
 /* Example 2 */
-void example_2(void)
+void struct_sample_2(void)
 {
     printf("\nExample 2:\n");
 
@@ -85,7 +94,7 @@ struct pointType point1;
 
 void PrintPoint(struct pointType p);
 
-void example_3(void)
+void struct_sample_3(void)
 {
     printf("\nExample 3:\n");
 
@@ -103,7 +112,7 @@ void PrintPoint(struct pointType p)
 /* Example 3 */
 
 /* Example 4 */
-void example_4(void)
+void struct_sample_4(void)
 {
     printf("\nExample 4:\n");
 
@@ -126,13 +135,3 @@ void example_4(void)
         printf("\nPointArray[%d].x=%d,\tPointArray[%d].y=%d,\tPointArray[%d].z=%d\n\n", i, PointArray[i].x, i, PointArray[i].y, i, PointArray[i].z);
 }
 /* Example 4 */
-
-// Prompts for exit
-void exit_prompt(void)
-{
-    printf("\n");
-    char in = get_char("Would you like to exit? [Y-N]: ", "YyNn\n");
-    if(in == 'Y' || in == 'y')
-        exit(0);
-    printf("\n");
-}
