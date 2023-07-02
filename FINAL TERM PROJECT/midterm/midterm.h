@@ -1,6 +1,6 @@
 #include ".\pointers\Valdez_PointerSamples.h"
 #include ".\pointers\Valdez_PointerMEs.h"
-#include ".\structures\Valdez_StructSampes.h"
+#include ".\structures\Valdez_StructSamples.h"
 #include ".\atm system\Valdez_StructATM.h"
 
 void midterm()
