@@ -62,8 +62,8 @@ void ptr_sample2()
 void ptr_sample3()
 {
     // variable and pointer declaration
-    int i;
-    int *p1;
+    // int i;
+    // int *p1;
 
     // the first statement prints out garbage becuase i is not initialized, logic error
     // printf("p1 = %d\n", p1);   // ERROR: p1 not initialized
@@ -350,13 +350,6 @@ void pointer_samples()
         printf("  [8] Pointer arithmetic using (++) and (--).\n");
         printf("  [9] Variable declaration using malloc().\n");
         printf("  [10] Array block declaraction using malloc().\n");
-
-        // for(int i = 1; i <= 10; i++)
-        // {
-        //     printf("  Sample [%d]", i);
-        //     ++i;
-        //     printf("\tSample [%d]\n", i);
-        // }
 
         int choice, min = -1, max = 10;
         get_int(&choice, min, max, "> Please select an option: ");
