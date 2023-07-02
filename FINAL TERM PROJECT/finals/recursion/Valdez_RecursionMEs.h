@@ -151,9 +151,6 @@ void recursion_MEs()
         printf("  [3] BLIP BLAP\n");
         printf("  [4] Fibonnaci\n");
         printf("  [5] Ackermann\n");
-        
-        // for(int i = 1; i <= 5; i++)
-        //     printf("  Exercise [%d]\n", i);
 
         int choice, min = -1, max = 5;
         get_int(&choice, min, max, "> Please select an option: ");

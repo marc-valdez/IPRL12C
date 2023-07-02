@@ -232,13 +232,6 @@ void pointer_MEs()
         printf("  [9] Write a program that will dynamically allocate contiguous memory for 10 floating point values.\n");
         printf("  [10] Same as above but double data type.\n");
 
-        // for(int i = 1; i <= 10; i++)
-        // {
-        //     printf("  Exercise [%d]", i);
-        //     ++i;
-        //     printf("\t\tExercise [%d]\n", i);
-        // }
-
         int choice, min = -1, max = 10;
         get_int(&choice, min, max, "> Please select an option: ");
 

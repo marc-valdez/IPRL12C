@@ -189,9 +189,6 @@ void fileprocessing_samples()
         printf("  [5] The following program shows how to perform formatted text file OUTPUT using the primitive data types.\n");
         printf("  [6] The following program shows how to perform formatted text file INPUT using the primitive data types. \n");
 
-        // for(int i = 1; i <= 7; i++)
-        //     printf("  Example [%d]\n", i);
-
         int choice, min = -1, max = 6;
         get_int(&choice, min, max, "> Please select an option: ");
         system("cls");
