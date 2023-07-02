@@ -49,7 +49,7 @@ int is_empty(const char *buffer)
 {
     if(buffer[0] == '\0')
     {
-        cprintf(RED, "\n! Input cannot be empty. Please enter a value.\n");
+        cprintf(RED, "  ! Input cannot be empty. Please enter a value.\n");
         return 1;
     }
     return 0;
@@ -59,7 +59,7 @@ int has_whitespace(const char *buffer)
 {
     if(strchr(buffer, ' ') != NULL)
     {
-        cprintf(RED, "\n! Invalid input. Please try again without using whitespace characters.\n");
+        cprintf(RED, "  ! Invalid input. Please try again without using whitespace characters.\n");
         return 1;
     }
     return 0;
@@ -69,7 +69,7 @@ int starts_or_ends_with_dot(const char *buffer)
 {
     if(buffer[0] == '.' || buffer[strlen(buffer) - 1] == '.')
     {
-        cprintf(RED, "\n! Invalid input. Please enter a value that does not start or end with a period (.) character.\n");
+        cprintf(RED, "  ! Invalid input. Please enter a value that does not start or end with a period (.) character.\n");
         return 1;
     }
     return 0;
@@ -109,26 +109,26 @@ void get_int(int *user_input, const int min, const int max, const char *va_promp
 
         if(sscanf_s(buffer, "%d", user_input) != 1)
         {
-            cprintf(RED, "\n! Invalid input. Please enter a numeric value.\n");
+            cprintf(RED, "  ! Invalid input. Please enter a numeric value.\n");
             continue;
         }
 
         char remaining[MAX];
         if(sscanf_s(buffer, "%f%s", (float *)user_input, remaining) != 1)
         {
-            cprintf(RED, "\n! Invalid input. Please refrain from using non-numeric characters.\n");
+            cprintf(RED, "  ! Invalid input. Please refrain from using non-numeric characters.\n");
             continue;
         }
 
         if(sscanf_s(buffer, "%d%[.]%s", user_input, remaining, remaining) != 1)
         {
-            cprintf(YELLOW, "\n! Invalid input. Please enter a whole number.\n");
+            cprintf(YELLOW, "  ! Invalid input. Please enter a whole number.\n");
             continue;
         }
 
         if(*user_input < (int)min || *user_input >(int)max)
         {
-            cprintf(YELLOW, "\n! Input out of range. Please enter a number between %d and %d (inclusive).\n", (int)min, (int)max);
+            cprintf(YELLOW, "  ! Input out of range. Please enter a number between %d and %d (inclusive).\n", (int)min, (int)max);
             continue;
         }
 
@@ -161,20 +161,20 @@ void get_float(float *user_input, const float min, const float max, const char *
 
         if(sscanf_s(buffer, "%f", user_input) != 1)
         {
-            cprintf(RED, "\n! Invalid input. Please enter a numeric value.\n");
+            cprintf(RED, "  ! Invalid input. Please enter a numeric value.\n");
             continue;
         }
 
         char remaining[MAX];
         if(sscanf_s(buffer, "%f%s", user_input, remaining) != 1)
         {
-            cprintf(YELLOW, "\n! Invalid input. Please enter a whole number.\n");
+            cprintf(YELLOW, "  ! Invalid input. Please enter a whole number.\n");
             continue;
         }
 
         if(*user_input < (float)min || *user_input >(float)max)
         {
-            cprintf(YELLOW, "\n! Input out of range. Please enter a number between %.2f and %.2f (inclusive).\n", (float)min, (float)max);
+            cprintf(YELLOW, "  ! Input out of range. Please enter a number between %.2f and %.2f (inclusive).\n", (float)min, (float)max);
             continue;
         }
 
@@ -207,20 +207,20 @@ void get_double(double *user_input, const double min, const double max, const ch
 
         if(sscanf_s(buffer, "%lf", user_input) != 1)
         {
-            cprintf(RED, "\n! Invalid input. Please enter a numeric value.\n");
+            cprintf(RED, "  ! Invalid input. Please enter a numeric value.\n");
             continue;
         }
 
         char remaining[MAX];
         if(sscanf_s(buffer, "%lf%s", user_input, remaining) != 1)
         {
-            cprintf(YELLOW, "\n! Invalid input. Please enter a whole number.\n");
+            cprintf(YELLOW, "  ! Invalid input. Please enter a whole number.\n");
             continue;
         }
 
         if(*(double *)user_input < (double)min || *(double *)user_input >(double)max)
         {
-            cprintf(YELLOW, "\n! Input out of range. Please enter a number between %.2lf and %.2lf (inclusive).\n", (double)min, (double)max);
+            cprintf(YELLOW, "  ! Input out of range. Please enter a number between %.2lf and %.2lf (inclusive).\n", (double)min, (double)max);
             continue;
         }
 
@@ -253,13 +253,13 @@ void get_string(char *user_input, const int limit, const char *va_prompt, ...)
 
         if(sscanf_s(buffer, "%s", user_input) != 1)
         {
-            cprintf(YELLOW, "\n! Invalid input. Please enter a string of characters.\n");
+            cprintf(YELLOW, "  ! Invalid input. Please enter a string of characters.\n");
             continue;
         }
 
         if((int)strlen(user_input) > limit)
         {
-            cprintf(YELLOW, "\n! Invalid input. Character limit is %d characters.\n", limit);
+            cprintf(YELLOW, "  ! Invalid input. Character limit is %d characters.\n", limit);
             continue;
         }
 
@@ -281,7 +281,7 @@ char yes_or_no(const char *prompt)
 
         if(strspn(buffer, "YyNn") != strlen(buffer))
         {
-            cprintf(YELLOW, "\n! Invalid input. Please enter Y or N to continue.\n");
+            cprintf(YELLOW, "  ! Invalid input. Please enter Y or N to continue.\n");
             continue;
         }
 
