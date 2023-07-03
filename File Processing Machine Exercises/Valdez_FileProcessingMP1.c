@@ -6,6 +6,7 @@ int main()
 
     // Write a program that will output the characters ‘A’ to ‘Z’ (one character per line) onto a text file whose filename is specified by the user.  
     // Use fputc() for character output.
+
     FILE *outputf;
     char outputfilename[MAX];
 
@@ -24,5 +25,6 @@ int main()
     }
 
     fclose(outputf);
+    
     return 0;
 }
