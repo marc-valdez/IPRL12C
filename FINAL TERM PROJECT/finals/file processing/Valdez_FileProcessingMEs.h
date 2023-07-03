@@ -15,7 +15,7 @@ void fileprocessing_MEs()
         printf("  [3] Write a program that asks the user to input two integers, then print all integers from n1 to n2 on to a text file. \n");
         printf("  [4] Write a program that will read the integers from the file generated in the previous exercise.\n");
 
-        int choice, min = -1, max = 2;
+        int choice, min = -1, max = 4;
         get_int(&choice, min, max, "> Please select an option: ");
 
         system("cls");
