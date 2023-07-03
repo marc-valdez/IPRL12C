@@ -11,7 +11,7 @@ int fp_exer4()
     fp = fopen("output.txt", "r");
     if(fp == NULL)
     {
-        printf("ERROR: %s cannot be opened.\n", "output.txt");
+        printf("ERROR: %s cannot be opened.\n", "integers.txt");
         exit(1);
     }
 

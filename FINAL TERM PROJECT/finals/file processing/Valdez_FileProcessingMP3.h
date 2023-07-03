@@ -14,7 +14,7 @@ int fp_exer3()
     get_int(&n2, n1, 100, "Enter the second integer: ");
 
     FILE *fp;
-    fp = fopen("output.txt", "w");
+    fp = fopen("integers.txt", "w");
     for(int i = n1; i <= n2; i++)
         fprintf(fp, "%d\n", i);
     fclose(fp);
