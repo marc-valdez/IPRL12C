@@ -176,23 +176,26 @@ void fp_sample6()
 
 void fileprocessing_samples()
 {
-    // this is just a simple selection menu for the fp_sample codes above
+    char *menu_items[] = {
+        "The following sample program opens a text file named “test.txt”, read its contents one character at a time, prints it and finally and closes the file.",
+        "The following program is an improvement of the previous program. In the following program, the user is allowed to input any filename.",
+        "This is a simple primitive version of the DOS command “type” or the UNIX command “cat”",
+        "This is a very simple text file copy utility program.",
+        "The following program shows how to perform formatted text file OUTPUT using the primitive data types.",
+        "The following program shows how to perform formatted text file INPUT using the primitive data types."
+    };
+    int menu_size = sizeof(menu_items) / sizeof(menu_items[0]);
+    
     while(1)
     {
         system("cls");
         printf("=====================================================================\n");
         printf("File Processing Example Programs | [0] Go back | [-1] Exit\n");
-        printf("  [1] The following sample program opens a text file named “test.txt”, read its contents one character at a time, prints it and finally and closes the file.\n");
-        printf("  [2] The following program is an improvement of the previous program. In the following program, the user is allowed to input any filename.\n");
-        printf("  [3] This is a simple primitive version of the DOS command “type” or the UNIX command “cat”\n");
-        printf("  [4] This is a very simple text file copy utility program.\n");
-        printf("  [5] The following program shows how to perform formatted text file OUTPUT using the primitive data types.\n");
-        printf("  [6] The following program shows how to perform formatted text file INPUT using the primitive data types. \n");
+        print_menu(menu_items, menu_size);
 
-        int choice, min = -1, max = 6;
-        get_int(&choice, min, max, "> Please select an option: ");
+        int choice = get_int(-1, menu_size, "> Please select an option: ");
+
         system("cls");
-
         switch(choice)
         {
             case -1: {

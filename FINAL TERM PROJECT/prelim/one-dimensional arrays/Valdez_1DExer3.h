@@ -8,8 +8,7 @@ void oneD_exer3()
 {
 	printf("3. Return the lowest value\n\n");
 
-	int n;
-	get_int(&n, 0, 4, "Enter array size (%d-%d): ", 0, 4);
+	int n = get_int(0, 4, "Enter array size (%d-%d): ", 0, 4);
 
 	double d_arr[n];
 	d_init3(d_arr, n);

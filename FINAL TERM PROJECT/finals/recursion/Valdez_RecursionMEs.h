@@ -140,21 +140,24 @@ void rec_exer4()
 
 void recursion_MEs()
 {
-    // this is just a simple selection menu for the rec_exer codes above
+    char *menu_items[] = {
+        "Series",
+        "Mystery",
+        "BLIP BLAP",
+        "Fibonnaci",
+        "Ackermann"
+    };
+    int menu_size = sizeof(menu_items) / sizeof(menu_items[0]);
+
     while(1)
     {
         system("cls");
         printf("=====================================================================\n");
         printf("Recursion Machine Exercises | [0] Go back | [-1] Exit\n");
-        printf("  [1] Series\n");
-        printf("  [2] Mystery\n");
-        printf("  [3] BLIP BLAP\n");
-        printf("  [4] Fibonnaci\n");
-        printf("  [5] Ackermann\n");
+        print_menu(menu_items, menu_size);
 
-        int choice, min = -1, max = 5;
-        get_int(&choice, min, max, "> Please select an option: ");
-
+        int choice = get_int(-1, menu_size, "> Please select an option: ");
+        
         system("cls");
         switch(choice)
         {

@@ -9,9 +9,8 @@ int fp_exer3()
 {
     system("cls");
 
-    int n1, n2;
-    get_int(&n1, 0, 100, "Enter the first integer: ");
-    get_int(&n2, n1, 100, "Enter the second integer: ");
+    int n1 = get_int(0, 100, "Enter the first integer: ");
+    int n2 = get_int(n1, 100, "Enter the second integer: ");
 
     FILE *fp;
     fp = fopen("integers.txt", "w");

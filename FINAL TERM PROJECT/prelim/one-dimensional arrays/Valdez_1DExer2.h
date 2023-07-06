@@ -7,8 +7,7 @@ void oneD_exer2()
 {
     printf("2. Allow the user to enter size, and value of array\n\n");
 
-    int n;
-    get_int(&n, 0, 4, "Enter array size (%d-%d): ", 0, 4);
+    int n = get_int(0, 4, "Enter array size (%d-%d): ", 0, 4);
 
     printf("\n");
 
@@ -27,5 +26,5 @@ void oneD_exer2()
 void d_init2(double arr[], int n)
 {
     for(int i = 0; i < n; i++)
-        get_double(&arr[i], 0.0, 1000.0, "Enter value of array element %d: ", i);
+        arr[i] = get_double(0.0, 1000.0, "Enter value of array element %d: ", i);
 }

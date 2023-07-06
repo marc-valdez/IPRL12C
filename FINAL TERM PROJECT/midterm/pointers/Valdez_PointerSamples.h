@@ -334,25 +334,28 @@ void ptr_sample10()
 
 void pointer_samples()
 {
-    // this is just a simple selection menu for the ptr_sample codes above
+    char *menu_items[] = {
+        "The following example shows the use of the address-of (&) and the dereferencing (*) operators with other basic data types.",
+        "The following example shows that a value can be accessed indirectly using several pointers to the same memory location.",
+        "The following example shows incorrect ways of using/accessing pointers.",
+        "WRONG way of swapping integer variables using pointers.",
+        "CORRECT way of swapping integer variables using pointers.",
+        "Pointer arithmetic examples.",
+        "Pointer dereferencing examples.",
+        "Pointer arithmetic using (++) and (--).",
+        "Variable declaration using malloc().",
+        "Array block declaraction using malloc()."
+    };
+    int menu_size = sizeof(menu_items) / sizeof(char *);
+    
     while(1)
     {
         system("cls");
         printf("=====================================================================\n");
         printf("Pointer Sample Programs | [0] Go back | [-1] Exit\n");
-        printf("  [1] The following example shows the use of the address-of (&) and the dereferencing (*) operators with other basic data types.\n");
-        printf("  [2] The following example shows that a value can be accessed indirectly using several pointers to the same memory location.\n");
-        printf("  [3] The following example shows incorrect ways of using/accessing pointers.\n");
-        printf("  [4] WRONG way of swapping integer variables using pointers.\n");
-        printf("  [5] CORRECT way of swapping integer variables using pointers.\n");
-        printf("  [6] Pointer arithmetic examples.\n");
-        printf("  [7] Pointer dereferencing examples.\n");
-        printf("  [8] Pointer arithmetic using (++) and (--).\n");
-        printf("  [9] Variable declaration using malloc().\n");
-        printf("  [10] Array block declaraction using malloc().\n");
+        print_menu(menu_items, menu_size);
 
-        int choice, min = -1, max = 10;
-        get_int(&choice, min, max, "> Please select an option: ");
+        int choice = get_int(-1, menu_size, "> Please select an option: ");
 
         system("cls");
         switch(choice)

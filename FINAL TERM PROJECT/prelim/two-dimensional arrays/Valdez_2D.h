@@ -18,25 +18,29 @@ void twoD_exer8(void);
 
 void twoD_MEs()
 {
+	char *menu_items[] = {
+		"Write a function that will initialize the contents of a double data type 2D array to 0.0.",
+		"Same as problem 1, but allow the user to input the value of the array element via scanf() statement.",
+		"Write a function that will display all the elements of the 2D array.",
+		"Write a function that will return the number of negative elements in the 2D array.",
+		"Write a function that will print only the elements on the main diagonal of the 2D array.",
+		"Write a function that will return the sum of the elements on a specified row.",
+		"Write a function that will return the sum of the elements on a specified column.",
+		"Write a function that will add two matrices, A and B, and store the sum to C."
+	};
+	int menu_size = sizeof(menu_items) / sizeof(menu_items[0]);
+
 	while(1)
 	{
 		system("cls");
 		printf("=====================================================================\n");
 		printf("Two Dimensional Array Activities: | [0] Go back | [-1] Exit\n");
-		printf("  [1] Write a function that will initialize the contents of a double data type 2D array to 0.0.\n");
-		printf("  [2] Same as problem 1, but allow the user to input the value of the array element via scanf() statement.\n");
-		printf("  [3] Write a function that will display all the elements of the 2D array.\n");
-		printf("  [4] Write a function that will return the number of negative elements in the 2D array.\n");
-		printf("  [5] Write a function that will print only the elements on the main diagonal of the 2D array.\n");
-		printf("  [6] Write a function that will return the sum of the elements on a specified row.\n");
-		printf("  [7] Write a function that will return the sum of the elements on a specified column.\n");
-		printf("  [8] Write a function that will add two matrices, A and B, and store the sum to C.\n");
+		print_menu(menu_items, menu_size);
 
-		int buffer;
-		get_int(&buffer, -1, 8, "> Please select an option: ");
+		int choice = get_int(-1, menu_size, "> Please select an option: ");
 
 		system("cls");
-		switch(buffer)
+		switch(choice)
 		{
 			case -1: {
 				char answer = yes_or_no("Are you sure you want to exit? (y/n): ");
@@ -94,7 +98,7 @@ void d_init_scan(double arr[row][col])
 {
 	for(int i = 0; i < row; i++)
 		for(int j = 0; j < col; j++)
-			get_double(&arr[i][j], 0.0, 100.0, "Enter value of array element [%d][%d]: ", i, j);
+			arr[i][j] = get_double(0.0, 100.0, "Enter value of array element [%d][%d]: ", i, j);
 	printf("\n");
 }
 
@@ -231,8 +235,7 @@ void twoD_exer6()
 		printf("\n");
 	}
 	printf("\n");
-	int input;
-	get_int(&input, 1, row, "Please enter a row number: ");
+	int input = get_int(1, row, "Please enter a row number: ");
 	int sum = sum_row(d_arr, input);
 	printf("\nThe sum of row %d is %d\n\n", input, sum);
 }
@@ -267,8 +270,7 @@ void twoD_exer7()
 	}
 
 	printf("\n");
-	int input;
-	get_int(&input, 1, col, "Please enter a column number: ");
+	int input = get_int(1, col, "Please enter a column number: ");
 	int sum = sum_column(d_arr, input);
 	printf("\nThe sum of column %d is %d\n\n", input, sum);
 }

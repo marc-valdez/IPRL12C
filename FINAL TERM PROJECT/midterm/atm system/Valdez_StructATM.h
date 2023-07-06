@@ -250,8 +250,7 @@ void deposit(Account *user)
 {
     while(true)
     {
-        float deposit;
-        get_float(&deposit, INT_MIN, INT_MAX, "\nDeposit amount >> ");
+        float deposit = get_float(INT_MIN, INT_MAX, "\nDeposit amount >> ");
 
         if(deposit <= 0.0)
             cprintf(YELLOW, "\n! Deposit amount should be greater than zero.\n");
@@ -277,8 +276,7 @@ void withdrawal(Account *user)
 {
     while(true)
     {
-        float withdrawal;
-        get_float(&withdrawal, INT_MIN, INT_MAX, "\nWithdrawal amount >> ");
+        float withdrawal = get_float(INT_MIN, INT_MAX, "\nWithdrawal amount >> ");
 
         if(withdrawal <= 0.0)
             cprintf(YELLOW, "\n! Withdrawal amount should be greater than zero.\n");
@@ -349,8 +347,7 @@ void transactions(Account *user)
 
         printf("\n%s[%dm[6]%s[%dm Generate Report\n", COLOR, CYAN, COLOR, DEFAULT);
 
-        int transaction;
-        get_int(&transaction, 1, 6, "\nEnter transaction number >> ");
+        int transaction = get_int(1, 6, "\nEnter transaction number >> ");
 
         switch(transaction)
         {

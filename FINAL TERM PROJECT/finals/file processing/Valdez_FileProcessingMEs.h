@@ -15,18 +15,16 @@ void fileprocessing_MEs()
         "Write a program that will count the number of vowel letters in a text file.",
         "Write a program that will determine whether these two text files are identical or not (i.e., the contents are the same.)"
     };
-    int max = sizeof(menu_items) / sizeof(menu_items[0]);
+    int menu_size = sizeof(menu_items) / sizeof(menu_items[0]);
 
     while(1)
     {
         system("cls");
         printf("=====================================================================\n");
         printf("File Processing Machine Exercises | [0] Go back | [-1] Exit\n");
-        for(int i = 0; i < max; i++)
-            printf("  [%d] %s\n", i + 1, menu_items[i]);
+        print_menu(menu_items, menu_size);
 
-        int choice, min = -1;
-        get_int(&choice, min, max, "> Please select an option: ");
+        int choice = get_int(-1, menu_size, "> Please select an option: ");
 
         system("cls");
         switch(choice)

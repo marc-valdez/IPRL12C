@@ -10,23 +10,27 @@
 
 void oneD_MEs()
 {
+    char *menu_items[] = {
+        "Initialize a double array for all elements to contain 0.0",
+        "Allow the user to enter size, and value of array",
+        "Return the lowest value",
+        "Return the sum of all elements",
+        "Return the number of negative values",
+        "See if an integer is found in an array",
+        "Copy contents of array A to B",
+        "Copy contents of array A to B in reverse",
+        "Check if both array A and B have the same values"
+    };
+    int menu_size = sizeof(menu_items) / sizeof(menu_items[0]);
+
     while(1)
     {
         system("cls");
         printf("=====================================================================\n");
         printf("One Dimensional Array Activities: | [0] Go back | [-1] Exit\n");
-        printf("  [1] Initialize a double array for all elements to contain 0.0\n");
-        printf("  [2] Allow the user to enter size, and value of array\n");
-        printf("  [3] Return the lowest value\n");
-        printf("  [4] Return the sum of all elements\n");
-        printf("  [5] Return the number of negative values\n");
-        printf("  [6] See if an integer is found in an array\n");
-        printf("  [7] Copy contents of array A to B\n");
-        printf("  [8] Copy contents of array A to B in reverse\n");
-        printf("  [9] Check if both array A and B have the same values\n");
+        print_menu(menu_items, menu_size);
 
-        int choice, min = -1, max = 9;
-        get_int(&choice, min, max, "> Please select an option: ");
+        int choice = get_int(-1, menu_size, "> Please select an option: ");
 
         system("cls");
         switch(choice)

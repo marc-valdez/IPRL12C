@@ -7,19 +7,23 @@ void struct_sample_4(void);
 
 void struct_samples()
 {
+    char *menu_items[] = {
+        "Display the value of the members of structure variable.",
+        "Structure to structure assignment.",
+        "Passing Structure as a function parameter.",
+        "Structure Array"
+    };
+    int menu_size = sizeof(menu_items) / sizeof(menu_items[0]);
+
     while(1)
     {
         system("cls");
         printf("=====================================================================\n");
         printf("Midterm Activities | [0] Go back | [-1] Exit\n");
-        printf("  [1] Display the value of the members of structure variable.\n");
-        printf("  [2] Structure to structure assignment.\n");
-        printf("  [3] Passing Structure as a function parameter.\n");
-        printf("  [4] Structure Array\n");
+        print_menu(menu_items, menu_size);
 
-        int choice, min = -1, max = 4;
-        get_int(&choice, min, max, "> Please select an option: ");
-
+        int choice = get_int(-1, menu_size, "> Please select an option: ");
+        
         system("cls");
         switch(choice)
         {

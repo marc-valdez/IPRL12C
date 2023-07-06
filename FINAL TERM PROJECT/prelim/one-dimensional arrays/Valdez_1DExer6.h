@@ -7,8 +7,7 @@ void oneD_exer6()
 {
 	printf("6. See if an integer is found in an array\n\n");
 
-	int n;
-	get_int(&n, 0, 4, "Enter array size (%d-%d): ", 0, 4);
+	int n = get_int(0, 4, "Enter array size (%d-%d): ", 0, 4);
 
 	int i_arr[n];
 	for(int i = 0; i < n; i++)
@@ -17,8 +16,7 @@ void oneD_exer6()
 		printf("%d\t", i_arr[i]);
 	}
 
-	int x;
-	get_int(&x, 0, 1000, "\n\nInput integer to find: ");
+	int x = get_int(0, 1000, "\n\nInput integer to find: ");
 
 	if(find(i_arr, n, x) == 1)
 		printf("\n== Integer %d Found inside array! ==\n\n", x);

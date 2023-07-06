@@ -131,11 +131,9 @@ int lrt_main()
 // The minimum reload amount of a beep card is 13 pesos.
 void beep_reload(float *beep_card_balance)
 {
-	float reload_amount = 0.0;
-
 	// Get the reload amount from the user then add it to the beep balance.
 	float min = MIN_RELOAD, max = MAX_RELOAD - *beep_card_balance;
-	get_float(&reload_amount, min, max, "\nPlease enter your reload amount. [%.2f PHP - %.2f PHP] >> ", min, max);
+	float reload_amount = get_float(min, max, "\nPlease enter your reload amount. [%.2f PHP - %.2f PHP] >> ", min, max);
 
 	*beep_card_balance += reload_amount;
 
@@ -162,7 +160,6 @@ void beep_avail(float *beep_card_balance, int *beep_card_status)
 	printf("\nA new beep card costs %.2f PHP, %.2f for the card, %.2f for the initial load.", new_card_total, BEEP_CARD_PRICE, INITIAL_BEEP_CARD_BALANCE);
 	char buffer = yes_or_no("\nWould you like to avail a beep card? [Y/N] >> ");
 
-	float payment = 0.0;
 	if(buffer == 'Y' || buffer == 'y')
 	{
 		// Update the beep status to 1 since the user said yes in availing a new card.
@@ -170,7 +167,7 @@ void beep_avail(float *beep_card_balance, int *beep_card_status)
 
 		// Ask user for the payment, the minimum price of a beep card today is 100 pesos.
 		float min = new_card_total, max = 1000;
-		get_float(&payment, min, max, "\nPlease enter your payment amount. [%.2f PHP - %.2f PHP] >> ", min, max);
+		float payment = get_float(min, max, "\nPlease enter your payment amount. [%.2f PHP - %.2f PHP] >> ", min, max);
 
 		// Print the user's change and update them on their new beep card balance.
 		printf("\nYour change is %.2f PHP.\n", payment - new_card_total);
@@ -196,7 +193,7 @@ void check_beep_card(float *beep_card_balance, int *beep_card_status)
 		*beep_card_status = 1;
 
 		float min = 0, max = MAX_RELOAD;
-		get_float(beep_card_balance, min, max, "\nPlease enter your beep card balance. [%.2f PHP - %.2f PHP] >> ", min, max);
+		*beep_card_balance = get_float(min, max, "\nPlease enter your beep card balance. [%.2f PHP - %.2f PHP] >> ", min, max);
 
 		// Check if the user has the minimum required balance of 13 pesos inside their beep card.
 		balance_check(beep_card_balance, MIN_RELOAD);
@@ -206,7 +203,7 @@ void check_beep_card(float *beep_card_balance, int *beep_card_status)
 }
 
 // This function prints the selection menu for the user.
-void print_menu()
+void print_stations()
 {
 	printf("\n");
 	/*	For the sake of space constraints, a second integer j is initialized to start at the halfway point of the array index,
@@ -222,11 +219,11 @@ void get_stations(int *origin, int *destination)
 	while(1)
 	{
 		// This function simply prints the station_names array by iterating through it linearly.
-		print_menu();
+		print_stations();
 
 		int min = 1, max = 20;
-		get_int(origin, min, max, "\nPlease enter your Current Station number. [%d-%d] >> ", min, max);
-		get_int(destination, min, max, "\nPlease enter your Destination Station number. [%d-%d] >> ", min, max);
+		*origin = get_int(min, max, "\nPlease enter your Current Station number. [%d-%d] >> ", min, max);
+		*destination = get_int(min, max, "\nPlease enter your Destination Station number. [%d-%d] >> ", min, max);
 
 		// This checks if the user inputted the same station twice.
 		if(*origin != *destination)
@@ -250,11 +247,10 @@ void update_balance(float *beep_card_balance, int fare)
 void calculate_change(int fare)
 {
 	float change;
-
 	while(1)
 	{
 		float min = 0.0, max = 1000.0;
-		get_float(&change, min, max, "\nPlease enter your payment amount. [%.2f PHP - %.2f PHP] >> ", min, max);
+		change = get_float(min, max, "\nPlease enter your payment amount. [%.2f PHP - %.2f PHP] >> ", min, max);
 
 		if(change >= fare)
 			break;

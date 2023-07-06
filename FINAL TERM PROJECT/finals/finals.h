@@ -5,19 +5,22 @@
 
 void finals()
 {
+    char *menu_items[] = {
+        "File Processing Samples",
+        "Recursion Machine Exercises",
+        "File Processing Machine Exercises",
+        "File Processing Quiz",
+        "THIS PROGRAM!!!"
+    };
+    int menu_size = sizeof(menu_items) / sizeof(menu_items[0]);
     while(1)
     {
         system("cls");
         printf("=====================================================================\n");
         printf("Finals Activities | [0] Go back | [-1] Exit\n");
-        printf("  [1] File Processing Samples\n");
-        printf("  [2] Recursion Machine Exercises\n");
-        printf("  [3] File Processing Machine Exercises\n");
-        printf("  [4] File Processing Quiz\n");
-        printf("  [ ] THIS PROGRAM!!!\n");
+        print_menu(menu_items, menu_size);
 
-        int choice, min = -1, max = 4;
-        get_int(&choice, min, max, "> Please select an option: ");
+        int choice = get_int(-1, menu_size, "> Please select an option: ");
 
         system("cls");
         switch(choice)

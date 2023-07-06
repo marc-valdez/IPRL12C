@@ -5,18 +5,22 @@
 
 void midterm()
 {
+    char *menu_items[] = {
+        "Pointer Samples",
+        "Pointer Machine Exercises",
+        "Struct Samples",
+        "Struct-based ATM System"
+    };
+    int menu_size = sizeof(menu_items) / sizeof(menu_items[0]);
+    
     while(1)
     {
         system("cls");
         printf("=====================================================================\n");
         printf("Midterm Activities | [0] Go back | [-1] Exit\n");
-        printf("  [1] Pointer Samples\n");
-        printf("  [2] Pointer Machine Exercises\n");
-        printf("  [3] Struct Samples\n");
-        printf("  [4] Struct-based ATM System\n");
+        print_menu(menu_items, menu_size);
 
-        int choice, min = -1, max = 6;
-        get_int(&choice, min, max, "> Please select an option: ");
+        int choice = get_int(-1, menu_size, "> Please select an option: ");
 
         system("cls");
         switch(choice)

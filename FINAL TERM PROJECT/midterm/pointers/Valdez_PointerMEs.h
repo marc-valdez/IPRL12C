@@ -216,24 +216,28 @@ void ptr_exer10()
 
 void pointer_MEs()
 {
+    char *menu_items[] = {
+        "Write a program that declares one float variable and one double data type variable.",
+        "What is the value of dafter executing scanf()?",
+        "Sum() vs Add()",
+        "Write a function that will compute the sum and average of the elements of the array.",
+        "One dimensional float array traversal using a pointer that is pointing to the FIRST element of the array.",
+        "Same as above but double data type.",
+        "One dimensional float array traversal using a pointer that is pointing to the LAST element of the array.",
+        "Same as above but double data type.",
+        "Write a program that will dynamically allocate contiguous memory for 10 floating point values.",
+        "Same as above but double data type."
+    };
+    int menu_size = sizeof(menu_items) / sizeof(menu_items[0]);
+
     while(1)
     {
         system("cls");
         printf("=====================================================================\n");
         printf("Pointer Machine Exercises | [0] Go back | [-1] Exit\n");
-        printf("  [1] Write a program that declares one float variable and one double data type variable.\n");
-        printf("  [2] What is the value of dafter executing scanf()?\n");
-        printf("  [3] Sum() vs Add()\n");
-        printf("  [4] Write a function that will compute the sum and average of the elements of the array.\n");
-        printf("  [5] One dimensional float array traversal using a pointer that is pointing to the FIRST element of the array.\n");
-        printf("  [6] Same as above but double data type.\n");
-        printf("  [7] One dimensional float array traversal using a pointer that is pointing to the LAST element of the array.\n");
-        printf("  [8] Same as above but double data type.\n");
-        printf("  [9] Write a program that will dynamically allocate contiguous memory for 10 floating point values.\n");
-        printf("  [10] Same as above but double data type.\n");
+        print_menu(menu_items, menu_size);
 
-        int choice, min = -1, max = 10;
-        get_int(&choice, min, max, "> Please select an option: ");
+        int choice = get_int(-1, menu_size, "> Please select an option: ");
 
         system("cls");
         switch(choice)

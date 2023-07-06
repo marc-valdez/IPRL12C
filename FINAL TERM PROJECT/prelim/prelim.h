@@ -6,19 +6,23 @@
 
 void prelim()
 {
+    char *menu_items[] = {
+        "1D Array Machine Exercises",
+        "General Machine Exercise 1",
+        "General Machine Exercise 2",
+        "2D Array Machine Exercises",
+        "LRT System"
+    };
+    int menu_size = sizeof(menu_items) / sizeof(menu_items[0]);
+
     while(1)
     {
         system("cls");
         printf("=====================================================================\n");
         printf("Prelim Activities | [0] Go back | [-1] Exit\n");
-        printf("  [1] 1D Array Machine Exercises\n");
-        printf("  [2] General Machine Exercise 1\n");
-        printf("  [3] General Machine Exercise 2\n");
-        printf("  [4] 2D Array Machine Exercises\n");
-        printf("  [5] LRT System\n");
+        print_menu(menu_items, menu_size);
 
-        int choice, min = -1, max = 5;
-        get_int(&choice, min, max, "> Please select an option: ");
+        int choice = get_int(-1, menu_size, "> Please select an option: ");
 
         system("cls");
         switch(choice)

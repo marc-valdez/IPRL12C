@@ -8,8 +8,7 @@ void oneD_exer4()
 {
 	printf("4. Return the sum of all elements\n\n");
 
-	int n;
-	get_int(&n, 0, 4, "Enter array size (%d-%d): ", 0, 4);
+	int n = get_int(0, 4, "Enter array size (%d-%d): ", 0, 4);
 
 	double d_arr[n];
 	d_init4(d_arr, n);
