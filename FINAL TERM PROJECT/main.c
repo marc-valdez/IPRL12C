@@ -11,17 +11,21 @@ int main()
     printf(" Contact: marc.valdez@lpunetwork.edu.ph\n\n");
     system("pause");
 
+    char *menu_items[] = {
+        "Prelim",
+        "Midterm",
+        "Finals"
+    };
+    int menu_size = sizeof(menu_items) / sizeof(menu_items[0]);
+    
     while(1)
     {
         system("cls");
         printf("=====================================================================\n");
         printf("Main Menu | [0] Exit\n");
-        printf("  [1] Prelim\n");
-        printf("  [2] Midterm\n");
-        printf("  [3] Finals\n");
+        print_menu(menu_items, menu_size);
 
-        int choice, min = 0, max = 3;
-        get_int(&choice, min, max, "> Please select an option: ");
+        int choice = get_int(0, menu_size, "> Please select an option: ");
 
         system("cls");
         switch(choice)
