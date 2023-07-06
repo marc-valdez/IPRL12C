@@ -300,3 +300,35 @@ void exit_prompt(const char *prompt)
     system("pause");
     exit(0);
 }
+
+/*
+ The following function is a not so simple file open prompt.
+ The simple act of concatenating two strings becomes extremely complicated once buffer overflow is considered.
+ The user input is case sensitive.
+*/
+FILE *open_file(const char *prompt, const char *extension)
+{
+    char filename[MAX];
+    get_string(filename, MAX, prompt);
+
+    // Concatenate filename and extension using strncat_s
+    size_t filename_length = strlen(filename);
+    size_t extension_length = strlen(extension);
+    size_t remaining_space = sizeof(filename) - filename_length - 1;
+    size_t copy_length = remaining_space > extension_length ? extension_length : remaining_space;
+    if(strncat_s(filename, sizeof(filename), extension, copy_length) != 0) {
+        // Handle buffer overflow or truncation error
+        printf("Error: Filename buffer overflow or truncation occurred.\n");
+        return NULL;
+    }
+
+    // Open the file
+    FILE *fp;
+    errno_t err = fopen_s(&fp, filename, "r");
+    if(err != 0) {
+        // Handle file opening error
+        printf("Error opening file: %s\n", filename);
+        return NULL;
+    }
+    return fp;
+}
