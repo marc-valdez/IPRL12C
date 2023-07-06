@@ -77,14 +77,14 @@ int starts_or_ends_with_dot(const char *buffer)
 
 /*
  The following functions are used to take user input.
- Each function takes an address to an integer, float, double, or string to modify.
+ The numeric functions are all value returning, while the string function requires an address to a string literal.
  For the numeric functions, a min and max value need to be specified.
  For the string function, a character limit needs to be specified.
  All functions require a string literal for the message prompt.
  It also accepts variadic arguments for the prompt (e.g., %d, %f, %s).
  There is a preprocessor defined constant called MAX to specify the maximum character length of all inputs.
 */
-void get_int(int *user_input, const int min, const int max, const char *va_prompt, ...)
+int get_int(const int min, const int max, const char *va_prompt, ...)
 {
     char prompt[MAX];
 
@@ -107,36 +107,37 @@ void get_int(int *user_input, const int min, const int max, const char *va_promp
         if(starts_or_ends_with_dot(buffer))
             continue;
 
-        if(sscanf_s(buffer, "%d", user_input) != 1)
+        int user_input;
+        if(sscanf_s(buffer, "%d", &user_input) != 1)
         {
             cprintf(RED, "  ! Invalid input. Please enter a numeric value.\n");
             continue;
         }
 
         char remaining[MAX];
-        if(sscanf_s(buffer, "%f%s", (float *)user_input, remaining) != 1)
+        if(sscanf_s(buffer, "%f%s", (float *)&user_input, remaining) != 1)
         {
             cprintf(RED, "  ! Invalid input. Please refrain from using non-numeric characters.\n");
             continue;
         }
 
-        if(sscanf_s(buffer, "%d%[.]%s", user_input, remaining, remaining) != 1)
+        if(sscanf_s(buffer, "%d%[.]%s", &user_input, remaining, remaining) != 1)
         {
             cprintf(YELLOW, "  ! Invalid input. Please enter a whole number.\n");
             continue;
         }
 
-        if(*user_input < (int)min || *user_input >(int)max)
+        if(user_input < min || user_input > max)
         {
-            cprintf(YELLOW, "  ! Input out of range. Please enter a number between %d and %d (inclusive).\n", (int)min, (int)max);
+            cprintf(YELLOW, "  ! Input out of range. Please enter a number between %d and %d (inclusive).\n", min, max);
             continue;
         }
 
-        return;
+        return user_input;
     }
 }
 
-void get_float(float *user_input, const float min, const float max, const char *va_prompt, ...)
+float get_float(const float min, const float max, const char *va_prompt, ...)
 {
     char prompt[MAX];
 
@@ -159,30 +160,31 @@ void get_float(float *user_input, const float min, const float max, const char *
         if(starts_or_ends_with_dot(buffer))
             continue;
 
-        if(sscanf_s(buffer, "%f", user_input) != 1)
+        float user_input;
+        if(sscanf_s(buffer, "%f", &user_input) != 1)
         {
             cprintf(RED, "  ! Invalid input. Please enter a numeric value.\n");
             continue;
         }
 
         char remaining[MAX];
-        if(sscanf_s(buffer, "%f%s", user_input, remaining) != 1)
+        if(sscanf_s(buffer, "%f%s", &user_input, remaining) != 1)
         {
             cprintf(YELLOW, "  ! Invalid input. Please enter a whole number.\n");
             continue;
         }
 
-        if(*user_input < (float)min || *user_input >(float)max)
+        if(user_input < min || user_input > max)
         {
-            cprintf(YELLOW, "  ! Input out of range. Please enter a number between %.2f and %.2f (inclusive).\n", (float)min, (float)max);
+            cprintf(YELLOW, "  ! Input out of range. Please enter a number between %.2f and %.2f (inclusive).\n", min, max);
             continue;
         }
 
-        return;
+        return user_input;
     }
 }
 
-void get_double(double *user_input, const double min, const double max, const char *va_prompt, ...)
+double get_double(const double min, const double max, const char *va_prompt, ...)
 {
     char prompt[MAX];
 
@@ -205,26 +207,27 @@ void get_double(double *user_input, const double min, const double max, const ch
         if(starts_or_ends_with_dot(buffer))
             continue;
 
-        if(sscanf_s(buffer, "%lf", user_input) != 1)
+        double user_input;
+        if(sscanf_s(buffer, "%lf", &user_input) != 1)
         {
             cprintf(RED, "  ! Invalid input. Please enter a numeric value.\n");
             continue;
         }
 
         char remaining[MAX];
-        if(sscanf_s(buffer, "%lf%s", user_input, remaining) != 1)
+        if(sscanf_s(buffer, "%lf%s", &user_input, remaining) != 1)
         {
             cprintf(YELLOW, "  ! Invalid input. Please enter a whole number.\n");
             continue;
         }
 
-        if(*(double *)user_input < (double)min || *(double *)user_input >(double)max)
+        if(user_input < min || user_input > max)
         {
-            cprintf(YELLOW, "  ! Input out of range. Please enter a number between %.2lf and %.2lf (inclusive).\n", (double)min, (double)max);
+            cprintf(YELLOW, "  ! Input out of range. Please enter a number between %.2lf and %.2lf (inclusive).\n", min, max);
             continue;
         }
 
-        return;
+        return user_input;
     }
 }
 
@@ -331,4 +334,10 @@ FILE *open_file(const char *prompt, const char *extension)
         return NULL;
     }
     return fp;
+}
+
+void print_menu(char *menu_items[], const int menu_size)
+{
+    for(int i = 0; i < menu_size; i++)
+        printf("  [%d] %s\n", i + 1, menu_items[i]);
 }
