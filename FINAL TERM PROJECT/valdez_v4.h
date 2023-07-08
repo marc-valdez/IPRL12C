@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include <limits.h>
 #include <stdarg.h>
+#include <stdbool.h>
+#include <string.h>
 #include <ctype.h>
+#include <limits.h>
 
 #define MAX 100
 
