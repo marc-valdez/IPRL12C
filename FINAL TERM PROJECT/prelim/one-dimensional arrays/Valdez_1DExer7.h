@@ -1,4 +1,3 @@
-#include <stdio.h>
 // Marc Valdez
 
 void arrcpy(int A[], int B[], int n);

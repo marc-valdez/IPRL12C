@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-
 #define MAX_ACCOUNTS 5
 #define MAX_WITHDRAWAL_AMOUNT 4000.0
 

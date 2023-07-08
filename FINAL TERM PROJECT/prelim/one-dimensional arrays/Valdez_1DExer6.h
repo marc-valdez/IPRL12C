@@ -1,4 +1,3 @@
-#include <stdio.h>
 // Marc Valdez
 
 int find(int arr[], int n, int x);

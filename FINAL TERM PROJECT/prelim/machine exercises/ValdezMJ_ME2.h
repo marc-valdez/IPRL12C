@@ -1,6 +1,6 @@
 // Marc Valdez
 // Machine Exercise 2 - March 23, 2023
-#include <stdio.h>
+
 float compute(int messages);
 
 void prelim_ME2() {

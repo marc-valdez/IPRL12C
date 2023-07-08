@@ -1,4 +1,3 @@
-#include <stdio.h>
 // Marc Valdez
 
 void d_init4(double arr[], int n);

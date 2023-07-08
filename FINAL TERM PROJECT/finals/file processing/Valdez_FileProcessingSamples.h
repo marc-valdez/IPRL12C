@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 void fp_sample1()
 {
     // create a file pointer called inputf
@@ -185,7 +181,7 @@ void fileprocessing_samples()
         "The following program shows how to perform formatted text file INPUT using the primitive data types."
     };
     int menu_size = sizeof(menu_items) / sizeof(menu_items[0]);
-    
+
     while(1)
     {
         system("cls");

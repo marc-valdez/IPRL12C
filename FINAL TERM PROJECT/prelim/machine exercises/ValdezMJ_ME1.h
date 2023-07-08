@@ -1,7 +1,7 @@
 // Online C compiler to run C program online
 // Marc Valdez
 // Machine Exercise 1 - March 23, 2023
-#include <stdio.h>
+
 int sum(int a, int b);
 int product(int a, int b);
 void printMessage();

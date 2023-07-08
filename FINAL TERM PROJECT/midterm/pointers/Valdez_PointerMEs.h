@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 void ptr_exer1()
 {
     // Write a program that declares one float variable and one double data type variable.
