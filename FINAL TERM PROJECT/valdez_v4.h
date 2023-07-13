@@ -91,7 +91,7 @@ int get_int(const int min, const int max, const char *va_prompt, ...)
 
     va_list args;
     va_start(args, va_prompt);
-    vsprintf_s(prompt, strlen(va_prompt) + 1, va_prompt, args);
+    vsprintf_s(prompt, sizeof(prompt), va_prompt, args);
     va_end(args);
 
     char buffer[MAX];
@@ -144,7 +144,7 @@ float get_float(const float min, const float max, const char *va_prompt, ...)
 
     va_list args;
     va_start(args, va_prompt);
-    vsprintf_s(prompt, strlen(va_prompt) + 1, va_prompt, args);
+    vsprintf_s(prompt, sizeof(prompt), va_prompt, args);
     va_end(args);
 
     char buffer[MAX];
@@ -191,7 +191,7 @@ double get_double(const double min, const double max, const char *va_prompt, ...
 
     va_list args;
     va_start(args, va_prompt);
-    vsprintf_s(prompt, strlen(va_prompt) + 1, va_prompt, args);
+    vsprintf_s(prompt, sizeof(prompt), va_prompt, args);
     va_end(args);
 
     char buffer[MAX];
@@ -238,7 +238,7 @@ void get_string(char *user_input, const int limit, const char *va_prompt, ...)
 
     va_list args;
     va_start(args, va_prompt);
-    vsprintf_s(prompt, strlen(va_prompt) + 1, va_prompt, args);
+    vsprintf_s(prompt, sizeof(prompt), va_prompt, args);
     va_end(args);
 
     char buffer[MAX];
